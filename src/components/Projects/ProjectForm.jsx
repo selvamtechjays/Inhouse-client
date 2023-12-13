@@ -1,7 +1,7 @@
 // ProjectForm.js
 
 import React, { useEffect, useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 const ProjectForm = ({ show, handleClose, handleAddProject, projectToEdit }) => {
@@ -87,100 +87,111 @@ const ProjectForm = ({ show, handleClose, handleAddProject, projectToEdit }) => 
   
     return (
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>{projectToEdit ? "Edit Project" : "Add Project"}</Modal.Title>
-        </Modal.Header>
+      <Modal.Header closeButton>
+        <Modal.Title>{projectToEdit ? "Edit Project" : "Add Project"}</Modal.Title>
+      </Modal.Header>
       <Modal.Body>
         <Form>
-          <Form.Group controlId="formProjectName">
-            <Form.Label>Project Name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter project name"
-              name="projectName"
-              value={projectData.projectName}
-              onChange={handleChange}
-              isInvalid={!!errors.projectName}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.projectName}
-            </Form.Control.Feedback>
-          </Form.Group>
+          <Row>
+            {/* First Column */}
+            <Col>
+              <Form.Group controlId="formProjectName">
+                <Form.Label>Project Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter project name"
+                  name="projectName"
+                  value={projectData.projectName}
+                  onChange={handleChange}
+                  isInvalid={!!errors.projectName}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.projectName}
+                </Form.Control.Feedback>
+              </Form.Group>
 
-          <Form.Group controlId="formClientName">
-            <Form.Label>Client Name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter client name"
-              name="clientName"
-              value={projectData.clientName}
-              onChange={handleChange}
-              isInvalid={!!errors.clientName}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.clientName}
-            </Form.Control.Feedback>
-          </Form.Group>
+              <Form.Group controlId="formStartDate">
+                <Form.Label>Start Date</Form.Label>
+                <Form.Control
+                  type="date"
+                  placeholder="Enter start date"
+                  name="startDate"
+                  value={projectData.startDate}
+                  onChange={handleChange}
+                  isInvalid={!!errors.startDate}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.startDate}
+                </Form.Control.Feedback>
 
-          <Form.Group controlId="formStartDate">
-            <Form.Label>Start Date</Form.Label>
-            <Form.Control
-              type="date"
-              placeholder="Enter start date"
-              name="startDate"
-              value={projectData.startDate}
-              onChange={handleChange}
-              isInvalid={!!errors.startDate}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.startDate}
-            </Form.Control.Feedback>
-          </Form.Group>
+                <Form.Group controlId="formProjectType">
+                  <Form.Label>Project Type</Form.Label>
+                  <Form.Select
+                  name="projectType"
+                  value={projectData.projectType}
+                  onChange={handleChange}
+                  isInvalid={!!errors.projectType}
+                >
+                  <option value="">Select Project Type</option>
+                  <option value="Type1">Type 1</option>
+                  <option value="Type2">Type 2</option>
+                  {/* Add more options as needed */}
+                </Form.Select>
+                <Form.Control.Feedback type="invalid">
+                  {errors.projectType}
+                </Form.Control.Feedback>
+                </Form.Group>
+              </Form.Group>
+            </Col>
 
-          <Form.Group controlId="formEndDate">
-            <Form.Label>End Date</Form.Label>
-            <Form.Control
-              type="date"
-              placeholder="Enter end date"
-              name="endDate"
-              value={projectData.endDate}
-              onChange={handleChange}
-              isInvalid={!!errors.endDate}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.endDate}
-            </Form.Control.Feedback>
-          </Form.Group>
+            {/* Second Column */}
+            <Col>
+              <Form.Group controlId="formClientName">
+                <Form.Label>Client Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter client name"
+                  name="clientName"
+                  value={projectData.clientName}
+                  onChange={handleChange}
+                  isInvalid={!!errors.clientName}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.clientName}
+                </Form.Control.Feedback>
+              </Form.Group>
 
-          <Form.Group controlId="formProjectType">
-            <Form.Label>Project Type</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter project type"
-              name="projectType"
-              value={projectData.projectType}
-              onChange={handleChange}
-              isInvalid={!!errors.projectType}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.projectType}
-            </Form.Control.Feedback>
-          </Form.Group>
+              <Form.Group controlId="formEndDate">
+                <Form.Label>End Date</Form.Label>
+                <Form.Control
+                  type="date"
+                  placeholder="Enter end date"
+                  name="endDate"
+                  value={projectData.endDate}
+                  onChange={handleChange}
+                  isInvalid={!!errors.endDate}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.endDate}
+                </Form.Control.Feedback>
 
-          <Form.Group controlId="formResources">
-            <Form.Label>Resources</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter resources"
-              name="resources"
-              value={projectData.resources}
-              onChange={handleChange}
-              isInvalid={!!errors.resources}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.resources}
-            </Form.Control.Feedback>
-          </Form.Group>
+                <Form.Group controlId="formResources">
+                  <Form.Label>Resources</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter resources"
+                    name="resources"
+                    value={projectData.resources}
+                    onChange={handleChange}
+                    isInvalid={!!errors.resources}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.resources}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Form.Group>
+            </Col>
+          </Row>
         </Form>
       </Modal.Body>
       <Modal.Footer>
