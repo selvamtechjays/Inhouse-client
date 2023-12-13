@@ -1,100 +1,102 @@
-// ProjectForm.js
-
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import './project.css'
+
 const ProjectForm = ({ show, handleClose, handleAddProject, projectToEdit }) => {
-    const [projectData, setProjectData] = useState({
-      projectName: "",
-      clientName: "",
-      startDate: null,
-      endDate: null,
-      projectType: "",
-      resources: "",
-    });
-  
-    const [errors, setErrors] = useState({});
-  
-    useEffect(() => {
+  const [projectData, setProjectData] = useState({
+    projectName: "",
+    clientName: "",
+    startDate: null,
+    endDate: null,
+    projectType: "",
+    resources: "",
+  });
+
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (projectToEdit) {
+      // If projectToEdit is provided, populate the form with its data
+      setProjectData(projectToEdit);
+    }
+  }, [projectToEdit]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setProjectData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleDateChange = (date, field) => {
+    setProjectData((prevData) => ({ ...prevData, [field]: date }));
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Validate Project Name
+    if (!projectData.projectName.trim()) {
+      newErrors.projectName = "Project Name is required";
+    }
+
+    // Validate Client Name
+    if (!projectData.clientName.trim()) {
+      newErrors.clientName = "Client Name is required";
+    }
+
+    // Validate Start Date
+    if (!projectData.startDate) {
+      newErrors.startDate = "Start Date is required";
+    }
+
+    // Validate End Date
+    if (!projectData.endDate) {
+      newErrors.endDate = "End Date is required";
+    }
+
+    // Validate Project Type
+    if (!projectData.projectType.trim()) {
+      newErrors.projectType = "Project Type is required";
+    }
+
+    // Validate Resources
+    if (!projectData.resources.trim()) {
+      newErrors.resources = "Resources are required";
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0; // Return true if there are no errors
+  };
+
+  const handleSave = () => {
+    if (validateForm()) {
       if (projectToEdit) {
-        // If projectToEdit is provided, populate the form with its data
-        setProjectData(projectToEdit);
+        // If editing, update the project in the parent component
+        handleAddProject(projectData, true);
+      } else {
+        // If adding new, add the project to the parent component
+        handleAddProject(projectData, false);
       }
-    }, [projectToEdit]);
-  
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      setProjectData((prevData) => ({ ...prevData, [name]: value }));
-    };
-  
-    const handleDateChange = (date, field) => {
-      setProjectData((prevData) => ({ ...prevData, [field]: date }));
-    };
-  
-    const validateForm = () => {
-      const newErrors = {};
-  
-      // Validate Project Name
-      if (!projectData.projectName.trim()) {
-        newErrors.projectName = "Project Name is required";
-      }
-  
-      // Validate Client Name
-      if (!projectData.clientName.trim()) {
-        newErrors.clientName = "Client Name is required";
-      }
-  
-      // Validate Start Date
-      if (!projectData.startDate) {
-        newErrors.startDate = "Start Date is required";
-      }
-  
-      // Validate End Date
-      if (!projectData.endDate) {
-        newErrors.endDate = "End Date is required";
-      }
-  
-      // Validate Project Type
-      if (!projectData.projectType.trim()) {
-        newErrors.projectType = "Project Type is required";
-      }
-  
-      // Validate Resources
-      if (!projectData.resources.trim()) {
-        newErrors.resources = "Resources are required";
-      }
-  
-      setErrors(newErrors);
-  
-      return Object.keys(newErrors).length === 0; // Return true if there are no errors
-    };
-  
-    const handleSave = () => {
-      if (validateForm()) {
-        if (projectToEdit) {
-          // If editing, update the project in the parent component
-          handleAddProject(projectData, true);
-        } else {
-          // If adding new, add the project to the parent component
-          handleAddProject(projectData, false);
-        }
-  
-        // Close the form modal
-        handleClose();
-      }
-    };
-  
-    return (
-      <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>{projectToEdit ? "Edit Project" : "Add Project"}</Modal.Title>
+
+      // Close the form modal
+      handleClose();
+    }
+  };
+
+  return (
+    <Modal size="lg"  show={show} onHide={handleClose} >
+      <Modal.Header closeButton >
+        <Modal.Title >
+          {projectToEdit ? "Edit Project" : "Add Project"}
+        </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <Form>
-          <Row>
+      <Modal.Body >
+        <Form >
+          <Row >
             {/* First Column */}
-            <Col>
+            <Col >
               <Form.Group controlId="formProjectName">
                 <Form.Label>Project Name</Form.Label>
                 <Form.Control
@@ -127,19 +129,19 @@ const ProjectForm = ({ show, handleClose, handleAddProject, projectToEdit }) => 
                 <Form.Group controlId="formProjectType">
                   <Form.Label>Project Type</Form.Label>
                   <Form.Select
-                  name="projectType"
-                  value={projectData.projectType}
-                  onChange={handleChange}
-                  isInvalid={!!errors.projectType}
-                >
-                  <option value="">Select Project Type</option>
-                  <option value="Type1">Type 1</option>
-                  <option value="Type2">Type 2</option>
-                  {/* Add more options as needed */}
-                </Form.Select>
-                <Form.Control.Feedback type="invalid">
-                  {errors.projectType}
-                </Form.Control.Feedback>
+                    name="projectType"
+                    value={projectData.projectType}
+                    onChange={handleChange}
+                    isInvalid={!!errors.projectType}
+                  >
+                    <option value="">Select Project Type</option>
+                    <option value="Type1">Type 1</option>
+                    <option value="Type2">Type 2</option>
+                    {/* Add more options as needed */}
+                  </Form.Select>
+                  <Form.Control.Feedback type="invalid">
+                    {errors.projectType}
+                  </Form.Control.Feedback>
                 </Form.Group>
               </Form.Group>
             </Col>
@@ -198,8 +200,8 @@ const ProjectForm = ({ show, handleClose, handleAddProject, projectToEdit }) => 
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
-        <Button variant="primary" onClick={handleSave}>
-          Save
+        <Button variant="dark" onClick={handleSave}>
+        Add
         </Button>
       </Modal.Footer>
     </Modal>

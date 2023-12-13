@@ -100,7 +100,8 @@ export const TeamContent = () => {
             <div className="table-cell">{team.empCode}</div>
             <div className="table-cell">{team.techStack}</div>
             <div className="table-cell">{team.project}</div>
-            <div className="table-cell">{project.percentage}</div>
+            <div className="table-cell">{team.allocatedPercentage}</div>
+            <div className="table-cell">{team.priority}</div>
             
             <div className="table-cell">
               <Button variant="success" style={{ fontSize: "12px" }} onClick={() => openForm(team)}>
