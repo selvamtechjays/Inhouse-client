@@ -7,7 +7,7 @@ import { MdGroups } from "react-icons/md";
 import { IoMdPersonAdd } from "react-icons/io";
 import { IoIosLogOut } from "react-icons/io";
 import { SiPivotaltracker } from "react-icons/si";
-import { Route, Routes, Link } from "react-router-dom";
+import { Route, Routes, Link, useNavigate } from "react-router-dom";
 import { DashboardContent } from "../Dashboard/DashboardContent";
 import { ProjectsContent } from "../Projects/ProjectsContent";
 import { EmployeesContent } from "../Employees/EmployeesContent";
@@ -17,9 +17,17 @@ import { TeamContent } from "../Team/TeamContent";
 const Profile = () => {
   const [activeSection, setActiveSection] = useState("dashboard");
   const [isHovered, setIsHovered] = useState(null);
+  const navigate = useNavigate()
 
   const handleSectionChange = (section) => {
     setActiveSection(section);
+  };
+
+  const handleLogout = () => {
+    // Clear the email from local storage
+    localStorage.removeItem('email');
+   
+      navigate('/')
   };
 
 
@@ -114,7 +122,7 @@ const Profile = () => {
             >
               <button
                 className={getButtonClassName("logout")}
-                onClick={() => handleSectionChange("logout")}
+                onClick={handleLogout}
             
               >
                 <IoIosLogOut 
