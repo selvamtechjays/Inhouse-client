@@ -186,9 +186,9 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
                   isInvalid={!!errors.priority}
                 >
                   <option value="">Select Priority</option>
-                  <option value="High">High</option>
-                  <option value="Medium">Medium</option>
-                  <option value="Low">Low</option>
+                  <option value="1">Senior</option>
+                  <option value="2">Junior</option>
+                  <option value="3">Intern</option>
                 </Form.Select>
                 <Form.Control.Feedback type="invalid">
                   {errors.priority}
