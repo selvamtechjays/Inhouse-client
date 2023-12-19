@@ -40,6 +40,16 @@ export const ProjectsContent = () => {
   };
 
   const handleAddProject = (newProject, isEdit) => {
+    // Capitalize the first letter of projectName and clientName
+    newProject.projectName = capitalizeFirstLetter(newProject.projectName);
+    newProject.clientName = capitalizeFirstLetter(newProject.clientName);
+    newProject.projectType = capitalizeFirstLetter(newProject.projectType);
+    newProject.resources = capitalizeFirstLetter(newProject.resources);
+
+      // Format startDate and endDate as "dd/mm/yyyy"
+    newProject.startDate = formatDate(newProject.startDate);
+    newProject.endDate = formatDate(newProject.endDate);
+  
     if (isEdit) {
       const updatedProjects = projects.map((project) =>
         project.id === projectToEdit.id ? newProject : project
@@ -51,7 +61,14 @@ export const ProjectsContent = () => {
         { ...newProject, id: Date.now() },
       ]);
     }
+
   };
+  
+  // Helper function to capitalize the first letter of a string
+  const capitalizeFirstLetter = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+  
 
   const handleDeleteProject = (index) => {
     const updatedProjects = [...projects];
@@ -63,6 +80,15 @@ export const ProjectsContent = () => {
     setFilterType(type);
     setFilterText(text);
   };
+
+  // Helper function to format date as "dd/mm/yyyy"
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Month is zero-based
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+};
 
   return (
     <Container>
@@ -122,10 +148,10 @@ export const ProjectsContent = () => {
               <div className="table-cell">{project.projectType}</div>
               <div className="table-cell">{project.resources}</div>
               <div className="table-cell">
-                <Button variant="success" style={{ fontSize: "12px" }} onClick={() => openForm(project)}>
+                <Button variant="dark" style={{ fontSize: "12px" }} onClick={() => openForm(project)}>
                   Edit
                 </Button>{" "}
-                <Button variant="danger" style={{ fontSize: "12px" }} onClick={() => handleDeleteProject(index)}>
+                <Button variant="secondary" style={{ fontSize: "12px" }} onClick={() => handleDeleteProject(index)}>
                   Delete
                 </Button>
               </div>

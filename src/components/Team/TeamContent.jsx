@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Table, Dropdown, Form } from "react-bootstrap";
 import TeamForm from "./TeamForm";
 import { CiFilter } from "react-icons/ci";
+import { capitalize } from "@mui/material";
 
 export const TeamContent = () => {
   const [isFormOpen, setFormOpen] = useState(false);
@@ -33,6 +34,7 @@ export const TeamContent = () => {
   };
 
   const handleAddTeam = (newTeam, isEdit) => {
+    newTeam.name = capitalize(newTeam.name)
     if (isEdit) {
       const updatedTeams = teams.map((team) => (team.id === teamToEdit.id ? newTeam : team));
       setTeams(updatedTeams);
@@ -122,10 +124,10 @@ export const TeamContent = () => {
                 <div className="table-cell">{team.allocatedPercentage}</div>
                 <div className="table-cell">{team.priority}</div>
                 <div className="table-cell">
-                  <Button variant="success" style={{ fontSize: "12px" }} onClick={() => openForm(team)}>
+                  <Button variant="dark" style={{ fontSize: "12px" }} onClick={() => openForm(team)}>
                     Edit
                   </Button>{" "}
-                  <Button variant="danger" style={{ fontSize: "12px" }} onClick={() => handleDeleteTeam(index)}>
+                  <Button variant="secondary" style={{ fontSize: "12px" }} onClick={() => handleDeleteTeam(index)}>
                     Delete
                   </Button>
                 </div>

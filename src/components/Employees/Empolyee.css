@@ -33,6 +33,7 @@
   .table-body {
     display: flex;
     flex-direction: column;
+    
   }
   
   .table-row {

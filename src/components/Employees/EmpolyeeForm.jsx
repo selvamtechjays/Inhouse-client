@@ -10,6 +10,7 @@ const EmpolyeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
     email: "",
     employeeCode: "",
     slack: "",
+    isOnline: false,
   };
 
   const [employeeData, setEmployeeData] = useState(initialEmployeeState);
@@ -37,6 +38,7 @@ const EmpolyeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
       handleAddEmployee(employeeData, !!employeeToEdit);
       handleClose();
       setEmployeeData(initialEmployeeState);
+
     }
   };
 
@@ -57,7 +59,8 @@ const EmpolyeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
     }
 
     if (!data.slack.trim()) {
-      errors.slack = "Email is required";
+      
+      errors.slack = "Email is required (must includes 'techjays' before @)";
     }
 
     return errors;

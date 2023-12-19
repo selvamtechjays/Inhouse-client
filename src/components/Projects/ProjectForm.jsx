@@ -2,9 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import './project.css'
+import "./project.css";
 
-const ProjectForm = ({ show, handleClose, handleAddProject, projectToEdit }) => {
+const ProjectForm = ({
+  show,
+  handleClose,
+  handleAddProject,
+  projectToEdit,
+}) => {
   const [projectData, setProjectData] = useState({
     projectName: "",
     clientName: "",
@@ -19,7 +24,14 @@ const ProjectForm = ({ show, handleClose, handleAddProject, projectToEdit }) => 
   useEffect(() => {
     if (projectToEdit) {
       // If projectToEdit is provided, populate the form with its data
-      setProjectData(projectToEdit);
+      setProjectData((prevData) => ({
+        ...prevData,
+        ...projectToEdit,
+        startDate: projectToEdit.startDate
+          ? new Date(projectToEdit.startDate)
+          : null,
+        endDate: projectToEdit.endDate ? new Date(projectToEdit.endDate) : null,
+      }));
     }
   }, [projectToEdit]);
 
@@ -65,6 +77,16 @@ const ProjectForm = ({ show, handleClose, handleAddProject, projectToEdit }) => 
       newErrors.resources = "Resources are required";
     }
 
+    // Validate End Date
+    if (!projectData.endDate) {
+      newErrors.endDate = "End Date is required";
+    } else if (
+      projectData.startDate &&
+      projectData.endDate < projectData.startDate
+    ) {
+      newErrors.endDate = "End Date cannot be earlier than Start Date";
+    }
+
     setErrors(newErrors);
 
     return Object.keys(newErrors).length === 0; // Return true if there are no errors
@@ -80,23 +102,33 @@ const ProjectForm = ({ show, handleClose, handleAddProject, projectToEdit }) => 
         handleAddProject(projectData, false);
       }
 
+      // Clear the form data after adding a new project
+      setProjectData({
+        projectName: "",
+        clientName: "",
+        startDate: null,
+        endDate: null,
+        projectType: "",
+        resources: "",
+      });
+
       // Close the form modal
       handleClose();
     }
   };
 
   return (
-    <Modal size="lg"  show={show} onHide={handleClose} >
-      <Modal.Header closeButton >
-        <Modal.Title >
+    <Modal size="lg" show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>
           {projectToEdit ? "Edit Project" : "Add Project"}
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body >
-        <Form >
-          <Row >
+      <Modal.Body>
+        <Form>
+          <Row>
             {/* First Column */}
-            <Col >
+            <Col>
               <Form.Group controlId="formProjectName">
                 <Form.Label>Project Name</Form.Label>
                 <Form.Control
@@ -201,7 +233,7 @@ const ProjectForm = ({ show, handleClose, handleAddProject, projectToEdit }) => 
           Close
         </Button>
         <Button variant="dark" onClick={handleSave}>
-        Add
+          Add
         </Button>
       </Modal.Footer>
     </Modal>

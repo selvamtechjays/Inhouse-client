@@ -47,3 +47,51 @@
 }
 
 
+/* Add media query for responsiveness */
+
+@media screen and (max-width: 768px) {
+  .bg {
+    width: 50px;
+  }
+
+  .bg.open {
+    width: 250px;
+  }
+
+  .bg.open li .link_name {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .bg.open li a .link_name {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .bg.open li i {
+    margin-left: -20px;
+  }
+
+  .bg.open li.profile {
+    width: 100%;
+  }
+
+  .bg.open ~ .home-section {
+    left: 50px; /* Adjust as needed */
+    width: calc(100% - 50px);
+  }
+
+  .bg .logo_details .icon {
+    opacity: 1;
+  }
+
+  .bg .nav-list {
+    display: none;
+  }
+
+  .bg.open .nav-list {
+    display: block;
+  }
+}
+
+

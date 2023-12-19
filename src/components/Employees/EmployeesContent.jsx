@@ -1,17 +1,27 @@
 // EmployeeContent.js
 
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Button, Form, Table, Dropdown } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Form,
+  Table,
+  Dropdown,
+} from "react-bootstrap";
 import { CiFilter } from "react-icons/ci";
 import EmployeeForm from "./EmpolyeeForm";
+import { capitalize } from "@mui/material";
 
 export const EmployeesContent = () => {
   const [isFormOpen, setFormOpen] = useState(false);
   const [employees, setEmployees] = useState([]);
   const [employeeToEdit, setEmployeeToEdit] = useState(null);
-  const [search, setSearch] = useState('');
-  const [filterType, setFilterType] = useState('name'); // Default filter type
-  const [filterText, setFilterText] = useState('Filter');
+  const [search, setSearch] = useState("");
+  const [filterType, setFilterType] = useState("name"); // Default filter type
+  const [filterText, setFilterText] = useState("Filter");
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     const storedEmployees = JSON.parse(localStorage.getItem("employees")) || [];
@@ -21,6 +31,15 @@ export const EmployeesContent = () => {
   useEffect(() => {
     localStorage.setItem("employees", JSON.stringify(employees));
   }, [employees]);
+
+  useEffect(() => {
+    const userEmail = localStorage.getItem("email");
+
+    // Find the corresponding employee and set online status
+    const updatedEmployees = employees.map((employee) =>
+      employee.slack === userEmail ? { ...employee, isOnline: true } : employee
+    );
+  }, []);
 
   const openForm = (employee) => {
     setEmployeeToEdit(employee);
@@ -33,6 +52,22 @@ export const EmployeesContent = () => {
   };
 
   const handleAddEmployee = (newEmployee, isEdit) => {
+    // Capitalize name and role
+    newEmployee.name = capitalize(newEmployee.name);
+    newEmployee.role = capitalize(newEmployee.role);
+
+    // Check if email includes 'techjays' or not
+    const atIndex = newEmployee.slack.indexOf("@");
+    const domain = newEmployee.slack.slice(atIndex + 1);
+    const isTechjaysBeforeAt = domain.includes("techjays");
+
+    if (!isTechjaysBeforeAt) {
+      console.log("Email must include 'techjays' before @");
+      // Set an error and keep the form open
+      setErrors({ ...errors, slack: "Email must include 'techjays' before @" });
+      return;
+    }
+
     if (isEdit) {
       const updatedEmployees = employees.map((employee) =>
         employee.id === employeeToEdit.id ? newEmployee : employee
@@ -44,6 +79,9 @@ export const EmployeesContent = () => {
         { ...newEmployee, id: Date.now() },
       ]);
     }
+    // Clear errors and close the form after successful submission
+    setErrors({});
+    setFormOpen(false);
   };
 
   const handleDeleteEmployee = (index) => {
@@ -64,7 +102,11 @@ export const EmployeesContent = () => {
           <h1 className="mb-4">Employees</h1>
         </Col>
         <Col className="text-end">
-          <Button variant="dark" onClick={() => openForm(null)} style={{ fontSize: "17px", width: "150px" }}>
+          <Button
+            variant="dark"
+            onClick={() => openForm(null)}
+            style={{ fontSize: "17px", width: "150px" }}
+          >
             Add Employee
           </Button>
         </Col>
@@ -72,24 +114,46 @@ export const EmployeesContent = () => {
           <Col md="auto" className="text-start">
             <Dropdown>
               <Dropdown.Toggle
-                style={{ fontSize: "15px", backgroundColor: "rgb(201, 192, 192)", color: "black" }}
+                style={{
+                  fontSize: "15px",
+                  backgroundColor: "rgb(201, 192, 192)",
+                  color: "black",
+                }}
                 id="dropdown-basic"
               >
                 <CiFilter /> {filterText}
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item onClick={() => handleFilterSelect('name', 'Name')}>Name</Dropdown.Item>
-                <Dropdown.Item onClick={() => handleFilterSelect('role', 'Role')}>Role</Dropdown.Item>
-                <Dropdown.Item onClick={() => handleFilterSelect('employeeCode', 'Employee Code')}>Employee Code</Dropdown.Item>
-                <Dropdown.Item onClick={() => handleFilterSelect('slack', 'Email')}>Email</Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => handleFilterSelect("name", "Name")}
+                >
+                  Name
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => handleFilterSelect("role", "Role")}
+                >
+                  Role
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() =>
+                    handleFilterSelect("employeeCode", "Employee Code")
+                  }
+                >
+                  Employee Code
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => handleFilterSelect("slack", "Email")}
+                >
+                  Email
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </Col>
           <Col md="auto" className="text-start ">
             <Form.Control
               onChange={(e) => setSearch(e.target.value)}
-              value={search} 
+              value={search}
               type="text"
               placeholder="🔍Search..."
               style={{ width: "200px" }}
@@ -106,29 +170,53 @@ export const EmployeesContent = () => {
           <div className="table-cell">Action</div>
         </div>
         <div className="table-body">
-          {employees.filter((item) => {
-            const searchTerm = search.toLowerCase();
-            const employeeValue = item[filterType].toLowerCase();
-            return employeeValue.includes(searchTerm);
-          }).map((employee, index) => (
-            <div key={index} className="table-row">
-              <div className="table-cell">{employee.name}</div>
-              <div className="table-cell">{employee.role}</div>
-              <div className="table-cell">{employee.employeeCode}</div>
-              <div className="table-cell">{employee.slack}</div>
-              <div className="table-cell">
-                <Button variant="success" style={{ fontSize: "12px" }} onClick={() => openForm(employee)}>
-                  Edit
-                </Button>{" "}
-                <Button variant="danger" style={{ fontSize: "12px" }} onClick={() => handleDeleteEmployee(index)}>
-                  Delete
-                </Button>
+          {employees
+            .filter((item) => {
+              const searchTerm = search.toLowerCase();
+              const employeeValue = item[filterType].toLowerCase();
+              return employeeValue.includes(searchTerm);
+            })
+            .map((employee, index) => (
+              <div key={index} className="table-row">
+                <div className="d-flex align-items-center justify-content-center">
+                  <div>
+                    {employee.slack === localStorage.getItem("email") ? (
+                      <span style={{ color: "rgb(145, 240, 145)" }}>●</span>
+                    ) : (
+                      <span style={{ color: "gray" }}>●</span>
+                    )}
+                  </div>
+                </div>
+                <div className="table-cell">{employee.name}</div>
+                <div className="table-cell">{employee.role}</div>
+                <div className="table-cell">{employee.employeeCode}</div>
+                <div className="table-cell">{employee.slack}</div>
+                <div className="table-cell">
+                  <Button
+                    variant="dark"
+                    style={{ fontSize: "12px" }}
+                    onClick={() => openForm(employee)}
+                  >
+                    Edit
+                  </Button>{" "}
+                  <Button
+                    variant="secondary"
+                    style={{ fontSize: "12px" }}
+                    onClick={() => handleDeleteEmployee(index)}
+                  >
+                    Delete
+                  </Button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
-      <EmployeeForm show={isFormOpen} handleClose={closeForm} handleAddEmployee={handleAddEmployee} employeeToEdit={employeeToEdit} />
+      <EmployeeForm
+        show={isFormOpen}
+        handleClose={closeForm}
+        handleAddEmployee={handleAddEmployee}
+        employeeToEdit={employeeToEdit}
+      />
     </Container>
   );
 };

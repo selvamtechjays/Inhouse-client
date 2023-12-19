@@ -15,14 +15,19 @@ import { TeamContent } from "../Team/TeamContent";
 
 
 const Profile = () => {
+  //State to track the active section (dashboard,projects,employees,team)
   const [activeSection, setActiveSection] = useState("dashboard");
+
+  //State to track the hover effect on buttons
   const [isHovered, setIsHovered] = useState(null);
   const navigate = useNavigate()
 
+  //function to handle section changes
   const handleSectionChange = (section) => {
     setActiveSection(section);
   };
 
+  //function to handle user logout
   const handleLogout = () => {
     // Clear the email from local storage
     localStorage.removeItem('email');
@@ -31,7 +36,7 @@ const Profile = () => {
   };
 
 
-
+//function to get the css class for button styling
   const getButtonClassName = (section) => {
     return `nav-link text-white ${
       activeSection === section ? "active" : ""

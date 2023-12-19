@@ -10,11 +10,12 @@ import { auth, provider } from "./GoogleAuth/GoogleAuth";
 provider
 
 export const Home = () => {
-    // Redirect function
+    // Navigate function from react-router-dom
   const navigate = useNavigate();
-
+   // state to store the user's email
   const [value,setValue] = useState('')
 
+  // click handler for ther google sign in button using firebase authentication
   const handleClick =()=>{
     signInWithPopup(auth,provider).then((data) =>{
       setValue(data.user.email)
