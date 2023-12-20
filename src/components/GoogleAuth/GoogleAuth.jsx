@@ -17,4 +17,22 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app)
 const provider = new GoogleAuthProvider();
 
+// Set up a listener to watch for the user's authentication state changes
+auth.onAuthStateChanged((user) => {
+  // Check if the user is signed in
+  if (user) {
+    // Check if the user's email includes the required domain
+    const allowedDomain = "techjays.com"; // Change this to your desired domain
+    if (user.email.includes(`@${allowedDomain}`)) {
+      // User is authenticated and has the correct email domain
+      console.log("User is authenticated and has the correct email domain");
+    } else {
+      // User is not allowed to access the application
+      console.log("User is not allowed to access this application");
+      // You can sign out the user if you want
+      auth.signOut();
+    }
+  }
+})
+
 export {auth,provider};

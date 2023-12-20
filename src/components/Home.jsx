@@ -6,6 +6,9 @@ import { FaFacebookF } from "react-icons/fa";
 
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "./GoogleAuth/GoogleAuth";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { signOut } from 'firebase/auth';
 
 // Firebase authentication provider
 provider;
@@ -20,13 +23,35 @@ export const Home = () => {
 
   // Click handler for the Google sign-in button using Firebase authentication
   const handleClick = () => {
-    signInWithPopup(auth, provider).then((data) => {
-      // Set user's email in state and localStorage
-      setValue(data.user.email);
-      localStorage.setItem("email", data.user.email);
-    });
-  };
+    signInWithPopup(auth, provider)
+      .then((data) => {
+        const allowedDomain = "techjays.com"; // Change this to your desired domain
 
+        // Check if the user's email includes the required domain
+        if (data.user.email.includes(`@${allowedDomain}`)) {
+          // Set user's email in state and localStorage
+          setValue(data.user.email);
+          localStorage.setItem("email", data.user.email);
+          toast.success("You are logged in successfully.");
+          // Redirect to the profile page
+          navigate("/profile");
+        } else {
+          // User is not allowed to access the application
+          console.log("User is not allowed to access this application");
+          // Sign out the user
+          signOut(auth);
+          // Show Toastify error and redirect to the home page
+          toast.error("You are not allowed to access this application.");
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        // Handle errors
+        console.error("Error signing in:", error.message);
+        // Show Toastify error
+        toast.error("Error signing in. Please try again.");
+      });
+  };
   // useEffect to set the initial value based on the email stored in localStorage
   useEffect(() => {
     setValue(localStorage.getItem('email'));
@@ -35,6 +60,7 @@ export const Home = () => {
   // JSX rendering
   return (
     <section style={{ height: "100vh" }} className="position-relative pb-5">
+         <ToastContainer />
       <div className="container-fluid">
         <div className="row pt-5">
           {/* Image Column */}
