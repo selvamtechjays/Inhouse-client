@@ -11,27 +11,22 @@ import {
   Dropdown,
 } from "react-bootstrap";
 import { CiFilter } from "react-icons/ci";
-import EmployeeForm from "./EmpolyeeForm";
-import { capitalize } from "@mui/material";
+import EmployeeForm from "./EmpolyeeForm"; // Importing the EmployeeForm component
+import { capitalize } from "@mui/material"; // Importing the capitalize utility function
+import { getallEmployees } from "../../service/allapi"; // Importing API functions
 
+// EmployeesContent component definition
 export const EmployeesContent = () => {
-  const [isFormOpen, setFormOpen] = useState(false);
-  const [employees, setEmployees] = useState([]);
-  const [employeeToEdit, setEmployeeToEdit] = useState(null);
-  const [search, setSearch] = useState("");
+  // State variables
+  const [isFormOpen, setFormOpen] = useState(false); // For controlling the visibility of the employee form
+  const [employees, setEmployees] = useState([]); // For storing the list of employees
+  const [employeeToEdit, setEmployeeToEdit] = useState(null); // For tracking the employee being edited
+  const [search, setSearch] = useState(""); // For storing the search term
   const [filterType, setFilterType] = useState("name"); // Default filter type
-  const [filterText, setFilterText] = useState("Filter");
-  const [errors, setErrors] = useState({});
+  const [filterText, setFilterText] = useState("Filter"); // Default filter text
+  const [errors, setErrors] = useState({}); // For handling form validation errors
 
-  useEffect(() => {
-    const storedEmployees = JSON.parse(localStorage.getItem("employees")) || [];
-    setEmployees(storedEmployees);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("employees", JSON.stringify(employees));
-  }, [employees]);
-
+  // useEffect hook to set online status based on user email
   useEffect(() => {
     const userEmail = localStorage.getItem("email");
 
@@ -39,18 +34,37 @@ export const EmployeesContent = () => {
     const updatedEmployees = employees.map((employee) =>
       employee.slack === userEmail ? { ...employee, isOnline: true } : employee
     );
-  }, []);
+    // TODO: You need to do something with the updatedEmployees, probably set it in state
+  }, [employees]); // Re-run the effect when employees state changes
 
+  // Function to open the employee form
   const openForm = (employee) => {
     setEmployeeToEdit(employee);
     setFormOpen(true);
   };
 
+  // Function to close the employee form
   const closeForm = () => {
     setEmployeeToEdit(null);
     setFormOpen(false);
   };
 
+  // Function to fetch all employees
+  const getAllEmployee = async () => {
+    try {
+      const response = await getallEmployees();
+      setEmployees(response.data);
+    } catch (error) {
+      console.error("Error fetching employees:", error);
+    }
+  };
+
+  // useEffect hook to fetch all employees on component mount
+  useEffect(() => {
+    getAllEmployee();
+  }, []);
+
+  // Function to handle adding or editing an employee
   const handleAddEmployee = (newEmployee, isEdit) => {
     // Capitalize name and role
     newEmployee.name = capitalize(newEmployee.name);
@@ -68,12 +82,14 @@ export const EmployeesContent = () => {
       return;
     }
 
+    // If editing, update the employee in the list
     if (isEdit) {
       const updatedEmployees = employees.map((employee) =>
         employee.id === employeeToEdit.id ? newEmployee : employee
       );
       setEmployees(updatedEmployees);
     } else {
+      // If adding, add the new employee to the list
       setEmployees((prevEmployees) => [
         ...prevEmployees,
         { ...newEmployee, id: Date.now() },
@@ -84,19 +100,28 @@ export const EmployeesContent = () => {
     setFormOpen(false);
   };
 
+  // Function to handle deleting an employee
   const handleDeleteEmployee = (index) => {
     const updatedEmployees = [...employees];
     updatedEmployees.splice(index, 1);
     setEmployees(updatedEmployees);
   };
 
+  // Function to handle selecting a filter type
   const handleFilterSelect = (type, text) => {
     setFilterType(type);
     setFilterText(text);
   };
 
+  // useEffect hook to fetch all employees on component mount
+  useEffect(() => {
+    getAllEmployee();
+  }, []);
+
+  // JSX rendering
   return (
     <Container>
+      {/* Header Section */}
       <Row className="mb-3">
         <Col className="text-start">
           <h1 className="mb-4">Employees</h1>
@@ -110,8 +135,10 @@ export const EmployeesContent = () => {
             Add Employee
           </Button>
         </Col>
+        {/* Search and Filter Section */}
         <Row className="mb-2 justify-content-start">
           <Col md="auto" className="text-start">
+            {/* Dropdown for selecting filter type */}
             <Dropdown>
               <Dropdown.Toggle
                 style={{
@@ -151,6 +178,7 @@ export const EmployeesContent = () => {
             </Dropdown>
           </Col>
           <Col md="auto" className="text-start ">
+            {/* Search input */}
             <Form.Control
               onChange={(e) => setSearch(e.target.value)}
               value={search}
@@ -161,7 +189,9 @@ export const EmployeesContent = () => {
           </Col>
         </Row>
       </Row>
+      {/* Employee Table Section */}
       <div className="table-container">
+        {/* Table Header */}
         <div className="table-heading">
           <div className="table-cell">Name</div>
           <div className="table-cell">Role</div>
@@ -169,6 +199,7 @@ export const EmployeesContent = () => {
           <div className="table-cell">Email</div>
           <div className="table-cell">Action</div>
         </div>
+        {/* Table Body */}
         <div className="table-body">
           {employees
             .filter((item) => {
@@ -178,6 +209,7 @@ export const EmployeesContent = () => {
             })
             .map((employee, index) => (
               <div key={index} className="table-row">
+                {/* Online status indicator */}
                 <div className="d-flex align-items-center justify-content-center">
                   <div>
                     {employee.slack === localStorage.getItem("email") ? (
@@ -187,10 +219,12 @@ export const EmployeesContent = () => {
                     )}
                   </div>
                 </div>
+                {/* Employee data cells */}
                 <div className="table-cell">{employee.name}</div>
                 <div className="table-cell">{employee.role}</div>
                 <div className="table-cell">{employee.employeeCode}</div>
                 <div className="table-cell">{employee.slack}</div>
+                {/* Action buttons */}
                 <div className="table-cell">
                   <Button
                     variant="dark"
@@ -211,6 +245,7 @@ export const EmployeesContent = () => {
             ))}
         </div>
       </div>
+      {/* EmployeeForm component for adding/editing employees */}
       <EmployeeForm
         show={isFormOpen}
         handleClose={closeForm}

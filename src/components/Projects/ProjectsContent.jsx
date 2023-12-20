@@ -1,3 +1,4 @@
+// Importing necessary dependencies
 import React, { useEffect, useState } from "react";
 import {
   Container,
@@ -11,8 +12,11 @@ import {
 import "./project.css";
 import { CiFilter } from "react-icons/ci";
 import ProjectForm from "./ProjectForm";
+import { getallProjects } from "../../service/allapi";
 
+// ProjectsContent component definition
 export const ProjectsContent = () => {
+  // State management for form visibility, projects data, and editing project
   const [isFormOpen, setFormOpen] = useState(false);
   const [projects, setProjects] = useState([]);
   const [projectToEdit, setProjectToEdit] = useState(null);
@@ -20,36 +24,37 @@ export const ProjectsContent = () => {
   const [filterType, setFilterType] = useState('projectName'); 
   const [filterText, setFilterText] = useState('Filter'); 
 
-  useEffect(() => {
-    const storedProjects = JSON.parse(localStorage.getItem("projects")) || [];
-    setProjects(storedProjects);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("projects", JSON.stringify(projects));
-  }, [projects]);
-
+  // Function to open the project form
   const openForm = (project) => {
     setProjectToEdit(project);
     setFormOpen(true);
   };
 
+  // Function to close the project form
   const closeForm = () => {
     setProjectToEdit(null);
     setFormOpen(false);
   };
 
+  // Function to call the API and get all projects
+  const getAllProjects = async () => {
+    const response = await getallProjects(userData);
+    setProjects(response.data);
+  };
+
+  // Function to handle adding or editing a project
   const handleAddProject = (newProject, isEdit) => {
-    // Capitalize the first letter of projectName and clientName
+    // Capitalize the first letter of projectName, clientName, projectType, and resources
     newProject.projectName = capitalizeFirstLetter(newProject.projectName);
     newProject.clientName = capitalizeFirstLetter(newProject.clientName);
     newProject.projectType = capitalizeFirstLetter(newProject.projectType);
     newProject.resources = capitalizeFirstLetter(newProject.resources);
 
-      // Format startDate and endDate as "dd/mm/yyyy"
+    // Format startDate and endDate as "dd/mm/yyyy"
     newProject.startDate = formatDate(newProject.startDate);
     newProject.endDate = formatDate(newProject.endDate);
-  
+
+    // Update projects array based on whether it's an edit or addition
     if (isEdit) {
       const updatedProjects = projects.map((project) =>
         project.id === projectToEdit.id ? newProject : project
@@ -61,35 +66,41 @@ export const ProjectsContent = () => {
         { ...newProject, id: Date.now() },
       ]);
     }
-
   };
-  
+
   // Helper function to capitalize the first letter of a string
   const capitalizeFirstLetter = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
-  
 
+  // Function to handle project deletion
   const handleDeleteProject = (index) => {
     const updatedProjects = [...projects];
     updatedProjects.splice(index, 1);
     setProjects(updatedProjects);
   };
 
+  // Function to handle filter type selection
   const handleFilterSelect = (type, text) => {
     setFilterType(type);
     setFilterText(text);
   };
 
   // Helper function to format date as "dd/mm/yyyy"
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  const day = date.getDate().toString().padStart(2, '0');
-  const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Month is zero-based
-  const year = date.getFullYear();
-  return `${day}/${month}/${year}`;
-};
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Month is zero-based
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
 
+  // useEffect hook to fetch all projects on component mount
+  useEffect(() => {
+    getAllProjects();
+  }, []);
+
+  // JSX rendering
   return (
     <Container>
       <Row className="mb-3">

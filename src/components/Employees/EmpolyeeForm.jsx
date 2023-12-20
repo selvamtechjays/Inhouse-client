@@ -1,27 +1,31 @@
-// EmpolyeeForm.jsx
-
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { addTeam } from "../../service/allapi";
 
-const EmpolyeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) => {
+// EmployeeForm component definition
+const EmployeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) => {
+  // Initial state for employee data
   const initialEmployeeState = {
     name: "",
     role: "",
-    email: "",
     employeeCode: "",
     slack: "",
     isOnline: false,
   };
 
+  // State to manage employee data
   const [employeeData, setEmployeeData] = useState(initialEmployeeState);
+  
+  // State to manage form validation errors
   const [errors, setErrors] = useState({});
+   
+  // Navigate function from react-router-dom
+  const navigate = useNavigate()
 
-  useEffect(() => {
-    if (employeeToEdit) {
-      setEmployeeData(employeeToEdit);
-    } 
-  }, [employeeToEdit]);
-
+  // Event handler for input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEmployeeData((prevData) => ({
@@ -30,18 +34,36 @@ const EmpolyeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
     }));
   };
 
-  const handleSave = () => {
+  // Event handler for save button click
+  const handleSave = async () => {
+    // API call to add team member
+    const response = await addTeam(employeeData)
+    
+    // Check the response status
+    if (response.status === 200) {
+      toast.success(response.data.message);
+      
+      // Navigate to the profile page after a delay
+      setTimeout(() => {
+        navigate('/profile')
+      }, 1500);
+    } else {
+      toast.error(response.data.message);
+    }
+
+    // Validate the form and set errors
     const validationErrors = validateForm(employeeData);
     setErrors(validationErrors);
 
+    // If there are no validation errors, add/edit the employee, close the modal, and reset the form
     if (Object.keys(validationErrors).length === 0) {
       handleAddEmployee(employeeData, !!employeeToEdit);
       handleClose();
       setEmployeeData(initialEmployeeState);
-
     }
   };
 
+  // Form validation function
   const validateForm = (data) => {
     let errors = {};
 
@@ -53,19 +75,18 @@ const EmpolyeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
       errors.role = "Role is required";
     }
 
-
     if (!data.employeeCode.trim()) {
       errors.employeeCode = "Employee Code is required";
     }
 
     if (!data.slack.trim()) {
-      
-      errors.slack = "Email is required (must includes 'techjays' before @)";
+      errors.slack = "Email is required (must include 'techjays' before @)";
     }
 
     return errors;
   };
-
+  
+  // JSX rendering
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -75,6 +96,7 @@ const EmpolyeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
         <Form>
           <Row>
             <Col>
+              {/* Form group for Name */}
               <Form.Group controlId="name">
                 <Form.Label>Name</Form.Label>
                 <Form.Control
@@ -89,6 +111,7 @@ const EmpolyeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
               </Form.Group>
             </Col>
             <Col>
+              {/* Form group for Role */}
               <Form.Group controlId="role">
                 <Form.Label>Role</Form.Label>
                 <Form.Control
@@ -106,7 +129,8 @@ const EmpolyeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
 
           <Row>
             <Col>
-            <Form.Group controlId="slack">
+              {/* Form group for Slack (Email) */}
+              <Form.Group controlId="slack">
                 <Form.Label>Slack</Form.Label>
                 <Form.Control
                   type="text"
@@ -123,6 +147,7 @@ const EmpolyeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
 
           <Row>
             <Col>
+              {/* Form group for Employee Code */}
               <Form.Group controlId="employeeCode">
                 <Form.Label>Employee Code</Form.Label>
                 <Form.Control
@@ -136,22 +161,24 @@ const EmpolyeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
                 <Form.Control.Feedback type="invalid">{errors.employeeCode}</Form.Control.Feedback>
               </Form.Group>
             </Col>
-    
           </Row>
         </Form>
       </Modal.Body>
       <Modal.Footer>
+        {/* Close button */}
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
+        {/* Save button */}
         <Button variant="dark" onClick={handleSave}>
-         Add
+          {employeeToEdit ? "Edit" : "Add"}
         </Button>
       </Modal.Footer>
+      {/* Toast container for notifications */}
+      <ToastContainer position="top-center" />
     </Modal>
   );
 };
 
-export default EmpolyeeForm;
-
+export default EmployeeForm;
 

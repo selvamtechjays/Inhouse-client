@@ -1,8 +1,10 @@
 // TeamForm.js
 
+// Import necessary React components and hooks
 import React, { useState, useEffect } from "react";
 import { Modal, Form, Button, Row, Col } from "react-bootstrap";
 
+// Initial state for the team form
 const initialTeamState = {
   name: "",
   empCode: "",
@@ -12,10 +14,13 @@ const initialTeamState = {
   priority: "",
 };
 
+// TeamForm component for adding/editing team information
 const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
-  const [teamData, setTeamData] = useState(initialTeamState);
-  const [errors, setErrors] = useState({});
+  // State variables for managing the component's state
+  const [teamData, setTeamData] = useState(initialTeamState); // State for storing team data
+  const [errors, setErrors] = useState({}); // State for storing form validation errors
 
+  // Effect hook to update the form data when editing an existing team
   useEffect(() => {
     if (teamToEdit) {
       setTeamData(teamToEdit);
@@ -24,31 +29,37 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
     }
   }, [teamToEdit]);
 
+  // Function to handle changes in form input fields
   const handleChange = (e) => {
     const { name, value } = e.target;
     setTeamData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  // Function to validate the form fields
   const validateForm = () => {
     const newErrors = {};
 
-    // Validate your form fields here
+    // Validate name field
     if (!teamData.name.trim()) {
       newErrors.name = "Name is required";
     }
 
+    // Validate empCode field
     if (!teamData.empCode.trim()) {
       newErrors.empCode = "Employee Code is required";
     }
 
+    // Validate techStack field
     if (!teamData.techStack.trim()) {
       newErrors.techStack = "Tech Stack is required";
     }
 
+    // Validate project field
     if (!teamData.project.trim()) {
       newErrors.project = "Project is required";
     }
 
+    // Validate allocatedPercentage field
     if (!teamData.allocatedPercentage.trim()) {
       newErrors.allocatedPercentage = "Allocated Percentage is required";
     } else if (
@@ -59,25 +70,30 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
       newErrors.allocatedPercentage = "Please enter a valid percentage (0-100)";
     }
 
+    // Validate priority field
     if (!teamData.priority.trim()) {
       newErrors.priority = "Priority is required";
     } else if (isNaN(teamData.priority) || +teamData.priority < 1) {
       newErrors.priority = "Please enter a valid priority (greater than 0)";
     }
 
+    // Set validation errors in state
     setErrors(newErrors);
 
     // Return true if the form is valid, false otherwise
     return Object.keys(newErrors).length === 0;
   };
 
+  // Function to handle form submission
   const handleSubmit = () => {
     if (validateForm()) {
+      // Call the handleAddTeam function to add/edit the team
       handleAddTeam(teamData, !!teamToEdit);
       handleClose();
     }
   };
 
+  // Render the TeamForm component
   return (
     <Modal size="lg" show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -85,6 +101,7 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
       </Modal.Header>
       <Modal.Body>
         <Form>
+          {/* Form input fields */}
           <Row>
             <Col>
               <Form.Group controlId="name">
@@ -199,15 +216,18 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
         </Form>
       </Modal.Body>
       <Modal.Footer>
+        {/* Close button */}
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
+        {/* Add/Edit button */}
         <Button variant="dark" onClick={handleSubmit}>
-          Add
+          {teamToEdit ? "Edit" : "Add"}
         </Button>
       </Modal.Footer>
     </Modal>
   );
 };
 
+// Export the TeamForm component
 export default TeamForm;
