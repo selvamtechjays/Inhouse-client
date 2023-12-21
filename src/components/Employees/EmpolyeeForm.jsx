@@ -33,6 +33,7 @@ const EmployeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
       [name]: value,
     }));
   };
+  console.log(employeeData);
 
   // Event handler for save button click
   const handleSave = async () => {

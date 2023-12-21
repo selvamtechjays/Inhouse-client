@@ -20,6 +20,8 @@
     "boxicons": "^2.1.4",
     "firebase": "^10.7.1",
     "formik": "^2.4.5",
+    "mdbreact": "^5.2.0",
+    "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",
     "react-datepicker": "^4.24.0",
