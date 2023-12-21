@@ -14,6 +14,7 @@ import { CiFilter } from "react-icons/ci";
 import EmployeeForm from "./EmpolyeeForm"; // Importing the EmployeeForm component
 import { capitalize } from "@mui/material"; // Importing the capitalize utility function
 import { getallEmployees } from "../../service/allapi"; // Importing API functions
+import "./Employee.css";
 
 // EmployeesContent component definition
 export const EmployeesContent = () => {

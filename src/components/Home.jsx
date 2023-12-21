@@ -32,9 +32,10 @@ export const Home = () => {
           // Set user's email in state and localStorage
           setValue(data.user.email);
           localStorage.setItem("email", data.user.email);
-          toast.success("You are logged in successfully.");
+         
           // Redirect to the profile page
           navigate("/profile");
+          toast.success("You are logged in successfully.");
         } else {
           // User is not allowed to access the application
           console.log("User is not allowed to access this application");
