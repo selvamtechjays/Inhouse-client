@@ -25,6 +25,16 @@ const EmployeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
   // Navigate function from react-router-dom
   const navigate = useNavigate()
 
+   // Update form fields when employeeToEdit prop changes
+   useEffect(() => {
+    if (employeeToEdit) {
+      setEmployeeData(employeeToEdit);
+    } else {
+      // If no employee to edit, reset the form
+      setEmployeeData(initialEmployeeState);
+    }
+  }, [employeeToEdit]);
+
   // Event handler for input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,33 +43,47 @@ const EmployeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
       [name]: value,
     }));
   };
+  console.log(employeeData);
 
   // Event handler for save button click
-  const handleSave = async () => {
-    // API call to add team member
-    const response = await addTeam(employeeData)
+  // const handleSave = async () => {
+  //   // API call to add team member
+  //   const response = await addTeam(employeeData)
     
-    // Check the response status
-    if (response.status === 200) {
-      toast.success(response.data.message);
+  //   // Check the response status
+  //   if (response.status === 200) {
+  //     toast.success(response.data.message);
       
-      // Navigate to the profile page after a delay
-      setTimeout(() => {
-        navigate('/profile')
-      }, 1500);
-    } else {
-      toast.error(response.data.message);
-    }
+  //     // Navigate to the profile page after a delay
+  //     setTimeout(() => {
+  //       navigate('/profile')
+  //     }, 1500);
+  //   } else {
+  //     toast.error(response.data.message);
+  //   }
 
-    // Validate the form and set errors
+  //   // Validate the form and set errors
+  //   const validationErrors = validateForm(employeeData);
+  //   setErrors(validationErrors);
+
+  //   // If there are no validation errors, add/edit the employee, close the modal, and reset the form
+  //   if (Object.keys(validationErrors).length === 0) {
+  //     handleAddEmployee(employeeData, !!employeeToEdit);
+  //     handleClose();
+  //     setEmployeeData(initialEmployeeState);
+  //   }
+  // };
+
+
+  const handleSave = () => {
     const validationErrors = validateForm(employeeData);
     setErrors(validationErrors);
 
-    // If there are no validation errors, add/edit the employee, close the modal, and reset the form
     if (Object.keys(validationErrors).length === 0) {
       handleAddEmployee(employeeData, !!employeeToEdit);
       handleClose();
       setEmployeeData(initialEmployeeState);
+
     }
   };
 

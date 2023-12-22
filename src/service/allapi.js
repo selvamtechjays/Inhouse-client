@@ -17,9 +17,9 @@ export const getSingleEmployee=async(id)=>{
     return await commonRequest("GET",`${BASE_URL}/api/get-singleEmp/${id}`,"")
 }
 
-//Update An Eployee
-export const updateEmployee=async(id,body)=>{
-    return await commonRequest("PUT",`${BASE_URL}/api/update-employee${id}`,body)
+//Update An Employee
+export const updateEmployee=async(id,employeeData)=>{
+    return await commonRequest("PUT",`${BASE_URL}/api/update-employee/${id}`,employeeData)
 }
 //Delete an Employee
 export const deleteEmployee=async(id)=>{
@@ -30,14 +30,31 @@ export const deleteEmployee=async(id)=>{
 
 //add project
 export const addProject=async(body)=>{
-    return await commonRequest("POST",`${BASE_URL}api/add-projects`,body)
+    return await commonRequest("POST",`${BASE_URL}/api/add-project`,body)
 }
 
 //get all projects in table
 export const getallProjects=async(body)=>{
-    return await commonRequest("GET",`${BASE_URL}/api/get-employees`,body)
+    return await commonRequest("GET",`${BASE_URL}/api/get-projects`,body)
 }
 //Get a single Project
 export const getSingleProject=async(id)=>{
     return await commonRequest("GET",`${BASE_URL}/api/get-singleEmp/${id}`,"")
 }
+
+//Delete a project
+export const deleteProject=async(id)=>{
+    return await commonRequest("DELETE",`${BASE_URL}/api/delete-project/${id}`,"")
+}
+
+// Update  the project 
+
+// Update the updateProject function in allapi.js
+export const updateProject = async (id, projectData) => {
+    return await commonRequest("PUT", `${BASE_URL}/api/update-project/${id}`, projectData);
+  };
+  
+  
+
+
+

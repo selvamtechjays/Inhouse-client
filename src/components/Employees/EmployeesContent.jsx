@@ -10,10 +10,15 @@ import {
   Table,
   Dropdown,
 } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { CiFilter } from "react-icons/ci";
-import EmployeeForm from "./EmpolyeeForm"; // Importing the EmployeeForm component
-import { capitalize } from "@mui/material"; // Importing the capitalize utility function
-import { getallEmployees } from "../../service/allapi"; // Importing API functions
+import EmployeeForm from "./EmpolyeeForm";
+import { capitalize } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { BsPencilSquare, BsFillTrash3Fill } from "react-icons/bs";
+import { addTeam, deleteEmployee, getallEmployees, updateEmployee } from "../../service/allapi";
+import { MDBTable, MDBTableBody, MDBTableHead } from "mdbreact";
 import "./Employee.css";
 
 // EmployeesContent component definition
@@ -51,61 +56,91 @@ export const EmployeesContent = () => {
   };
 
   // Function to fetch all employees
+  //define a function to call api
   const getAllEmployee = async () => {
-    try {
-      const response = await getallEmployees();
-      setEmployees(response.data);
-    } catch (error) {
-      console.error("Error fetching employees:", error);
-    }
+    const response = await getallEmployees(employees);
+    setEmployees(response.data);
   };
 
-  // useEffect hook to fetch all employees on component mount
-  useEffect(() => {
-    getAllEmployee();
-  }, []);
-
-  // Function to handle adding or editing an employee
-  const handleAddEmployee = (newEmployee, isEdit) => {
+  // handle add and edit employee
+  const handleAddEmployee = async (newEmployee, isEdit) => {
     // Capitalize name and role
     newEmployee.name = capitalize(newEmployee.name);
     newEmployee.role = capitalize(newEmployee.role);
-
+  
     // Check if email includes 'techjays' or not
     const atIndex = newEmployee.slack.indexOf("@");
     const domain = newEmployee.slack.slice(atIndex + 1);
     const isTechjaysBeforeAt = domain.includes("techjays");
-
-    if (!isTechjaysBeforeAt) {
-      console.log("Email must include 'techjays' before @");
-      // Set an error and keep the form open
-      setErrors({ ...errors, slack: "Email must include 'techjays' before @" });
-      return;
+  
+    try {
+      if (!isTechjaysBeforeAt) {
+        console.log("Email must include 'techjays' before @");
+        // Set an error and keep the form open
+        setErrors({ ...errors, slack: "Email must include 'techjays' before @" });
+        return;
+      }
+  
+      // Exclude isOnline if it's not in the schema
+      if (!newEmployee.hasOwnProperty("isOnline")) {
+        delete newEmployee.isOnline;
+      }
+  
+      // If editing, update the employee in the list
+      if (isEdit) {
+        try {
+          const response = await updateEmployee(newEmployee._id, newEmployee);
+          console.log("Update Response:", response);
+  
+          if (response.status === 200) {
+            // Update the employee
+            setEmployees((prevEmployees) =>
+              prevEmployees.map((employee) =>
+                employee._id === newEmployee._id ? newEmployee : employee
+              )
+            );
+            toast.success(response.data.message);
+          } else {
+            toast.error(response.data.message);
+          }
+        } catch (updateError) {
+          console.error("Error updating employee", updateError);
+          toast.error("Error updating employee. Please try again.");
+        }
+      } else {
+        // if adding new, make an API call to add the employee
+        const response = await addTeam(newEmployee);
+        console.log("Add Team Response:", response);
+  
+        if (response.status === 200) {
+          // Add the new employee to the state with the returned id
+          setEmployees((prevEmployees) => [
+            ...prevEmployees,
+            { ...newEmployee, id: response.data.id },
+          ]);
+          toast.success(response.data.message);
+        } else {
+          toast.error(response.data.message);
+        }
+      }
+    } catch (error) {
+      console.error("Error updating/adding employee", error);
+      toast.error("Error updating/adding employee. Please try again.");
     }
-
-    // If editing, update the employee in the list
-    if (isEdit) {
-      const updatedEmployees = employees.map((employee) =>
-        employee.id === employeeToEdit.id ? newEmployee : employee
-      );
-      setEmployees(updatedEmployees);
-    } else {
-      // If adding, add the new employee to the list
-      setEmployees((prevEmployees) => [
-        ...prevEmployees,
-        { ...newEmployee, id: Date.now() },
-      ]);
-    }
-    // Clear errors and close the form after successful submission
-    setErrors({});
-    setFormOpen(false);
   };
+  
 
-  // Function to handle deleting an employee
-  const handleDeleteEmployee = (index) => {
-    const updatedEmployees = [...employees];
-    updatedEmployees.splice(index, 1);
-    setEmployees(updatedEmployees);
+
+  //function for delete Project
+  const handleDeleteEmployee = async (id) => {
+    //api call for delete Projct
+    const response = await deleteEmployee(id);
+    if (response.status == 200) {
+      toast.success(response.data.message);
+      getAllEmployee();
+    } else {
+      toast.error(response.data.message);
+    }
   };
 
   // Function to handle selecting a filter type
@@ -122,7 +157,6 @@ export const EmployeesContent = () => {
   // JSX rendering
   return (
     <Container>
-      {/* Header Section */}
       <Row className="mb-3">
         <Col className="text-start">
           <h1 className="mb-4">Employees</h1>
@@ -136,10 +170,8 @@ export const EmployeesContent = () => {
             Add Employee
           </Button>
         </Col>
-        {/* Search and Filter Section */}
         <Row className="mb-2 justify-content-start">
           <Col md="auto" className="text-start">
-            {/* Dropdown for selecting filter type */}
             <Dropdown>
               <Dropdown.Toggle
                 style={{
@@ -179,7 +211,6 @@ export const EmployeesContent = () => {
             </Dropdown>
           </Col>
           <Col md="auto" className="text-start ">
-            {/* Search input */}
             <Form.Control
               onChange={(e) => setSearch(e.target.value)}
               value={search}
@@ -190,18 +221,52 @@ export const EmployeesContent = () => {
           </Col>
         </Row>
       </Row>
-      {/* Employee Table Section */}
-      <div className="table-container">
-        {/* Table Header */}
-        <div className="table-heading">
-          <div className="table-cell">Name</div>
-          <div className="table-cell">Role</div>
-          <div className="table-cell">Emp code</div>
-          <div className="table-cell">Email</div>
-          <div className="table-cell">Action</div>
-        </div>
-        {/* Table Body */}
-        <div className="table-body">
+      <MDBTable responsive>
+        <thead className="tp">
+          <tr>
+            <th
+              style={{
+                backgroundColor: "#500933",
+                color: "white",
+                borderTopLeftRadius: "10px",
+                borderBottomLeftRadius: "10px",
+              }}
+              className="p-4"
+            >
+              Name{" "}
+            </th>
+            <th
+              style={{ backgroundColor: "#500933", color: "white" }}
+              className="p-4"
+            >
+              Role
+            </th>
+            <th
+              style={{ backgroundColor: "#500933", color: "white" }}
+              className="p-4"
+            >
+              Emp code
+            </th>
+            <th
+              style={{ backgroundColor: "#500933", color: "white" }}
+              className="p-4"
+            >
+              Email
+            </th>
+            <th
+              style={{
+                backgroundColor: "#500933",
+                color: "white",
+                borderTopRightRadius: "10px",
+                borderBottomRightRadius: "10px",
+              }}
+              className="p-4"
+            >
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <MDBTableBody>
           {employees
             .filter((item) => {
               const searchTerm = search.toLowerCase();
@@ -209,50 +274,49 @@ export const EmployeesContent = () => {
               return employeeValue.includes(searchTerm);
             })
             .map((employee, index) => (
-              <div key={index} className="table-row">
-                {/* Online status indicator */}
-                <div className="d-flex align-items-center justify-content-center">
-                  <div>
+              <tr key={index}>
+                <td style={{ display: "flex", alignItems: "center" }}>
+                  <div style={{ marginRight: "8px" }}>
                     {employee.slack === localStorage.getItem("email") ? (
-                      <span style={{ color: "rgb(145, 240, 145)" }}>●</span>
+                      <span style={{ color: "rgba(145, 240, 145, 1)" }}>●</span>
                     ) : (
                       <span style={{ color: "gray" }}>●</span>
                     )}
                   </div>
-                </div>
-                {/* Employee data cells */}
-                <div className="table-cell">{employee.name}</div>
-                <div className="table-cell">{employee.role}</div>
-                <div className="table-cell">{employee.employeeCode}</div>
-                <div className="table-cell">{employee.slack}</div>
-                {/* Action buttons */}
-                <div className="table-cell">
-                  <Button
-                    variant="dark"
-                    style={{ fontSize: "12px" }}
-                    onClick={() => openForm(employee)}
-                  >
-                    Edit
-                  </Button>{" "}
-                  <Button
-                    variant="secondary"
-                    style={{ fontSize: "12px" }}
-                    onClick={() => handleDeleteEmployee(index)}
-                  >
-                    Delete
-                  </Button>
-                </div>
-              </div>
+                  <div style={{ flex: 1, textAlign: "center" }}>
+                    {employee.name}
+                  </div>
+                </td>
+                <td>{employee.role}</td>
+                <td>{employee.employeeCode}</td>
+                <td>{employee.slack}</td>
+                <td>
+                  <Link>
+                    <a>
+                      <BsPencilSquare
+                        onClick={() => openForm(employee)}
+                        className="ms-1 icon"
+                      />
+                    </a>
+                  </Link>{" "}
+                  <a>
+                    <BsFillTrash3Fill
+                      onClick={() => handleDeleteEmployee(employee._id)}
+                      className="ms-2 icon"
+                    />
+                  </a>
+                </td>
+              </tr>
             ))}
-        </div>
-      </div>
-      {/* EmployeeForm component for adding/editing employees */}
+        </MDBTableBody>
+      </MDBTable>
       <EmployeeForm
         show={isFormOpen}
         handleClose={closeForm}
         handleAddEmployee={handleAddEmployee}
         employeeToEdit={employeeToEdit}
       />
+      <ToastContainer position="top-center" />
     </Container>
   );
 };

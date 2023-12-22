@@ -8,21 +8,19 @@
   
 
    */
-   .table-container {
+   /* .table-container {
     display: flex;
     flex-direction: column;
  
-  }
+  } */
   
-  .table-heading {
-    display: flex;
+  .tp{
+  
     background-color: #500933;
-    color: white;
-    height: 80px;
-    border-radius: 10px; 
-    align-items: center;
-    font-weight: bold;
+
+
   }
+  /* }
   
   .table-cell {
     padding: 10px;
@@ -43,5 +41,5 @@
   
   .table-row:hover {
     background-color: #e0e0e0; 
-  }
+  } */
   

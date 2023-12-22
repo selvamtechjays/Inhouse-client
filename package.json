@@ -20,6 +20,8 @@
     "boxicons": "^2.1.4",
     "firebase": "^10.7.1",
     "formik": "^2.4.5",
+    "mdbreact": "^5.2.0",
+    "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",
     "react-datepicker": "^4.24.0",
@@ -28,7 +30,8 @@
     "react-redux": "^9.0.1",
     "react-router-dom": "^6.20.1",
     "react-scripts": "^5.0.1",
-    "react-toastify": "^9.1.3"
+    "react-toastify": "^9.1.3",
+    "yup": "^1.3.3"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
