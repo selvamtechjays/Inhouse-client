@@ -15,13 +15,13 @@ import ProjectForm from "./ProjectForm";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import moment from 'moment';
-import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
-import {BsPencilSquare,BsFillTrash3Fill} from 'react-icons/bs'
+import { MDBTable, MDBTableBody } from 'mdbreact';
+import {BsPencilSquare,BsFillTrash3Fill,BsJustify} from 'react-icons/bs'
 import { addProject, deleteProject, getallProjects, updateProject } from "../../service/allapi";
 import { capitalize } from "@mui/material";
 
 // ProjectsContent component definition
-export const ProjectsContent = () => {
+export const ProjectsContent = ({OpenSidebar}) => {
   // State management for form visibility, projects data, and editing project
   const [isFormOpen, setFormOpen] = useState(false);
   const [projects, setProjects] = useState([]);
@@ -29,6 +29,15 @@ export const ProjectsContent = () => {
   const [search, setSearch] = useState('');
   const [filterType, setFilterType] = useState('projectName'); 
   const [filterText, setFilterText] = useState('Filter'); 
+
+      //for pagenation
+      const [currentPage,setCurrentPage] = useState(1)
+      const recordsPerPage = 4;
+      const lastIndex = currentPage * recordsPerPage;
+      const firstIndex = lastIndex - recordsPerPage;
+      const records = projects.slice(firstIndex, lastIndex);
+      const npages =Math.ceil(projects.length / recordsPerPage);
+      const numbers = [...Array(npages+1).keys()].slice(1)
 
   // Function to open the project form
   const openForm = (project) => {
@@ -128,6 +137,9 @@ export const ProjectsContent = () => {
     <Container>
       <Row className="mb-3">
         <Col className="text-start">
+        <div className='menu-icon'>
+            <BsJustify className='icon' onClick={OpenSidebar}/>
+        </div>
           <h1 className="mb-4">Projects</h1>
         </Col>
         <Col className="text-end">
@@ -174,7 +186,7 @@ export const ProjectsContent = () => {
       </tr>
      </thead>
       <MDBTableBody>
-          {projects.filter((item) => {
+          {records.filter((item) => {
             const searchTerm = search.toLowerCase();
             const projectValue = item[filterType].toLowerCase();
             return projectValue.includes(searchTerm);
@@ -195,8 +207,29 @@ export const ProjectsContent = () => {
             ))}
        </MDBTableBody>
     </MDBTable>
+    <nav className=' fs-5 p-4 ' >
+    <ul className='pagination  '>
+    
+      {
+        numbers.map((n, i)=>(
+          <li className={`page-item ${currentPage === n ? 'active' : ''}`}key={i}>
+            <a className='page-link text-dark' style={{backgroundColor:"white"}} onClick={()=>changeCpage(n)}>{n}</a>
+          </li>
+
+        ))
+      }
+   
+    </ul>
+  </nav>
       <ProjectForm show={isFormOpen} handleClose={closeForm} handleAddProject={handleAddProject} projectToEdit={projectToEdit} />
       <ToastContainer position="top-center" />
     </Container>
   );
+  //for pagenation
+
+  function changeCpage(id){
+    setCurrentPage(id)
+
+  }
 };
+export default ProjectsContent

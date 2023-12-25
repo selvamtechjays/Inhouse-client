@@ -95,9 +95,9 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
 
   // Render the TeamForm component
   return (
-    <Modal size="lg" show={show} onHide={handleClose}>
+    <Modal size="md" show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>{teamToEdit ? "Edit Team" : "Add Team"}</Modal.Title>
+        <Modal.Title><h2>{teamToEdit ? "Edit Team" : "Add Team"} </h2></Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
@@ -142,7 +142,7 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
               <Form.Group controlId="techStack">
                 <Form.Label>Tech Stack</Form.Label>
                 <Form.Select
-                  name="techStack"
+                  name="techStack" className="sel"
                   value={teamData.techStack}
                   onChange={handleChange}
                   isInvalid={!!errors.techStack}
@@ -160,7 +160,7 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
               <Form.Group controlId="project">
                 <Form.Label>Project</Form.Label>
                 <Form.Select
-                  name="project"
+                  name="project" className="sel"
                   value={teamData.project}
                   onChange={handleChange}
                   isInvalid={!!errors.project}
@@ -197,7 +197,7 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
               <Form.Group controlId="priority">
                 <Form.Label>Priority</Form.Label>
                 <Form.Select
-                  name="priority"
+                  name="priority" className="sel"
                   value={teamData.priority}
                   onChange={handleChange}
                   isInvalid={!!errors.priority}

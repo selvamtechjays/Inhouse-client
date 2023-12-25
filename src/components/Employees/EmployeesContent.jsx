@@ -16,13 +16,13 @@ import EmployeeForm from "./EmpolyeeForm";
 import { capitalize } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { BsPencilSquare, BsFillTrash3Fill } from "react-icons/bs";
+import { BsPencilSquare, BsFillTrash3Fill,BsJustify } from "react-icons/bs";
 import { addTeam, deleteEmployee, getallEmployees, updateEmployee } from "../../service/allapi";
-import { MDBTable, MDBTableBody, MDBTableHead } from "mdbreact";
-import "./Employee.css";
+import { MDBTable, MDBTableBody } from "mdbreact";
+import "./Employee.css"
 
 // EmployeesContent component definition
-export const EmployeesContent = () => {
+export const EmployeesContent = ({OpenSidebar}) => {
   // State variables
   const [isFormOpen, setFormOpen] = useState(false); // For controlling the visibility of the employee form
   const [employees, setEmployees] = useState([]); // For storing the list of employees
@@ -31,6 +31,15 @@ export const EmployeesContent = () => {
   const [filterType, setFilterType] = useState("name"); // Default filter type
   const [filterText, setFilterText] = useState("Filter"); // Default filter text
   const [errors, setErrors] = useState({}); // For handling form validation errors
+
+    //for pagenation
+    const [currentPage,setCurrentPage] = useState(1)
+    const recordsPerPage = 4;
+    const lastIndex = currentPage * recordsPerPage;
+    const firstIndex = lastIndex - recordsPerPage;
+    const records = employees.slice(firstIndex, lastIndex);
+    const npages =Math.ceil(employees.length / recordsPerPage);
+    const numbers = [...Array(npages+1).keys()].slice(1)
 
   // useEffect hook to set online status based on user email
   useEffect(() => {
@@ -159,6 +168,9 @@ export const EmployeesContent = () => {
     <Container>
       <Row className="mb-3">
         <Col className="text-start">
+        <div className='menu-icon'>
+            <BsJustify  className='icon' onClick={OpenSidebar}/>
+        </div>
           <h1 className="mb-4">Employees</h1>
         </Col>
         <Col className="text-end">
@@ -267,7 +279,7 @@ export const EmployeesContent = () => {
           </tr>
         </thead>
         <MDBTableBody>
-          {employees
+          {records
             .filter((item) => {
               const searchTerm = search.toLowerCase();
               const employeeValue = item[filterType].toLowerCase();
@@ -309,7 +321,21 @@ export const EmployeesContent = () => {
               </tr>
             ))}
         </MDBTableBody>
-      </MDBTable>
+        </MDBTable>
+    <nav className=' fs-5 p-4 ' >
+    <ul className='pagination  '>
+    
+      {
+        numbers.map((n, i)=>(
+          <li className={`page-item ${currentPage === n ? 'active' : ''}`}key={i}>
+            <a className='page-link text-dark' style={{backgroundColor:"white"}} onClick={()=>changeCpage(n)}>{n}</a>
+          </li>
+
+        ))
+      }
+   
+    </ul>
+  </nav>
       <EmployeeForm
         show={isFormOpen}
         handleClose={closeForm}
@@ -317,6 +343,13 @@ export const EmployeesContent = () => {
         employeeToEdit={employeeToEdit}
       />
       <ToastContainer position="top-center" />
-    </Container>
+      </Container>
   );
+
+  //for pagenation
+
+  function changeCpage(id){
+    setCurrentPage(id)
+
+  }
 };

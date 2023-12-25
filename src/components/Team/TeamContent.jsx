@@ -8,10 +8,11 @@ import { capitalize } from "@mui/material";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
-import {BsPencilSquare,BsFillTrash3Fill} from 'react-icons/bs'
+import {BsPencilSquare,BsFillTrash3Fill,BsJustify} from 'react-icons/bs'
 import { Link } from 'react-router-dom';
+import { deleteTeam } from "../../service/allapi";
 
-export const TeamContent = () => {
+export const TeamContent = ({OpenSidebar}) => {
   const [isFormOpen, setFormOpen] = useState(false);
   const [teams, setTeams] = useState([]);
   const [teamToEdit, setTeamToEdit] = useState(null);
@@ -19,14 +20,16 @@ export const TeamContent = () => {
   const [filterType, setFilterType] = useState('name'); 
   const [filterText, setFilterText] = useState('Name'); 
 
-  useEffect(() => {
-    const storedTeams = JSON.parse(localStorage.getItem("teams")) || [];
-    setTeams(storedTeams);
-  }, []);
+    //for pagenation
+    const [currentPage,setCurrentPage] = useState(1)
+    const recordsPerPage = 4;
+    const lastIndex = currentPage * recordsPerPage;
+    const firstIndex = lastIndex - recordsPerPage;
+    const records = teams.slice(firstIndex, lastIndex);
+    const npages =Math.ceil(teams.length / recordsPerPage);
+    const numbers = [...Array(npages+1).keys()].slice(1)
 
-  useEffect(() => {
-    localStorage.setItem("teams", JSON.stringify(teams));
-  }, [teams]);
+
 
   const openForm = (team) => {
     setTeamToEdit(team);
@@ -50,11 +53,19 @@ export const TeamContent = () => {
     }
   };
 
-  const handleDeleteTeam = (index) => {
-    const updatedTeams = [...teams];
-    updatedTeams.splice(index, 1);
-    setTeams(updatedTeams);
-  };
+  const handleDeleteTeam =async(id) => {
+
+    //api call for delete Projct
+    const response = await deleteTeam(id)
+    if (response.status == 200) {
+      toast.success(response.data.message);
+      getAllProjects()
+    
+    }else{
+     
+      toast.error(response.data.message);
+    }
+  }
 
   const handleFilterSelect = (type, text) => {
     setFilterType(type);
@@ -65,6 +76,9 @@ export const TeamContent = () => {
     <Container>
       <Row className="mb-3">
         <Col className="text-start">
+        <div className='menu-icon'>
+            <BsJustify className='icon' onClick={OpenSidebar}/>
+        </div>
           <h1 className="mb-4">Teams</h1>
         </Col>
         <Col className="text-end">
@@ -120,7 +134,7 @@ export const TeamContent = () => {
      </thead>
       <MDBTableBody>
      
-          {teams
+          {records
             .filter((team) => {
               const searchTerm = search.toLowerCase();
               const teamValue = team[filterType].toLowerCase();
@@ -136,18 +150,38 @@ export const TeamContent = () => {
                 <td className="table-cell">{team.allocatedPercentage}</td>
                 <td className="table-cell">{team.priority}</td>
            
-                <td><Link><a><BsPencilSquare onClick={() => openForm(employee)} className=' ms-1 icon'/></a>
-              </Link> <a><BsFillTrash3Fill onClick={() => handleDeleteEmployee(employee._id)} className='ms-2 icon'/></a></td>
+                <td><Link><a><BsPencilSquare onClick={() => openForm(team)} className=' ms-1 icon'/></a>
+              </Link> <a><BsFillTrash3Fill onClick={() => handleDeleteTeam(team._id)} className='ms-2 icon'/></a></td>
       
            
             </tr>
             ))}
        </MDBTableBody>
     </MDBTable>
+    <nav className=' fs-5 p-4 ' >
+    <ul className='pagination  '>
+    
+      {
+        numbers.map((n, i)=>(
+          <li className={`page-item ${currentPage === n ? 'active' : ''}`}key={i}>
+            <a className='page-link text-dark' style={{backgroundColor:"white"}} onClick={()=>changeCpage(n)}>{n}</a>
+          </li>
+
+        ))
+      }
+   
+    </ul>
+  </nav>
       <TeamForm show={isFormOpen} handleClose={closeForm} handleAddTeam={handleAddTeam} teamToEdit={teamToEdit} />
       <ToastContainer position="top-center" />
     </Container>
   );
+  //for pagenation
+
+  function changeCpage(id){
+    setCurrentPage(id)
+
+  }
 };
 
 export default TeamContent

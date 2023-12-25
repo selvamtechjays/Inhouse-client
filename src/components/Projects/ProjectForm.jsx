@@ -166,10 +166,10 @@ const ProjectForm = ({
   };
 
   return (
-    <Modal size="lg" show={show} onHide={handleClose}>
+    <Modal size="md" show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>
-          {projectToEdit ? "Edit Project" : "Add Project"}
+        <Modal.Title><h2>
+          {projectToEdit ? "Edit Project" : "Add Project"}</h2>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -210,7 +210,7 @@ const ProjectForm = ({
                 <Form.Group controlId="formProjectType">
                   <Form.Label>Project Type</Form.Label>
                   <Form.Select
-                    name="projectType"
+                    name="projectType" className="sel"
                     value={projectData.projectType}
                     onChange={handleChange}
                     isInvalid={!!errors.projectType}

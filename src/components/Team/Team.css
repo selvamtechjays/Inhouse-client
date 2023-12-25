@@ -18,6 +18,7 @@
     -moz-border-radius: 0px;
     border-radius: 22px; 
     padding: 7%;
+  
 } 
 .modal-header {
   border: none;
@@ -34,9 +35,8 @@
 
 }
 .sel{
-  background-color: rgb(244, 243, 243);
-}
-
+    background-color: rgb(244, 243, 243);
+  }
 
 
 

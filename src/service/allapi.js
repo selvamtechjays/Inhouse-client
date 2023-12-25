@@ -53,6 +53,29 @@ export const deleteProject=async(id)=>{
 export const updateProject = async (id, projectData) => {
     return await commonRequest("PUT", `${BASE_URL}/api/update-project/${id}`, projectData);
   };
+
+  //team section
+
+//add Team
+export const addTeams=async(body)=>{
+    return await commonRequest("POST",`${BASE_URL}/api/add-teams`,body)
+}
+
+//get all teams in table
+export const getallTeams=async(body)=>{
+    return await commonRequest("GET",`${BASE_URL}/api/get-teams`,body)
+}
+//Get a single Team
+export const getSingleTeam=async(id)=>{
+    return await commonRequest("GET",`${BASE_URL}/api/get-singleteam/${id}`,"")
+}
+
+
+//Delete a Team
+export const deleteTeam=async(id)=>{
+    return await commonRequest("DELETE",`${BASE_URL}/api/delete-team/${id}`,"")
+}
+
   
   
 
