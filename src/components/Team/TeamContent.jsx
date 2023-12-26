@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import {BsPencilSquare,BsFillTrash3Fill,BsJustify,BsSearch} from 'react-icons/bs'
 import { Link } from 'react-router-dom';
-import { deleteTeam, getallTeams } from "../../service/allapi";
+import { addTracker, deleteTracker, getallTracker, updateTracker } from "../../service/allapi";
 
 export const TeamContent = ({OpenSidebar}) => {
   const [isFormOpen, setFormOpen] = useState(false);
@@ -43,27 +43,62 @@ export const TeamContent = ({OpenSidebar}) => {
 
     // Function to call the API and get all projects
     const getallTeam=async()=>{
-      const response=await getallTeams(teams)
+      const response=await getallTracker(teams)
       setTeams(response.data)
-      console.log(teams);
+      console.log(teams.data);
     }
-
-  const handleAddTeam = (newTeam, isEdit) => {
-    newTeam.name = capitalize(newTeam.name)
-    if (isEdit) {
-      const updatedTeams = teams.map((team) => (team.id === teamToEdit.id ? newTeam : team));
-      setTeams(updatedTeams);
-      setTeamToEdit(null);
-      setFormOpen(false);
-    } else {
-      setTeams((prevTeams) => [...prevTeams, { ...newTeam, id: Date.now() }]);
-    }
-  };
+    const handleAddTeam = async (newTeam, isEdit) => {
+      // Capitalize name 
+      newTeam.name = capitalize(newTeam.name);
+    
+      try {
+        // If editing, update the team in the list
+        if (isEdit) {
+          try {
+            const response = await updateTracker(newTeam._id, newTeam);
+            console.log("Update Response:", response);
+    
+            if (response.status === 200) {
+              // Update the team
+              setTeams((prevTeams) =>
+                prevTeams.map((team) => (team._id === newTeam._id ? newTeam : team))
+              );
+              toast.success(response.data.message);
+            } else {
+              toast.error(response.data.message);
+            }
+          } catch (updateError) {
+            console.error("Error updating Tracker", updateError);
+            toast.error("Error updating Tracker. Please try again.");
+          }
+        } else {
+          // If adding new, make an API call to add the team
+          const response = await addTracker(newTeam);
+          console.log("Add Team Response:", response);
+    
+          if (response.status === 200) {
+            // Add the new team to the state with the returned id
+            setTeams((prevTeams) => [
+              ...prevTeams,
+              { ...newTeam, id: response.data.id },
+            ]);
+            toast.success(response.data.message);
+          } else {
+            toast.error(response.data.message);
+          }
+        }
+      } catch (error) {
+        console.error("Error updating/adding Team", error);
+        toast.error("Error updating/adding Team. Please try again.");
+      }
+    };
+    
+    
 
   const handleDeleteTeam =async(id) => {
 
     //api call for delete Projct
-    const response = await deleteTeam(id)
+    const response = await deleteTracker(id)
     if (response.status == 200) {
       toast.success(response.data.message);
       getallTeam()
@@ -80,7 +115,7 @@ export const TeamContent = ({OpenSidebar}) => {
   };
     // useEffect hook to fetch all employees on component mount
     useEffect(() => {
-      getallTeam();
+      getallTeam()
     }, []);
 
   return (
@@ -102,7 +137,13 @@ export const TeamContent = ({OpenSidebar}) => {
         <Col md="auto" className="text-start">
           <Dropdown>
             <Dropdown.Toggle
-              style={{ fontSize: "15px", backgroundColor: "rgb(201, 192, 192)", color: "black" }}
+           style={{
+            fontSize: "14px",
+            padding:"10px",
+            backgroundColor: "#f5f0f0",
+            color: "black",
+            border:"none",
+              }} 
               id="dropdown-basic"
             >
               <CiFilter /> {filterText}
@@ -155,10 +196,10 @@ export const TeamContent = ({OpenSidebar}) => {
               <tr>
 
                 <td className="table-cell">{team.name}</td>
-                <td className="table-cell">{team.empCode}</td>
+                <td className="table-cell">{team.employeeCode}</td>
                 <td className="table-cell">{team.techStack}</td>
                 <td className="table-cell">{team.project}</td>
-                <td className="table-cell">{team.allocatedPercentage}</td>
+                <td className="table-cell">{team.percentage}</td>
                 <td className="table-cell">{team.priority}</td>
            
                 <td><Link><a style={{color:"#450c36"}}><BsPencilSquare onClick={() => openForm(team)} className=' ms-1 icon'/></a>

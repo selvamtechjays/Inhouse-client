@@ -186,11 +186,13 @@ export const EmployeesContent = ({OpenSidebar}) => {
           <Col md="auto" className="text-start">
             <Dropdown>
               <Dropdown.Toggle
-                style={{
-                  fontSize: "15px",
-                  backgroundColor: "rgb(201, 192, 192)",
+                 style={{
+                  fontSize: "14px",
+                  padding:"10px",
+                  backgroundColor: "#f5f0f0",
                   color: "black",
-                }}
+                  border:"none",
+                }} 
                 id="dropdown-basic"
               >
                 <CiFilter /> {filterText}

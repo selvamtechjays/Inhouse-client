@@ -57,18 +57,23 @@ export const updateProject = async (id, projectData) => {
   //team section
 
 //add Team
-export const addTeams=async(body)=>{
+export const addTracker=async(body)=>{
     return await commonRequest("POST",`${BASE_URL}/api/add-tracker`,body)
 }
 
 //get all teams in table
-export const getallTeams=async(body)=>{
+export const getallTracker=async(body)=>{
     return await commonRequest("GET",`${BASE_URL}/api/get-tracker`,body)
 }
 
 //Delete a Team
-export const deleteTeam=async(id)=>{
+export const deleteTracker=async(id)=>{
     return await commonRequest("DELETE",`${BASE_URL}/api/delete-tracker/${id}`,"")
+}
+
+//Update a Team
+export const updateTracker=async(id,teamData)=>{
+    return await commonRequest("PUT",`${BASE_URL}/api/update-tracker/${id}`,teamData)
 }
 
   

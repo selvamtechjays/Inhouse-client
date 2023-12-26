@@ -6,12 +6,12 @@
   margin: 0;
   padding: 0;
   text-align: center;
-  background-color: #450c36;
+  background-color: #3f0728;
 }
 #sidebar {
   grid-area: sidebar;
   height: 100%;
-  background-color: #450c36;
+  background-color: #500933;
   overflow-y: auto;
   transition: all 0.5s;
   -webkit-transition: all 0.5s;
@@ -58,13 +58,18 @@
   background-color: #7d065e;
   color: #007bff;
   height: 50px;
-  width: fit-content;
   opacity: 1.7;
 }
-.close{
-  display: none;
+
+
+li{
+  justify-content: center;
 }
 
+.nav-link.text-white.active {
+  background-color: #7d065e;
+  /* Add any other styles as needed */
+}
 
 
 /* Add media query for responsiveness */
@@ -76,9 +81,6 @@
   .dev{
     display: none;
     
-  }
-  .close{
-    display: contents;
   }
   
 

@@ -19,6 +19,7 @@ import { MDBTable, MDBTableBody } from 'mdbreact';
 import {BsPencilSquare,BsFillTrash3Fill,BsJustify} from 'react-icons/bs'
 import { addProject, deleteProject, getallProjects, updateProject } from "../../service/allapi";
 import { capitalize } from "@mui/material";
+import { IoSearchSharp } from "react-icons/io5";
 
 // ProjectsContent component definition
 export const ProjectsContent = ({OpenSidebar}) => {
@@ -126,6 +127,13 @@ export const ProjectsContent = ({OpenSidebar}) => {
     setFilterText(text);
   };
 
+  const PlaceholderWithIcon = () => (
+    <div style={{ display: 'flex', alignItems: 'center' }}>
+      <IoSearchSharp />
+      <span style={{ marginLeft: '5px' }}>Search...</span>
+    </div>
+  );
+
 
   // useEffect hook to fetch all projects on component mount
   useEffect(() => {
@@ -151,7 +159,13 @@ export const ProjectsContent = ({OpenSidebar}) => {
           <Col md="auto" className="text-start">
             <Dropdown>
               <Dropdown.Toggle
-                style={{ fontSize: "15px", backgroundColor: "rgb(201, 192, 192)", color: "black" }}
+               style={{
+                  fontSize: "14px",
+                  padding:"10px",
+                  backgroundColor: "#f5f0f0",
+                  color: "black",
+                  border:"none",
+                }} 
                 id="dropdown-basic"
               >
                 <CiFilter /> {filterText}

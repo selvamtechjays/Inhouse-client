@@ -3,17 +3,16 @@
 // Import necessary React components and hooks
 import React, { useState, useEffect } from "react";
 import { Modal, Form, Button, Row, Col } from "react-bootstrap";
-import { addTeams, getallTeams } from "../../service/allapi";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // Initial state for the team form
 const initialTeamState = {
   name: "",
-  empCode: "",
+  employeeCode: "",
   techStack: "",
   project: "",
-  allocatedPercentage: "",
+  percentage: "",
   priority: "",
 };
 
@@ -48,8 +47,8 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
     }
 
     // Validate empCode field
-    if (!teamData.empCode.trim()) {
-      newErrors.empCode = "Employee Code is required";
+    if (!teamData.employeeCode.trim()) {
+      newErrors.employeeCode = "Employee Code is required";
     }
 
     // Validate techStack field
@@ -63,14 +62,14 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
     }
 
     // Validate allocatedPercentage field
-    if (!teamData.allocatedPercentage.trim()) {
-      newErrors.allocatedPercentage = "Allocated Percentage is required";
+    if (!teamData.percentage.trim()) {
+      newErrors.percentage = "Allocated Percentage is required";
     } else if (
-      isNaN(teamData.allocatedPercentage) ||
-      +teamData.allocatedPercentage < 0 ||
-      +teamData.allocatedPercentage > 100
+      isNaN(teamData.percentage) ||
+      +teamData.percentage < 0 ||
+      +teamData.percentage > 100
     ) {
-      newErrors.allocatedPercentage = "Please enter a valid percentage (0-100)";
+      newErrors.percentage = "Please enter a valid percentage (0-100)";
     }
 
     // Validate priority field
@@ -87,36 +86,16 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Function to handle form submission
-  const handleSubmit = async() => {
-    console.log(teamData);
+ 
+ // Function to handle form submission
+const handleSubmit = () => {
+  if (validateForm()) {
+    handleAddTeam(teamData, !!teamToEdit);
+    setTeamData(initialTeamState); 
+    handleClose(); 
+  }
+};
 
-    //api call
-    const response = await addTeams(teamData)
-    if (response.status == 200) {
-      toast.success(response.data.message);
-      getallTeams();
-    }else{
-     
-      toast.error(response.data.message);
-    }
-    if (validateForm()) {
-      // Call the handleAddTeam function to add/edit the team
-      handleAddTeam(teamData, !!teamToEdit);
-      
-            // Clear the form data after adding a new project
-            setTeamData({
-              name: "",
-              empCode: "",
-              techStack: "",
-              project: "",
-              allocatedPercentage: "",
-              priority: "",
-            });
-
-      handleClose();
-    }
-  };
 
   // Render the TeamForm component
   return (
@@ -150,13 +129,13 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
                 <Form.Control
                   type="text"
                   placeholder="Enter employee code"
-                  name="empCode"
-                  value={teamData.empCode}
+                  name="employeeCode"
+                  value={teamData.employeeCode}
                   onChange={handleChange}
-                  isInvalid={!!errors.empCode}
+                  isInvalid={!!errors.employeeCode}
                 />
                 <Form.Control.Feedback type="invalid">
-                  {errors.empCode}
+                  {errors.employeeCode}
                 </Form.Control.Feedback>
               </Form.Group>
             </Col>
@@ -208,10 +187,10 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
                 <Form.Control
                   type="text"
                   placeholder="Enter allocated percentage"
-                  name="allocatedPercentage"
-                  value={teamData.allocatedPercentage}
+                  name="percentage"
+                  value={teamData.percentage}
                   onChange={handleChange}
-                  isInvalid={!!errors.allocatedPercentage}
+                  isInvalid={!!errors.percentage}
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.allocatedPercentage}
@@ -246,7 +225,7 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
           Close
         </Button>
         {/* Add/Edit button */}
-        <Button variant="dark" onClick={handleSubmit}>
+        <Button variant="dark" onClick={handleSubmit }>
           {teamToEdit ? "Edit" : "Add"}
         </Button>
       </Modal.Footer>
