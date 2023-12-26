@@ -3,6 +3,9 @@
 // Import necessary React components and hooks
 import React, { useState, useEffect } from "react";
 import { Modal, Form, Button, Row, Col } from "react-bootstrap";
+import { addTeams, getallTeams } from "../../service/allapi";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Initial state for the team form
 const initialTeamState = {
@@ -85,10 +88,32 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
   };
 
   // Function to handle form submission
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
+    console.log(teamData);
+
+    //api call
+    const response = await addTeams(teamData)
+    if (response.status == 200) {
+      toast.success(response.data.message);
+      getallTeams();
+    }else{
+     
+      toast.error(response.data.message);
+    }
     if (validateForm()) {
       // Call the handleAddTeam function to add/edit the team
       handleAddTeam(teamData, !!teamToEdit);
+      
+            // Clear the form data after adding a new project
+            setTeamData({
+              name: "",
+              empCode: "",
+              techStack: "",
+              project: "",
+              allocatedPercentage: "",
+              priority: "",
+            });
+
       handleClose();
     }
   };

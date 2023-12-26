@@ -5,10 +5,11 @@ export const DashboardContent = ({OpenSidebar}) => {
   
 
   return (
-    <div>DashboardContent 
-         <div className='menu-icon'>
-            <BsJustify className='icon' onClick={OpenSidebar}/>
-        </div>
+    <div>  <div  className='menu-icon'>
+    <BsJustify className='icon' onClick={OpenSidebar}/>
+</div>
+      DashboardContent 
+       
     </div>
   )
 }

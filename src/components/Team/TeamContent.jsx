@@ -8,9 +8,9 @@ import { capitalize } from "@mui/material";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
-import {BsPencilSquare,BsFillTrash3Fill,BsJustify} from 'react-icons/bs'
+import {BsPencilSquare,BsFillTrash3Fill,BsJustify,BsSearch} from 'react-icons/bs'
 import { Link } from 'react-router-dom';
-import { deleteTeam } from "../../service/allapi";
+import { deleteTeam, getallTeams } from "../../service/allapi";
 
 export const TeamContent = ({OpenSidebar}) => {
   const [isFormOpen, setFormOpen] = useState(false);
@@ -41,6 +41,13 @@ export const TeamContent = ({OpenSidebar}) => {
     setFormOpen(false);
   };
 
+    // Function to call the API and get all projects
+    const getallTeam=async()=>{
+      const response=await getallTeams(teams)
+      setTeams(response.data)
+      console.log(teams);
+    }
+
   const handleAddTeam = (newTeam, isEdit) => {
     newTeam.name = capitalize(newTeam.name)
     if (isEdit) {
@@ -59,7 +66,7 @@ export const TeamContent = ({OpenSidebar}) => {
     const response = await deleteTeam(id)
     if (response.status == 200) {
       toast.success(response.data.message);
-      getAllProjects()
+      getallTeam()
     
     }else{
      
@@ -71,6 +78,10 @@ export const TeamContent = ({OpenSidebar}) => {
     setFilterType(type);
     setFilterText(text);
   };
+    // useEffect hook to fetch all employees on component mount
+    useEffect(() => {
+      getallTeam();
+    }, []);
 
   return (
     <Container>
@@ -121,14 +132,14 @@ export const TeamContent = ({OpenSidebar}) => {
       <thead className="tp" >
       <tr   >
      
-          <th style={{backgroundColor:"#500933", color:"white",
+          <th style={{backgroundColor:"#450c36", color:"white",
         borderTopLeftRadius:"10px",borderBottomLeftRadius:"10px"}} className="p-4">Name</th>
-          <th style={{backgroundColor:"#500933", color:"white",}} className="p-4">Emp code</th>
-          <th style={{backgroundColor:"#500933", color:"white",}} className="p-4">Tech stack</th>
-          <th style={{backgroundColor:"#500933", color:"white",}} className="p-4">Project</th>
-          <th style={{backgroundColor:"#500933", color:"white",}} className="p-4">Percentage</th>
-          <th style={{backgroundColor:"#500933", color:"white",}} className="p-4">Priority</th>
-          <th  style={{backgroundColor:"#500933", color:"white",
+          <th style={{backgroundColor:"#450c36", color:"white",}} className="p-4">Emp code</th>
+          <th style={{backgroundColor:"#450c36", color:"white",}} className="p-4">Tech stack</th>
+          <th style={{backgroundColor:"#450c36", color:"white",}} className="p-4">Project</th>
+          <th style={{backgroundColor:"#450c36", color:"white",}} className="p-4">Percentage</th>
+          <th style={{backgroundColor:"#450c36", color:"white",}} className="p-4">Priority</th>
+          <th  style={{backgroundColor:"#450c36", color:"white",
         borderTopRightRadius:"10px",borderBottomRightRadius:"10px"}}  className="p-4">Action</th>
           </tr>
      </thead>
@@ -150,8 +161,8 @@ export const TeamContent = ({OpenSidebar}) => {
                 <td className="table-cell">{team.allocatedPercentage}</td>
                 <td className="table-cell">{team.priority}</td>
            
-                <td><Link><a><BsPencilSquare onClick={() => openForm(team)} className=' ms-1 icon'/></a>
-              </Link> <a><BsFillTrash3Fill onClick={() => handleDeleteTeam(team._id)} className='ms-2 icon'/></a></td>
+                <td><Link><a style={{color:"#450c36"}}><BsPencilSquare onClick={() => openForm(team)} className=' ms-1 icon'/></a>
+              </Link> <a style={{color:"#450c36"}}><BsFillTrash3Fill onClick={() => handleDeleteTeam(team._id)} className='ms-2 icon'/></a></td>
       
            
             </tr>
@@ -164,7 +175,7 @@ export const TeamContent = ({OpenSidebar}) => {
       {
         numbers.map((n, i)=>(
           <li className={`page-item ${currentPage === n ? 'active' : ''}`}key={i}>
-            <a className='page-link text-dark' style={{backgroundColor:"white"}} onClick={()=>changeCpage(n)}>{n}</a>
+            <a className='page-link '  onClick={()=>changeCpage(n)}>{n}</a>
           </li>
 
         ))

@@ -173,14 +173,14 @@ export const ProjectsContent = ({OpenSidebar}) => {
       <MDBTable responsive>
       <thead className="tp" >
       <tr   >
-        <th style={{backgroundColor:"#500933", color:"white",
+        <th style={{backgroundColor:"#450c36", color:"white",
         borderTopLeftRadius:"10px",borderBottomLeftRadius:"10px"}} className="p-4" >Project Nmae </th>
-        <th style={{backgroundColor:"#4c0c32", color:"white",}}  className="p-4" >Client Name</th>
-        <th style={{backgroundColor:"#4c0c32", color:"white"}}  className="p-4" >Start Date</th>
-        <th style={{backgroundColor:"#4c0c32", color:"white"}}  className="p-4" >End Date</th>
-        <th style={{backgroundColor:"#4c0c32", color:"white"}}  className="p-4" >Proj.Type</th>
-        <th style={{backgroundColor:"#4c0c32", color:"white"}}  className="p-4" >#Resources</th>
-        <th style={{backgroundColor:"#4c0c32", color:"white",
+        <th style={{backgroundColor:"#450c36", color:"white",}}  className="p-4" >Client Name</th>
+        <th style={{backgroundColor:"#450c36", color:"white"}}  className="p-4" >Start Date</th>
+        <th style={{backgroundColor:"#450c36", color:"white"}}  className="p-4" >End Date</th>
+        <th style={{backgroundColor:"#450c36", color:"white"}}  className="p-4" >Proj.Type</th>
+        <th style={{backgroundColor:"#450c36", color:"white"}}  className="p-4" >#Resources</th>
+        <th style={{backgroundColor:"#450c36", color:"white",
         borderTopRightRadius:"10px",borderBottomRightRadius:"10px"}}  className="p-4" >Actions</th>
       
       </tr>
@@ -199,8 +199,8 @@ export const ProjectsContent = ({OpenSidebar}) => {
               <td>{project.projectType}</td>
               <td>{project.resources}</td>
       
-              <td><Link><a><BsPencilSquare onClick={() => openForm(project)} className=' ms-1 icon'/></a>
-              </Link> <a><BsFillTrash3Fill onClick={() => handleDeleteProject(project._id)} className='ms-2 icon'/></a></td>
+              <td><Link><a style={{color:"#450c36"}}><BsPencilSquare onClick={() => openForm(project)} className=' ms-1 icon'/></a>
+              </Link> <a style={{color:"#450c36"}}><BsFillTrash3Fill onClick={() => handleDeleteProject(project._id)} className='ms-2 icon'/></a></td>
       
            
             </tr>
@@ -213,7 +213,7 @@ export const ProjectsContent = ({OpenSidebar}) => {
       {
         numbers.map((n, i)=>(
           <li className={`page-item ${currentPage === n ? 'active' : ''}`}key={i}>
-            <a className='page-link text-dark' style={{backgroundColor:"white"}} onClick={()=>changeCpage(n)}>{n}</a>
+            <a className='page-link '  onClick={()=>changeCpage(n)}>{n}</a>
           </li>
 
         ))

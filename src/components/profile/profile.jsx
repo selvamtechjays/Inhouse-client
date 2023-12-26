@@ -52,11 +52,11 @@ const Profile = ({openSidebarToggle, OpenSidebar}) => {
         <Col md={3}  className="dev text-white p-4 h-100" id={openSidebarToggle ? "sidebar-responsive": ""}>
           
 
-        <span className='icon close_icon mb-2 ' onClick={OpenSidebar} style={{marginTop:'-10px',marginLeft:'20%px'}} >X</span>
+        <span className='close mb-2 ' onClick={OpenSidebar} style={{marginTop:'-10px',marginLeft:'40%px'}} >X</span>
           <ul className="nav nav-pills flex-column">
           
             <li
-              className={`nav-item mb-2 d-flex align-items-center ${getButtonClassName(
+              className={`nav-item mb-2 d-flex align-items-center ms-5 ${getButtonClassName(
                 "dashboard"
               )}`}
             >    
@@ -72,7 +72,7 @@ const Profile = ({openSidebarToggle, OpenSidebar}) => {
               </button>
             </li>
             <li
-              className={`nav-item mb-2 d-flex align-items-center ${getButtonClassName(
+              className={`nav-item mb-2 d-flex align-items-center ms-5 ${getButtonClassName(
                 "projects"
               )}`}
             >
@@ -86,7 +86,7 @@ const Profile = ({openSidebarToggle, OpenSidebar}) => {
               </button>
             </li>
             <li
-              className={`nav-item mb-2 d-flex align-items-center ${getButtonClassName(
+              className={`nav-item mb-2 d-flex align-items-center ms-5 ${getButtonClassName(
                 "employees"
               )}`}
             >
@@ -100,7 +100,7 @@ const Profile = ({openSidebarToggle, OpenSidebar}) => {
               </button>
             </li>
             <li
-              className={`nav-item mb-2 d-flex align-items-center ${getButtonClassName(
+              className={`nav-item mb-2 d-flex align-items-center ms-5 ${getButtonClassName(
                 "team"
               )}`}
             >
@@ -115,7 +115,7 @@ const Profile = ({openSidebarToggle, OpenSidebar}) => {
             </li>
 
             <li
-              className={`nav-item mb-2 d-flex align-items-center ${getButtonClassName(
+              className={`nav-item mb-2 d-flex align-items-center ms-5 ${getButtonClassName(
                 "logout"
               )}`}
             >

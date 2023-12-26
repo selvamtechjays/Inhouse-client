@@ -6,12 +6,12 @@
   margin: 0;
   padding: 0;
   text-align: center;
-  background-color: #3f0728;
+  background-color: #450c36;
 }
 #sidebar {
   grid-area: sidebar;
   height: 100%;
-  background-color: #500933;
+  background-color: #450c36;
   overflow-y: auto;
   transition: all 0.5s;
   -webkit-transition: all 0.5s;
@@ -58,8 +58,13 @@
   background-color: #7d065e;
   color: #007bff;
   height: 50px;
+  width: fit-content;
   opacity: 1.7;
 }
+.close{
+  display: none;
+}
+
 
 
 /* Add media query for responsiveness */
@@ -71,6 +76,9 @@
   .dev{
     display: none;
     
+  }
+  .close{
+    display: contents;
   }
   
 

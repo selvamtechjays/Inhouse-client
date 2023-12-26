@@ -238,7 +238,7 @@ export const EmployeesContent = ({OpenSidebar}) => {
           <tr>
             <th
               style={{
-                backgroundColor: "#500933",
+                backgroundColor: "#450c36",
                 color: "white",
                 borderTopLeftRadius: "10px",
                 borderBottomLeftRadius: "10px",
@@ -248,26 +248,26 @@ export const EmployeesContent = ({OpenSidebar}) => {
               Name{" "}
             </th>
             <th
-              style={{ backgroundColor: "#500933", color: "white" }}
+              style={{ backgroundColor: "#450c36", color: "white" }}
               className="p-4"
             >
               Role
             </th>
             <th
-              style={{ backgroundColor: "#500933", color: "white" }}
+              style={{ backgroundColor: "#450c36", color: "white" }}
               className="p-4"
             >
               Emp code
             </th>
             <th
-              style={{ backgroundColor: "#500933", color: "white" }}
+              style={{ backgroundColor: "#450c36", color: "white" }}
               className="p-4"
             >
               Email
             </th>
             <th
               style={{
-                backgroundColor: "#500933",
+                backgroundColor: "#450c36",
                 color: "white",
                 borderTopRightRadius: "10px",
                 borderBottomRightRadius: "10px",
@@ -304,14 +304,14 @@ export const EmployeesContent = ({OpenSidebar}) => {
                 <td>{employee.slack}</td>
                 <td>
                   <Link>
-                    <a>
+                    <a style={{color:"#450c36"}}>
                       <BsPencilSquare
                         onClick={() => openForm(employee)}
                         className="ms-1 icon"
                       />
                     </a>
                   </Link>{" "}
-                  <a>
+                  <a style={{color:"#450c36"}}>
                     <BsFillTrash3Fill
                       onClick={() => handleDeleteEmployee(employee._id)}
                       className="ms-2 icon"
@@ -325,10 +325,11 @@ export const EmployeesContent = ({OpenSidebar}) => {
     <nav className=' fs-5 p-4 ' >
     <ul className='pagination  '>
     
-      {
+      
+    {
         numbers.map((n, i)=>(
           <li className={`page-item ${currentPage === n ? 'active' : ''}`}key={i}>
-            <a className='page-link text-dark' style={{backgroundColor:"white"}} onClick={()=>changeCpage(n)}>{n}</a>
+            <a className='page-link' onClick={()=>changeCpage(n)}>{n}</a>
           </li>
 
         ))

@@ -65,13 +65,13 @@ export const Home = () => {
       <div className="container-fluid">
         <div className="row pt-5">
           {/* Image Column */}
-          <div className="col-12 col-lg-6" style={{ marginLeft: "50px" }}>
+          <div className="col-12 col-lg-6 pic" >
             {/* Image */}
             <img
               className="img-fluid w-90"
               style={{
                 marginBottom: "100px",
-                height: "600px",
+                height: "490px",
                 marginLeft: "0",
                 borderRadius: '15px'
               }}

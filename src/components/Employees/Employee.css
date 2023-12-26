@@ -16,9 +16,7 @@
   
   .tp{
   
-    background-color: #500933;
-
-
+    background-color: #450c36;
   }
   .modal-content{
     -webkit-border-radius: 0px;
@@ -35,6 +33,32 @@
   background-color: rgb(244, 243, 243);
 
 }
+.menu-icon{
+  display: none;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #5a5a5a;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+.pagination > .active > a
+{
+    color: white;
+    background-color: #450c36 !Important;
+    border: solid 1px #450c36 !Important;
+}
+
+.pagination > .active > a:hover
+{
+    background-color: #450c36 !Important;
+    border: solid 1px #450c36
+}
 
 
 
@@ -46,7 +70,9 @@
 
     width: 98%;
 } 
-
+.menu-icon{
+  display: contents;
+}
 
 }
 

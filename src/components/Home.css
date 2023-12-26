@@ -73,4 +73,18 @@
     font-size: 40px;
     z-index: 2;
   }
+  .pic{
+   margin-left: 50px;
+  }
+
+  /* Small <= 768px */
+  
+@media(max-width: 700px) {
+  .pic{
+    margin-left: 0px;
+   }
+ 
+
+
+}
   
