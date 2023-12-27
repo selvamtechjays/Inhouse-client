@@ -115,7 +115,7 @@ const Profile = () => {
                 zIndex: "1000",
               }}
             >
-              <Offcanvas.Title>Techjays</Offcanvas.Title>
+              <Offcanvas.Title>Inhouse</Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body
               style={{
@@ -126,7 +126,7 @@ const Profile = () => {
             >
               <ul className="nav nav-pills flex-column">
                 <li
-                  className={`nav-item mb-2 d-flex align-items-center ${getButtonClassName(
+                  className={`nav-item mb-2 d-flex  ${getButtonClassName(
                     "dashboard"
                   )}`}
                 >
@@ -138,7 +138,7 @@ const Profile = () => {
                   </button>
                 </li>
                 <li
-                  className={`nav-item mb-2 d-flex align-items-center ${getButtonClassName(
+                  className={`nav-item mb-2 d-flex  ${getButtonClassName(
                     "projects"
                   )}`}
                 >
@@ -150,7 +150,7 @@ const Profile = () => {
                   </button>
                 </li>
                 <li
-                  className={`nav-item mb-2 d-flex align-items-center ${getButtonClassName(
+                  className={`nav-item mb-2 d-flex  ${getButtonClassName(
                     "employees"
                   )}`}
                 >
@@ -162,7 +162,7 @@ const Profile = () => {
                   </button>
                 </li>
                 <li
-                  className={`nav-item mb-2 d-flex align-items-center ${getButtonClassName(
+                  className={`nav-item mb-2 d-flex  ${getButtonClassName(
                     "team"
                   )}`}
                 >
@@ -174,7 +174,7 @@ const Profile = () => {
                   </button>
                 </li>
                 <li
-                  className={`nav-item mb-2 d-flex align-items-center ${getButtonClassName(
+                  className={`nav-item mb-2 d-flex   ${getButtonClassName(
                     "logout"
                   )}`}
                 >

@@ -20,6 +20,7 @@ import {BsPencilSquare,BsFillTrash3Fill,BsJustify} from 'react-icons/bs'
 import { addProject, deleteProject, getallProjects, updateProject } from "../../service/allapi";
 import { capitalize } from "@mui/material";
 import { IoSearchSharp } from "react-icons/io5";
+import { MdOutlineFilterAlt } from "react-icons/md";
 
 // ProjectsContent component definition
 export const ProjectsContent = ({OpenSidebar}) => {
@@ -160,15 +161,16 @@ export const ProjectsContent = ({OpenSidebar}) => {
             <Dropdown>
               <Dropdown.Toggle
                style={{
-                  fontSize: "14px",
-                  padding:"10px",
-                  backgroundColor: "#f5f0f0",
-                  color: "black",
-                  border:"none",
+                fontSize: "16px",
+                padding:"7px",
+                backgroundColor: "#f5f0f0",
+                color: "rgb(50, 49, 49)",
+                border:"none",
+                fontWeight:"normal"
                 }} 
                 id="dropdown-basic"
               >
-                <CiFilter /> {filterText}
+             <MdOutlineFilterAlt id="filter-icon"  /> {filterText}
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
@@ -180,7 +182,17 @@ export const ProjectsContent = ({OpenSidebar}) => {
             </Dropdown>
           </Col>
           <Col md="auto" className="text-start ">
-            <Form.Control onChange={(e) => setSearch(e.target.value)} type="text" placeholder="🔍Search..." style={{ width: "200px" }} />
+          <div className="input-wrapper">
+        <IoSearchSharp id="search-icon" />
+        <input 
+          type="text" 
+          placeholder="Search"
+          style={{ width: "200px" }}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+
+          /> 
+          </div>
           </Col>
         </Row>
       </Row>
@@ -188,7 +200,7 @@ export const ProjectsContent = ({OpenSidebar}) => {
       <thead className="tp" >
       <tr   >
         <th style={{backgroundColor:"#450c36", color:"white",
-        borderTopLeftRadius:"10px",borderBottomLeftRadius:"10px"}} className="p-4" >Project Nmae </th>
+        borderTopLeftRadius:"10px",borderBottomLeftRadius:"10px"}} className="p-4" >Project Name </th>
         <th style={{backgroundColor:"#450c36", color:"white",}}  className="p-4" >Client Name</th>
         <th style={{backgroundColor:"#450c36", color:"white"}}  className="p-4" >Start Date</th>
         <th style={{backgroundColor:"#450c36", color:"white"}}  className="p-4" >End Date</th>

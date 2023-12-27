@@ -6,12 +6,12 @@
   margin: 0;
   padding: 0;
   text-align: center;
-  background-color: #3f0728;
+  background-color:  #450c36;
 }
 #sidebar {
   grid-area: sidebar;
   height: 100%;
-  background-color: #500933;
+  background-color:  #450c36;
   overflow-y: auto;
   transition: all 0.5s;
   -webkit-transition: all 0.5s;
@@ -46,7 +46,6 @@
 
 .profile-container .nav-link {
   display: flex;
-  align-items: center;
   text-decoration: none;
   opacity: 0.9;
   
@@ -59,16 +58,18 @@
   color: #007bff;
   height: 50px;
   opacity: 1.7;
-}
-
-
-li{
-  justify-content: center;
+  width: fit-content;
 }
 
 .nav-link.text-white.active {
   background-color: #7d065e;
   /* Add any other styles as needed */
+}
+.nav-item{
+  margin-left: 35px;
+}
+.menu-icon{
+  font-size: 25px;
 }
 
 
@@ -82,6 +83,22 @@ li{
     display: none;
     
   }
+
+  li{
+    margin-left: 23%;
+    
+  }
+  .nav-link.text-white.active {
+    background-color: #7d065e;
+    width: fit-content;
+    /* Add any other styles as needed */
+  }
+  .btn-close{
+    color: white;
+    background-color: white;
+  }
+  
+  
   
 
 

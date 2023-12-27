@@ -10,7 +10,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import {BsPencilSquare,BsFillTrash3Fill,BsJustify,BsSearch} from 'react-icons/bs'
 import { Link } from 'react-router-dom';
+import { IoSearchSharp } from "react-icons/io5";
 import { addTracker, deleteTracker, getallTracker, updateTracker } from "../../service/allapi";
+import { MdOutlineFilterAlt } from "react-icons/md";
 
 export const TeamContent = ({OpenSidebar}) => {
   const [isFormOpen, setFormOpen] = useState(false);
@@ -18,7 +20,7 @@ export const TeamContent = ({OpenSidebar}) => {
   const [teamToEdit, setTeamToEdit] = useState(null);
   const [search, setSearch] = useState('');
   const [filterType, setFilterType] = useState('name'); 
-  const [filterText, setFilterText] = useState('Name'); 
+  const [filterText, setFilterText] = useState('Filter'); 
 
     //for pagenation
     const [currentPage,setCurrentPage] = useState(1)
@@ -125,7 +127,7 @@ export const TeamContent = ({OpenSidebar}) => {
         <div className='menu-icon'>
             <BsJustify className='icon' onClick={OpenSidebar}/>
         </div>
-          <h1 className="mb-4">Teams</h1>
+          <h1 className="mb-2">Teams</h1>
         </Col>
         <Col className="text-end">
           <Button variant="dark" onClick={() => openForm(null)} style={{ fontSize: "17px", width: "150px"}}>
@@ -138,15 +140,16 @@ export const TeamContent = ({OpenSidebar}) => {
           <Dropdown>
             <Dropdown.Toggle
            style={{
-            fontSize: "14px",
-            padding:"10px",
+            fontSize: "16px",
+            padding:"7px",
             backgroundColor: "#f5f0f0",
-            color: "black",
+            color: "rgb(50, 49, 49)",
             border:"none",
+            fontWeight:"normal"
               }} 
               id="dropdown-basic"
             >
-              <CiFilter /> {filterText}
+             <MdOutlineFilterAlt id="filter-icon"  /> {filterText}
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
@@ -160,16 +163,20 @@ export const TeamContent = ({OpenSidebar}) => {
           </Dropdown>
         </Col>
         <Col md="auto" className="text-start ">
-          <Form.Control
-            type="text"
-            placeholder="🔍Search..."
-            style={{ width: "200px" }}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </Col>
+          <div className="input-wrapper">
+        <IoSearchSharp id="search-icon" />
+        <input 
+          type="text" 
+          placeholder="Search"
+          style={{ width: "200px" }}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+
+          /> 
+          </div>
+          </Col>
       </Row>
-      <MDBTable responsive>
+      <MDBTable responsive className="mt-3">
       <thead className="tp" >
       <tr   >
      

@@ -20,6 +20,8 @@ import { BsPencilSquare, BsFillTrash3Fill,BsJustify } from "react-icons/bs";
 import { addTeam, deleteEmployee, getallEmployees, updateEmployee } from "../../service/allapi";
 import { MDBTable, MDBTableBody } from "mdbreact";
 import "./Employee.css"
+import { IoSearchSharp } from "react-icons/io5";
+import { MdOutlineFilterAlt } from "react-icons/md";
 
 // EmployeesContent component definition
 export const EmployeesContent = ({OpenSidebar}) => {
@@ -187,15 +189,16 @@ export const EmployeesContent = ({OpenSidebar}) => {
             <Dropdown>
               <Dropdown.Toggle
                  style={{
-                  fontSize: "14px",
-                  padding:"10px",
+                  fontSize: "16px",
+                  padding:"7px",
                   backgroundColor: "#f5f0f0",
-                  color: "black",
+                  color: "rgb(50, 49, 49)",
                   border:"none",
+                  fontWeight:"normal"
                 }} 
                 id="dropdown-basic"
               >
-                <CiFilter /> {filterText}
+               <MdOutlineFilterAlt id="filter-icon"  /> {filterText}
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
@@ -225,13 +228,17 @@ export const EmployeesContent = ({OpenSidebar}) => {
             </Dropdown>
           </Col>
           <Col md="auto" className="text-start ">
-            <Form.Control
-              onChange={(e) => setSearch(e.target.value)}
-              value={search}
-              type="text"
-              placeholder="🔍Search..."
-              style={{ width: "200px" }}
-            />
+          <div className="input-wrapper">
+        <IoSearchSharp id="search-icon" />
+        <input 
+          type="text" 
+          placeholder="Search"
+          style={{ width: "200px" }}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+
+          /> 
+          </div>
           </Col>
         </Row>
       </Row>
