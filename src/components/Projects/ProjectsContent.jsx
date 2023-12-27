@@ -73,30 +73,30 @@ export const ProjectsContent = ({OpenSidebar}) => {
         // If editing, make an API call to update the project
         const response = await updateProject(newProject._id, newProject);
         console.log(response);
-
-        if (response.status === 200) {
+  
+        if (response && response.status === 200) {
           // Update the corresponding project in the state
           setProjects((prevProjects) =>
             prevProjects.map((project) =>
               project.id === newProject._id ? newProject : project
             )
           );
-          toast.success(response.data.message);
+          toast.success(response.data && response.data.message);
         } else {
-          toast.error(response.data.message);
+          toast.error(response && response.data && response.data.message || 'Unknown error occurred');
         }
       } else {
         // If adding new, make an API call to add the project
         const response = await addProject(newProject);
-        if (response.status === 200) {
+        if (response && response.status === 200) {
           // Add the new project to the state with the returned id
           setProjects((prevProjects) => [
             ...prevProjects,
-            { ...newProject, id: response.data.id },
+            { ...newProject, id: response.data && response.data.id },
           ]);
-          toast.success(response.data.message);
+          toast.success(response.data && response.data.message);
         } else {
-          toast.error(response.data.message);
+          toast.error(response && response.data && response.data.message || 'Unknown error occurred');
         }
       }
     } catch (error) {
@@ -104,6 +104,7 @@ export const ProjectsContent = ({OpenSidebar}) => {
       toast.error('Error updating/adding project. Please try again.');
     }
   };
+  
   
 
 

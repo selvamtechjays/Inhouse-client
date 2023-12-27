@@ -51,53 +51,64 @@ export const TeamContent = ({OpenSidebar}) => {
     }
 
 
-    // add tracker
-    const handleAddTeam = async (newTeam, isEdit) => {
-      // Capitalize name 
-      newTeam.name = capitalize(newTeam.name);
-    
+// add tracker
+const handleAddTeam = async (newTeam, isEdit) => {
+  // Capitalize name 
+  newTeam.name = capitalize(newTeam.name);
+
+  try {
+    // If editing, update the team in the list
+    if (isEdit) {
       try {
-        // If editing, update the team in the list
-        if (isEdit) {
-          try {
-            const response = await updateTracker(newTeam._id, newTeam);
-            console.log("Update Response:", response);
-    
-            if (response.status === 200) {
-              // Update the team
-              setTeams((prevTeams) =>
-                prevTeams.map((team) => (team._id === newTeam._id ? newTeam : team))
-              );
-              toast.success(response.data.message);
-            } else {
-              toast.error(response.data.message);
-            }
-          } catch (updateError) {
-            console.error("Error updating Tracker", updateError);
-            toast.error("Error updating Tracker. Please try again.");
-          }
-        } else {
-          // If adding new, make an API call to add the team
-          const response = await addTracker(newTeam);
-          console.log("Add Team Response:", response);
-    
-          if (response.status === 201) {
-            // Add the new team to the state with the returned id
-            setTeams((prevTeams) => [
-              ...prevTeams,
-              { ...newTeam, id: response.data.id },
-            ]);
+        const response = await updateTracker(newTeam._id, newTeam);
+        console.log("Update Response:", response);
+
+        if (response.status === 200) {
+          // Update the team
+          setTeams((prevTeams) =>
+            prevTeams.map((team) => (team._id === newTeam._id ? newTeam : team))
+          );
+
+          // Check if response.data is defined before accessing its properties
+          if (response.data && response.data.message) {
             toast.success(response.data.message);
           } else {
-            toast.error(response.data.message);
+            toast.error("Unexpected response format during update.");
           }
+        } else {
+          toast.error(response.data.message || "Error updating Tracker. Please try again.");
         }
-      } catch (error) {
-        console.error("Error updating/adding Team", error);
-        toast.error("Error updating/adding Team. Please try again.");
+      } catch (updateError) {
+        console.error("Error updating Tracker", updateError);
+        toast.error("Error updating Tracker. Please try again.");
       }
-    };
-    
+    } else {
+      // If adding new, make an API call to add the team
+      const response = await addTracker(newTeam);
+      console.log("Add Team Response:", response);
+
+      // Check if response.data is defined before accessing its properties
+      if (response.data && response.data.message) {
+        if (response.status === 201) {
+          // Add the new team to the state with the returned id
+          setTeams((prevTeams) => [
+            ...prevTeams,
+            { ...newTeam, id: response.data.id },
+          ]);
+          toast.success(response.data.message);
+        } else {
+          toast.error(response.data.message);
+        }
+      } else {
+        toast.error("Unexpected response format during team addition.");
+      }
+    }
+  } catch (error) {
+    console.error("Error updating/adding Team", error);
+    toast.error("You are adding the same empCode, kindly check that.");
+  }
+};
+
     
 
   const handleDeleteTeam =async(id) => {

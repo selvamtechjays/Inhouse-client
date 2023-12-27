@@ -1,12 +1,10 @@
 // TeamForm.js
 
-// Import necessary React components and hooks
 import React, { useState, useEffect } from "react";
 import { Modal, Form, Button, Row, Col } from "react-bootstrap";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// Initial state for the team form
 const initialTeamState = {
   name: "",
   employeeCode: "",
@@ -16,13 +14,10 @@ const initialTeamState = {
   priority: "",
 };
 
-// TeamForm component for adding/editing team information
 const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
-  // State variables for managing the component's state
-  const [teamData, setTeamData] = useState(initialTeamState); // State for storing team data
-  const [errors, setErrors] = useState({}); // State for storing form validation errors
+  const [teamData, setTeamData] = useState(initialTeamState);
+  const [errors, setErrors] = useState({});
 
-  // Effect hook to update the form data when editing an existing team
   useEffect(() => {
     if (teamToEdit) {
       setTeamData(teamToEdit);
@@ -31,73 +26,79 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
     }
   }, [teamToEdit]);
 
-  // Function to handle changes in form input fields
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // Validate each field as the user types
+    let errorMessage = "";
+    switch (name) {
+      case "name":
+        errorMessage = value.trim() === "" ? "Name is required" : !/^[a-zA-Z\s]+$/.test(value) ? "Name must be a string without numeric characters" : "";
+        break;
+      case "employeeCode":
+        errorMessage = value.trim() === "" ? "Employee Code is required" : !/^\d+$/.test(value) ? "Employee Code must contain only numerical values" : "";
+        break;
+      case "techStack":
+        errorMessage = value.trim() === "" ? "Tech Stack is required" : "";
+        break;
+      case "project":
+        errorMessage = value.trim() === "" ? "Project is required" : "";
+        break;
+      case "percentage":
+        errorMessage = value === "" ? "Allocated Percentage is required" : isNaN(value) || +value < 0 || +value > 100 ? "Please enter a valid percentage (0-100)" : "";
+        break;
+      case "priority":
+        errorMessage = value.trim() === "" ? "Priority is required" : isNaN(value) || +value < 1 ? "Please enter a valid priority (greater than 0)" : "";
+        break;
+      default:
+        errorMessage = "";
+    }
+
     setTeamData((prevData) => ({ ...prevData, [name]: value }));
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: errorMessage }));
   };
 
-  // Function to validate the form fields
   const validateForm = () => {
     const newErrors = {};
 
-    // Validate name field
-    if (!teamData.name.trim()) {
-      newErrors.name = "Name is required";
-    }
+    // Validate each field
+    Object.keys(teamData).forEach((name) => {
+      switch (name) {
+        case "name":
+          newErrors.name = teamData.name.trim() === "" ? "Name is required" : !/^[a-zA-Z\s]+$/.test(teamData.name) ? "Name must be a string without numeric characters" : "";
+          break;
+        case "employeeCode":
+          newErrors.employeeCode = teamData.employeeCode === "" ? "Employee Code is required" : !/^\d+$/.test(teamData.employeeCode) ? "Employee Code must contain only numerical values" : "";
+          break;
+        case "techStack":
+          newErrors.techStack = teamData.techStack.trim() === "" ? "Tech Stack is required" : "";
+          break;
+        case "project":
+          newErrors.project = teamData.project.trim() === "" ? "Project is required" : "";
+          break;
+        case "percentage":
+          newErrors.percentage = teamData.percentage === "" ? "Allocated Percentage is required" : isNaN(teamData.percentage) || +teamData.percentage < 0 || +teamData.percentage > 100 ? "Please enter a valid percentage (0-100)" : "";
+          break;
+        case "priority":
+          newErrors.priority = teamData.priority.trim() === "" ? "Priority is required" : isNaN(teamData.priority) || +teamData.priority < 1 ? "Please enter a valid priority (greater than 0)" : "";
+          break;
+        default:
+          newErrors[name] = "";
+      }
+    });
 
-    // Validate empCode field
-    if (!teamData.employeeCode.trim()) {
-      newErrors.employeeCode = "Employee Code is required";
-    }
-
-    // Validate techStack field
-    if (!teamData.techStack.trim()) {
-      newErrors.techStack = "Tech Stack is required";
-    }
-
-    // Validate project field
-    if (!teamData.project.trim()) {
-      newErrors.project = "Project is required";
-    }
-
-    // Validate allocatedPercentage field
-    if (!teamData.percentage) {
-      newErrors.percentage = "Allocated Percentage is required";
-    } else if (
-      isNaN(teamData.percentage) ||
-      +teamData.percentage < 0 ||
-      +teamData.percentage > 100
-    ) {
-      newErrors.percentage = "Please enter a valid percentage (0-100)";
-    }
-
-    // Validate priority field
-    if (!teamData.priority.trim()) {
-      newErrors.priority = "Priority is required";
-    } else if (isNaN(teamData.priority) || +teamData.priority < 1) {
-      newErrors.priority = "Please enter a valid priority (greater than 0)";
-    }
-
-    // Set validation errors in state
     setErrors(newErrors);
-
-    // Return true if the form is valid, false otherwise
-    return Object.keys(newErrors).length === 0;
+    return Object.values(newErrors).every((error) => error === "");
   };
 
- 
- // Function to handle form submission
-const handleSubmit = () => {
-  if (validateForm()) {
-    handleAddTeam(teamData, !!teamToEdit);
-    setTeamData(initialTeamState); 
-    handleClose(); 
-  }
-};
+  const handleSubmit = () => {
+    if (validateForm()) {
+      handleAddTeam(teamData, !!teamToEdit);
+      setTeamData(initialTeamState);
+      handleClose();
+    }
+  };
 
-
-  // Render the TeamForm component
   return (
     <Modal size="md" show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -105,7 +106,6 @@ const handleSubmit = () => {
       </Modal.Header>
       <Modal.Body>
         <Form>
-          {/* Form input fields */}
           <Row>
             <Col>
               <Form.Group controlId="name">
@@ -124,7 +124,7 @@ const handleSubmit = () => {
               </Form.Group>
             </Col>
             <Col>
-              <Form.Group controlId="empCode">
+              <Form.Group controlId="employeeCode">
                 <Form.Label>Employee Code</Form.Label>
                 <Form.Control
                   type="text"
@@ -182,7 +182,7 @@ const handleSubmit = () => {
 
           <Row>
             <Col>
-              <Form.Group controlId="allocatedPercentage">
+              <Form.Group controlId="percentage">
                 <Form.Label>Allocated Percentage</Form.Label>
                 <Form.Control
                   type="text"
@@ -193,7 +193,7 @@ const handleSubmit = () => {
                   isInvalid={!!errors.percentage}
                 />
                 <Form.Control.Feedback type="invalid">
-                  {errors.allocatedPercentage}
+                  {errors.percentage}
                 </Form.Control.Feedback>
               </Form.Group>
             </Col>
@@ -220,12 +220,10 @@ const handleSubmit = () => {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        {/* Close button */}
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
-        {/* Add/Edit button */}
-        <Button variant="dark" onClick={handleSubmit }>
+        <Button variant="dark" onClick={handleSubmit}>
           {teamToEdit ? "Edit" : "Add"}
         </Button>
       </Modal.Footer>
@@ -233,5 +231,6 @@ const handleSubmit = () => {
   );
 };
 
-// Export the TeamForm component
 export default TeamForm;
+
+

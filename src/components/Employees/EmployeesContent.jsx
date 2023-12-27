@@ -80,8 +80,6 @@ export const EmployeesContent = ({OpenSidebar}) => {
     newEmployee.role = capitalize(newEmployee.role);
   
     try {
-      
-  
       // Exclude isOnline if it's not in the schema
       if (!newEmployee.hasOwnProperty("isOnline")) {
         delete newEmployee.isOnline;
@@ -90,19 +88,24 @@ export const EmployeesContent = ({OpenSidebar}) => {
       // If editing, update the employee in the list
       if (isEdit) {
         try {
-          const response = await updateEmployee(newEmployee._id, newEmployee);
-          console.log("Update Response:", response);
+          if (newEmployee._id) {
+            const response = await updateEmployee(newEmployee._id, newEmployee);
+            console.log("Update Response:", response);
   
-          if (response.status === 200) {
-            // Update the employee
-            setEmployees((prevEmployees) =>
-              prevEmployees.map((employee) =>
-                employee._id === newEmployee._id ? newEmployee : employee
-              )
-            );
-            toast.success(response.data.message);
+            if (response && response.status === 200) {
+              // Update the employee
+              setEmployees((prevEmployees) =>
+                prevEmployees.map((employee) =>
+                  employee._id === newEmployee._id ? newEmployee : employee
+                )
+              );
+              toast.success(response?.data?.message || "Update successful");
+            } else {
+              toast.error(response?.data?.message || "Unknown error occurred");
+            }
           } else {
-            toast.error(response.data.message);
+            console.error("Error updating employee: _id is undefined");
+            toast.error("Error updating employee. Please try again.");
           }
         } catch (updateError) {
           console.error("Error updating employee", updateError);
@@ -113,15 +116,15 @@ export const EmployeesContent = ({OpenSidebar}) => {
         const response = await addTeam(newEmployee);
         console.log("Add Team Response:", response);
   
-        if (response.status === 200) {
+        if (response && response.status === 200) {
           // Add the new employee to the state with the returned id
           setEmployees((prevEmployees) => [
             ...prevEmployees,
-            { ...newEmployee, id: response.data.id },
+            { ...newEmployee, id: response?.data?.id },
           ]);
-          toast.success(response.data.message);
+          toast.success(response?.data?.message || "Employee added successfully");
         } else {
-          toast.error(response.data.message);
+          toast.error(response?.data?.message || "Unknown error occurred");
         }
       }
     } catch (error) {

@@ -91,7 +91,7 @@ export const Home = () => {
                 Welcome to techjays project tracker!
               </h4>
               {/* Subheading */}
-              <h4 className="lead fw-bold mb-5">Continue With</h4>
+              <h4 className="lead fw-bold mb-5">Continue With Techjays ID</h4>
               
               {/* Buttons for Google and Facebook */}
               <div

@@ -1,3 +1,5 @@
+// EmployeeForm.js
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
@@ -23,10 +25,10 @@ const EmployeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
   const [errors, setErrors] = useState({});
    
   // Navigate function from react-router-dom
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-   // Update form fields when employeeToEdit prop changes
-   useEffect(() => {
+  // Update form fields when employeeToEdit prop changes
+  useEffect(() => {
     if (employeeToEdit) {
       setEmployeeData(employeeToEdit);
     } else {
@@ -38,43 +40,37 @@ const EmployeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
   // Event handler for input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
+    let errorMessage = "";
+
+    // Additional specific validations for each field
+    switch (name) {
+      case "name":
+        errorMessage = value.trim() === "" ? "Name is required" : !/^[a-zA-Z\s]+$/.test(value) ? "Name must be a string without numeric characters" : "";
+        break;
+      case "role":
+        errorMessage = value.trim() === "" ? "Role is required" : !/^[a-zA-Z\s]+$/.test(value) ? "Role must be a string" : "";
+        break;
+      case "employeeCode":
+        errorMessage = value.trim() === "" ? "Employee Code is required" : !/^\d+$/.test(value) ? "Employee Code must contain only numerical values" : "";
+        break;
+      case "slack":
+        errorMessage = value.trim() === "" ? "Slack is required (must include 'techjays' after @)" : !value.includes('@techjays') ? "Slack must include 'techjays' after @" : "";
+        break;
+      default:
+        errorMessage = "";
+    }
+
     setEmployeeData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: errorMessage,
+    }));
   };
-  console.log(employeeData);
 
   // Event handler for save button click
-  // const handleSave = async () => {
-  //   // API call to add team member
-  //   const response = await addTeam(employeeData)
-    
-  //   // Check the response status
-  //   if (response.status === 200) {
-  //     toast.success(response.data.message);
-      
-  //     // Navigate to the profile page after a delay
-  //     setTimeout(() => {
-  //       navigate('/profile')
-  //     }, 1500);
-  //   } else {
-  //     toast.error(response.data.message);
-  //   }
-
-  //   // Validate the form and set errors
-  //   const validationErrors = validateForm(employeeData);
-  //   setErrors(validationErrors);
-
-  //   // If there are no validation errors, add/edit the employee, close the modal, and reset the form
-  //   if (Object.keys(validationErrors).length === 0) {
-  //     handleAddEmployee(employeeData, !!employeeToEdit);
-  //     handleClose();
-  //     setEmployeeData(initialEmployeeState);
-  //   }
-  // };
-
-
   const handleSave = () => {
     const validationErrors = validateForm(employeeData);
     setErrors(validationErrors);
@@ -83,7 +79,6 @@ const EmployeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
       handleAddEmployee(employeeData, !!employeeToEdit);
       handleClose();
       setEmployeeData(initialEmployeeState);
-
     }
   };
 
@@ -93,27 +88,27 @@ const EmployeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
 
     if (!data.name.trim()) {
       errors.name = "Name is required";
+    } else if (!/^[a-zA-Z\s]+$/.test(data.name)) {
+      errors.name = "Name must be a string without numeric characters";
     }
 
     if (!data.role.trim()) {
       errors.role = "Role is required";
+    } else if (!/^[a-zA-Z\s]+$/.test(data.role)) {
+      errors.role = "Role must be a string";
     }
 
     if (!data.employeeCode.trim()) {
       errors.employeeCode = "Employee Code is required";
+    } else if (!/^\d+$/.test(data.employeeCode)) {
+      errors.employeeCode = "Employee Code must contain only numerical values";
     }
 
     if (!data.slack.trim()) {
       errors.slack = "Slack is required (must include 'techjays' after @)";
-    } else {
-      const emailParts = data.slack.split('@');
-      const domain = emailParts[1]; 
-    
-      if (!domain || !domain.includes('techjays')) {
-        errors.slack = "Slack must include 'techjays' after @";
-      }
+    } else if (!data.slack.includes('@techjays')) {
+      errors.slack = "Slack must include 'techjays' after @";
     }
-    
 
     return errors;
   };

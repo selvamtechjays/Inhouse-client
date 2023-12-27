@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import "./project.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -23,144 +21,143 @@ const ProjectForm = ({
   });
 
   const [errors, setErrors] = useState({});
-    //object for useNavigate
-   
 
   useEffect(() => {
     if (projectToEdit) {
-      // If projectToEdit is provided, populate the form with its data
       setProjectData((prevData) => ({
         ...prevData,
         ...projectToEdit,
-        startDate: projectToEdit.startDate
-          ? new Date(projectToEdit.startDate)
-          : null,
-        endDate: projectToEdit.endDate ? new Date(projectToEdit.endDate) : null,
       }));
     }
   }, [projectToEdit]);
-  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProjectData((prevData) => ({
       ...prevData,
       [name]: value,
-      
     }));
-  };
-  console.log(projectData);
 
-  const handleDateChange = (date, field) => {
-    setProjectData((prevData) => ({ ...prevData, [field]: date }));
+    // Check for resources validation when the field changes
+    if (name === "resources") {
+      validateResources();
+    }
+
+    // Check for name and clientName validation when the fields change
+    if (name === "projectName" || name === "clientName") {
+      validateNameAndClientName();
+    }
+
+    // Check for date validation when either start or end date changes
+    if (name === "startDate" || name === "endDate") {
+      validateDate();
+    }
+  };
+
+  const validateDate = () => {
+    const newErrors = { ...errors };
+
+    // Validate End Date
+    newErrors.endDate =
+      projectData.endDate === ""
+        ? "End Date is required"
+        : projectData.startDate && projectData.endDate < projectData.startDate
+        ? "End Date cannot be earlier than Start Date"
+        : "";
+
+    setErrors(newErrors);
+  };
+
+  const validateResources = () => {
+    const newErrors = { ...errors };
+
+    // Validate Resources
+    newErrors.resources =
+      !/^[a-zA-Z\s]+$/.test(projectData.resources)
+        ? "Resources must be a string without numeric characters"
+        : "";
+
+    setErrors(newErrors);
+  };
+
+  const validateNameAndClientName = () => {
+    const newErrors = { ...errors };
+
+    // Validate Project Name
+    newErrors.projectName =
+      !/^[a-zA-Z\s]+$/.test(projectData.projectName)
+        ? "Project Name must be a string without numeric characters"
+        : "";
+
+    // Validate Client Name
+    newErrors.clientName =
+      !/^[a-zA-Z\s]+$/.test(projectData.clientName)
+        ? "Client Name must be a string without numeric characters"
+        : "";
+
+    setErrors(newErrors);
   };
 
   const validateForm = () => {
     const newErrors = {};
 
     // Validate Project Name
-    if (!projectData.projectName.trim()) {
-      newErrors.projectName = "Project Name is required";
-    }
+    newErrors.projectName =
+      !/^[a-zA-Z\s]+$/.test(projectData.projectName)
+        ? "Project Name must be a string without numeric characters"
+        : "";
 
     // Validate Client Name
-    if (!projectData.clientName.trim()) {
-      newErrors.clientName = "Client Name is required";
-    }
+    newErrors.clientName =
+      !/^[a-zA-Z\s]+$/.test(projectData.clientName)
+        ? "Client Name must be a string without numeric characters"
+        : "";
 
     // Validate Start Date
-    if (!projectData.startDate) {
-      newErrors.startDate = "Start Date is required";
-    }
+    newErrors.startDate = projectData.startDate === "" ? "Start Date is required" : "";
 
     // Validate End Date
-    if (!projectData.endDate) {
-      newErrors.endDate = "End Date is required";
-    }
+    newErrors.endDate = projectData.endDate === "" ? "End Date is required" : "";
 
     // Validate Project Type
-    if (!projectData.projectType.trim()) {
-      newErrors.projectType = "Project Type is required";
-    }
+    newErrors.projectType = projectData.projectType.trim() === "" ? "Project Type is required" : "";
 
     // Validate Resources
-    if (!projectData.resources.trim()) {
-      newErrors.resources = "Resources are required";
-    }
+    newErrors.resources =
+      !/^[a-zA-Z\s]+$/.test(projectData.resources)
+        ? "Resources must be a string without numeric characters"
+        : "";
 
     // Validate End Date
-    if (!projectData.endDate) {
-      newErrors.endDate = "End Date is required";
-    } else if (
-      projectData.startDate &&
-      projectData.endDate < projectData.startDate
-    ) {
-      newErrors.endDate = "End Date cannot be earlier than Start Date";
-    }
+    newErrors.endDate =
+      projectData.endDate === ""
+        ? "End Date is required"
+        : projectData.startDate && projectData.endDate < projectData.startDate
+        ? "End Date cannot be earlier than Start Date"
+        : "";
 
     setErrors(newErrors);
 
-    return Object.keys(newErrors).length === 0; // Return true if there are no errors
+    return Object.values(newErrors).every((error) => error === "");
   };
-
-  // const handleSave = async() => {
-  //   console.log(projectData);
-
-  //   //api call
-  //   const response = await addProject(projectData)
-  //   if (response.status == 200) {
-  //     toast.success(response.data.message);
-  //     setTimeout(()=> {
-  //       navigate('/profile')
-  //     }, 1500);
-  //   }else{
-     
-  //     toast.error(response.data.message);
-  //   }
-  //   if (validateForm()) {
-  //     if (projectToEdit) {
-  //       // If editing, update the project in the parent component
-  //       handleAddProject(projectData, true);
-  //     } else {
-  //       // If adding new, add the project to the parent component
-  //       handleAddProject(projectData, false);
-  //     }
-
-  //     // Clear the form data after adding a new project
-  //     setProjectData({
-  //       projectName: "",
-  //       clientName: "",
-  //       startDate: "",
-  //       endDate: "",
-  //       projectType: "",
-  //       resources: "",
-  //     });
-
-  //     // Close the form modal
-  //     handleClose();
-  //   }
-  // };
 
   const handleSave = () => {
     if (validateForm()) {
       if (projectToEdit) {
-        // If editing, update the project in the parent component
         handleAddProject(projectData, true);
       } else {
-        // If adding new, add the project to the parent component
         handleAddProject(projectData, false);
       }
 
-      // Clear the form data after adding a new project
       setProjectData({
         projectName: "",
         clientName: "",
-        startDate: null,
-        endDate: null,
+        startDate: "",
+        endDate: "",
         projectType: "",
         resources: "",
       });
 
-      // Close the form modal
       handleClose();
     }
   };
@@ -168,8 +165,8 @@ const ProjectForm = ({
   return (
     <Modal size="md" show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title><h2>
-          {projectToEdit ? "Edit Project" : "Add Project"}</h2>
+        <Modal.Title>
+          <h2>{projectToEdit ? "Edit Project" : "Add Project"}</h2>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -186,7 +183,6 @@ const ProjectForm = ({
                   value={projectData.projectName}
                   onChange={handleChange}
                   isInvalid={!!errors.projectName}
-                  
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.projectName}
@@ -218,7 +214,6 @@ const ProjectForm = ({
                     <option value="">Select Project Type</option>
                     <option value="Type1">Type 1</option>
                     <option value="Type2">Type 2</option>
-                    {/* Add more options as needed */}
                   </Form.Select>
                   <Form.Control.Feedback type="invalid">
                     {errors.projectType}
@@ -282,7 +277,7 @@ const ProjectForm = ({
           Close
         </Button>
         <Button variant="dark" onClick={handleSave}>
-          Add
+          {projectToEdit ? "Edit" : "Add"}
         </Button>
       </Modal.Footer>
     </Modal>
@@ -290,3 +285,4 @@ const ProjectForm = ({
 };
 
 export default ProjectForm;
+
