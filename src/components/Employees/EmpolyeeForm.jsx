@@ -104,8 +104,16 @@ const EmployeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
     }
 
     if (!data.slack.trim()) {
-      errors.slack = "Email is required (must include 'techjays' before @)";
+      errors.slack = "Slack is required (must include 'techjays' after @)";
+    } else {
+      const emailParts = data.slack.split('@');
+      const domain = emailParts[1]; 
+    
+      if (!domain || !domain.includes('techjays')) {
+        errors.slack = "Slack must include 'techjays' after @";
+      }
     }
+    
 
     return errors;
   };

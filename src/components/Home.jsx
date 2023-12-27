@@ -70,8 +70,8 @@ export const Home = () => {
             <img
               className="img-fluid w-90"
               style={{
-                marginBottom: "100px",
-                height: "490px",
+                marginBottom: "70px",
+                height: "600px",
                 marginLeft: "0",
                 borderRadius: '15px'
               }}

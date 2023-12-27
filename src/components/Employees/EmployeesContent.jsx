@@ -79,18 +79,8 @@ export const EmployeesContent = ({OpenSidebar}) => {
     newEmployee.name = capitalize(newEmployee.name);
     newEmployee.role = capitalize(newEmployee.role);
   
-    // Check if email includes 'techjays' or not
-    const atIndex = newEmployee.slack.indexOf("@");
-    const domain = newEmployee.slack.slice(atIndex + 1);
-    const isTechjaysBeforeAt = domain.includes("techjays");
-  
     try {
-      if (!isTechjaysBeforeAt) {
-        console.log("Email must include 'techjays' before @");
-        // Set an error and keep the form open
-        setErrors({ ...errors, slack: "Email must include 'techjays' before @" });
-        return;
-      }
+      
   
       // Exclude isOnline if it's not in the schema
       if (!newEmployee.hasOwnProperty("isOnline")) {

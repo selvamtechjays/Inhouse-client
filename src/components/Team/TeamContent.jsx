@@ -49,6 +49,9 @@ export const TeamContent = ({OpenSidebar}) => {
       setTeams(response.data)
       console.log(teams.data);
     }
+
+
+    // add tracker
     const handleAddTeam = async (newTeam, isEdit) => {
       // Capitalize name 
       newTeam.name = capitalize(newTeam.name);
@@ -78,7 +81,7 @@ export const TeamContent = ({OpenSidebar}) => {
           const response = await addTracker(newTeam);
           console.log("Add Team Response:", response);
     
-          if (response.status === 200) {
+          if (response.status === 201) {
             // Add the new team to the state with the returned id
             setTeams((prevTeams) => [
               ...prevTeams,
@@ -107,7 +110,7 @@ export const TeamContent = ({OpenSidebar}) => {
     
     }else{
      
-      toast.error(response.data.message);
+      toast.error(response.data.error);
     }
   }
 
@@ -154,10 +157,10 @@ export const TeamContent = ({OpenSidebar}) => {
 
             <Dropdown.Menu>
               <Dropdown.Item onClick={() => handleFilterSelect('name', 'Name')}>Name</Dropdown.Item>
-              <Dropdown.Item onClick={() => handleFilterSelect('empCode', 'Emp code')}>Emp code</Dropdown.Item>
+              <Dropdown.Item onClick={() => handleFilterSelect('employeeCode', 'Emp code')}>Emp code</Dropdown.Item>
               <Dropdown.Item onClick={() => handleFilterSelect('techStack', 'Tech stack')}>Tech stack</Dropdown.Item>
               <Dropdown.Item onClick={() => handleFilterSelect('project', 'Project')}>Project</Dropdown.Item>
-              <Dropdown.Item onClick={() => handleFilterSelect('allocatedPercentage', 'Percentage')}>Percentage</Dropdown.Item>
+              <Dropdown.Item onClick={() => handleFilterSelect('percentage', 'Percentage')}>Percentage</Dropdown.Item>
               <Dropdown.Item onClick={() => handleFilterSelect('priority', 'Priority')}>Priority</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>

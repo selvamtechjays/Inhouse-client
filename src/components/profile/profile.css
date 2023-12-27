@@ -66,11 +66,12 @@
   /* Add any other styles as needed */
 }
 .nav-item{
-  margin-left: 35px;
+  margin-left: 70px;
 }
 .menu-icon{
   font-size: 25px;
 }
+
 
 
 /* Add media query for responsiveness */

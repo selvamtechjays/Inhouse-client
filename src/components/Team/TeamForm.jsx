@@ -62,7 +62,7 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
     }
 
     // Validate allocatedPercentage field
-    if (!teamData.percentage.trim()) {
+    if (!teamData.percentage) {
       newErrors.percentage = "Allocated Percentage is required";
     } else if (
       isNaN(teamData.percentage) ||
