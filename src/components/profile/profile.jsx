@@ -1,7 +1,7 @@
 // Profile.js
 import React, { useState } from "react";
 import { Container, Row, Col, Offcanvas, Button } from "react-bootstrap";
-import "./Profile.css";
+import "./profile.css";
 import { useNavigate } from "react-router-dom";
 import { DashboardContent } from "../Dashboard/DashboardContent";
 import { ProjectsContent } from "../Projects/ProjectsContent";
@@ -30,18 +30,18 @@ const Profile = () => {
   };
 
   return (
-    <Container fluid className="profile-container">
+    <Container fluid className="profile-container ">
       <Row className="h-100">
         {/* Sidebar */}
-        <Col
+        <Col 
           md={3}
           className={`dev text-white p-4 h-100 ${
             showSidebar ? "sidebar-responsive" : ""
           }`}
         >
-          <ul className="nav nav-pills flex-column">
-            <li
-              className={`nav-item mb-2 d-flex align-items-center ${getButtonClassName(
+          <ul id="center" className="nav nav-pills flex-column">
+            <li 
+              className={`nav-item mb-2   mt-5 d-flex align-items-center ${getButtonClassName(
                 "dashboard"
               )}`}
             >
@@ -52,8 +52,8 @@ const Profile = () => {
                 Dashboard
               </button>
             </li>
-            <li
-              className={`nav-item mb-2 d-flex align-items-center ${getButtonClassName(
+            <li 
+              className={`nav-item mb-2   d-flex mt-3 align-items-center ${getButtonClassName(
                 "projects"
               )}`}
             >
@@ -64,8 +64,8 @@ const Profile = () => {
                 Projects
               </button>
             </li>
-            <li
-              className={`nav-item mb-2 d-flex align-items-center ${getButtonClassName(
+            <li 
+              className={`nav-item mb-2  mt-3 d-flex align-items-center ${getButtonClassName(
                 "employees"
               )}`}
             >
@@ -76,8 +76,8 @@ const Profile = () => {
                 Team Members
               </button>
             </li>
-            <li
-              className={`nav-item mb-2 d-flex align-items-center ${getButtonClassName(
+            <li 
+              className={`nav-item mb-2  mt-3 d-flex align-items-center ${getButtonClassName(
                 "team"
               )}`}
             >
@@ -88,8 +88,8 @@ const Profile = () => {
                 Tracker
               </button>
             </li>
-            <li
-              className={`nav-item mb-2 d-flex align-items-center ${getButtonClassName(
+            <li 
+              className={`nav-item mb-2  mt-3 d-flex align-items-center ${getButtonClassName(
                 "logout"
               )}`}
             >
@@ -104,7 +104,7 @@ const Profile = () => {
         </Col>
 
         {/* Main Content */}
-        <Col md={9} className="p-4 bg-light h-100">
+        <Col md={9}  className="p-4  bg-light h-100">
           <Offcanvas show={showSidebar} onHide={() => setShowSidebar(false)}>
             <Offcanvas.Header
               closeButton
@@ -117,20 +117,20 @@ const Profile = () => {
             >
               <Offcanvas.Title>Inhouse</Offcanvas.Title>
             </Offcanvas.Header>
-            <Offcanvas.Body
+            <Offcanvas.Body 
               style={{
                 backgroundColor: "#450c36",
                 fontSize: "19px",
                 fontWeight: "500",
               }}
             >
-              <ul className="nav nav-pills flex-column">
-                <li
+              <ul    className="nav nav-pills  flex-column">
+                <li 
                   className={`nav-item mb-2 d-flex  ${getButtonClassName(
                     "dashboard"
                   )}`}
                 >
-                  <button
+                  <button 
                     className={getButtonClassName("dashboard")}
                     onClick={() => handleSectionChange("dashboard")}
                   >
