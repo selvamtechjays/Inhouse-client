@@ -87,6 +87,7 @@
 
   li{
     margin-left: 23%;
+   
     
   }
   .nav-link.text-white.active {
@@ -104,5 +105,10 @@
 
 
 
+}
+#center{
+ 
+ align-content: center;
+ 
 }
 
