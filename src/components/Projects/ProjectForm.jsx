@@ -73,11 +73,11 @@ const ProjectForm = ({
 
     // Validate Resources
     newErrors.resources =
-      !/^[a-zA-Z\s]+$/.test(projectData.resources)
-        ? "Resources must be a string without numeric characters"
-        : "";
+    !/^\d+$/.test(projectData.resources)
+      ? "Resources must contain only numeric characters"
+      : "";
 
-    setErrors(newErrors);
+  setErrors(newErrors);
   };
 
   const validateNameAndClientName = () => {
@@ -124,9 +124,9 @@ const ProjectForm = ({
 
     // Validate Resources
     newErrors.resources =
-      !/^[a-zA-Z\s]+$/.test(projectData.resources)
-        ? "Resources must be a string without numeric characters"
-        : "";
+    !/^\d+$/.test(projectData.resources)
+      ? "Resources must contain only numeric characters"
+      : "";
 
     // Validate End Date
     newErrors.endDate =
