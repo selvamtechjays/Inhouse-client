@@ -4,7 +4,7 @@ import {
   Row,
   Col,
   Button,
-  Form,
+  Modal,
   Table,
   Dropdown,
 } from "react-bootstrap";
@@ -24,6 +24,10 @@ import { MdOutlineFilterAlt } from "react-icons/md";
 
 // ProjectsContent component definition
 export const ProjectsContent = ({OpenSidebar}) => {
+
+//for delete confirm modal
+ const [smShow, setSmShow] = useState(false);
+
   // State management for form visibility, projects data, and editing project
   const [isFormOpen, setFormOpen] = useState(false);
   const [projects, setProjects] = useState([]);
@@ -34,7 +38,7 @@ export const ProjectsContent = ({OpenSidebar}) => {
 
       //for pagenation
       const [currentPage,setCurrentPage] = useState(1)
-      const recordsPerPage = 4;
+      const recordsPerPage = 7;
       const lastIndex = currentPage * recordsPerPage;
       const firstIndex = lastIndex - recordsPerPage;
       const records = projects.slice(firstIndex, lastIndex);
@@ -116,6 +120,7 @@ export const ProjectsContent = ({OpenSidebar}) => {
     const response = await deleteProject(id)
     if (response.status == 200) {
       toast.success(response.data.message);
+      setSmShow(false)
       getAllProjects()
     
     }else{
@@ -197,7 +202,7 @@ export const ProjectsContent = ({OpenSidebar}) => {
           </Col>
         </Row>
       </Row>
-      <MDBTable responsive>
+      <MDBTable responsive className="p-3">
       <thead className="tp" >
       <tr   >
         <th style={{backgroundColor:"#450c36", color:"white",
@@ -218,7 +223,7 @@ export const ProjectsContent = ({OpenSidebar}) => {
             const projectValue = item[filterType].toLowerCase();
             return projectValue.includes(searchTerm);
           }).map((project, index) => (
-            <tr>
+            <tr >
               <td>{project.projectName}</td>
               <td>{project.clientName}</td>
               <td>{moment(project.startDate).format("DD-MM-YYYY")}</td>
@@ -227,7 +232,27 @@ export const ProjectsContent = ({OpenSidebar}) => {
               <td>{project.resources}</td>
       
               <td><Link><a style={{color:"#450c36"}}><BsPencilSquare onClick={() => openForm(project)} className=' ms-1 icon'/></a>
-              </Link> <a style={{color:"#450c36"}}><BsFillTrash3Fill onClick={() => handleDeleteProject(project._id)} className='ms-2 icon'/></a></td>
+              </Link> <a style={{color:"#450c36"}}><BsFillTrash3Fill onClick={() => setSmShow(true)} className='ms-2 icon'/></a>
+              <Modal 
+        size="sm"
+        show={smShow}
+        onHide={() => setSmShow(false)}
+        aria-labelledby="example-modal-sizes-title-sm"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-modal-sizes-title-sm">
+            
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body ><h5 className="text-center" style={{marginTop:'-40px'}}>Are u want to Delete ?</h5></Modal.Body>
+        <Modal.Footer style={{marginTop:'-25px'}} >
+          <Button variant="secondary" style={{ borderRadius: '10px',
+          color:"white",marginLeft:"-50px"}} onClick={() => setSmShow(false)}>Close</Button>
+          <Button variant="dark" style={{ borderRadius: '10px',
+          color:"white"}}  onClick={() => handleDeleteProject(project._id) }>Confirm</Button>
+        </Modal.Footer>
+      </Modal>
+</td>
       
            
             </tr>
@@ -249,7 +274,7 @@ export const ProjectsContent = ({OpenSidebar}) => {
     </ul>
   </nav>
       <ProjectForm show={isFormOpen} handleClose={closeForm} handleAddProject={handleAddProject} projectToEdit={projectToEdit} />
-      <ToastContainer position="top-center" />
+      <ToastContainer autoClose={500}   position="top-center" />
     </Container>
   );
   //for pagenation

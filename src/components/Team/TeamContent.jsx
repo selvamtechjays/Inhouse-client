@@ -1,7 +1,7 @@
 // TeamContent.js
 
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Table, Dropdown, Form } from "react-bootstrap";
+import { Container, Row, Col, Button, Modal, Dropdown, Form } from "react-bootstrap";
 import TeamForm from "./TeamForm";
 import { CiFilter } from "react-icons/ci";
 import { capitalize } from "@mui/material";
@@ -15,6 +15,10 @@ import { addTracker, deleteTracker, getallTracker, updateTracker } from "../../s
 import { MdOutlineFilterAlt } from "react-icons/md";
 
 export const TeamContent = ({OpenSidebar}) => {
+
+//for delete confirm modal
+  const [smShow, setSmShow] = useState(false);
+
   const [isFormOpen, setFormOpen] = useState(false);
   const [teams, setTeams] = useState([]);
   const [teamToEdit, setTeamToEdit] = useState(null);
@@ -24,7 +28,7 @@ export const TeamContent = ({OpenSidebar}) => {
 
     //for pagenation
     const [currentPage,setCurrentPage] = useState(1)
-    const recordsPerPage = 4;
+    const recordsPerPage = 7;
     const lastIndex = currentPage * recordsPerPage;
     const firstIndex = lastIndex - recordsPerPage;
     const records = teams.slice(firstIndex, lastIndex);
@@ -117,6 +121,7 @@ const handleAddTeam = async (newTeam, isEdit) => {
     const response = await deleteTracker(id)
     if (response.status == 200) {
       toast.success(response.data.message);
+      setSmShow(false)
       getallTeam()
     
     }else{
@@ -224,7 +229,27 @@ const handleAddTeam = async (newTeam, isEdit) => {
                 <td className="table-cell">{team.priority}</td>
            
                 <td><Link><a style={{color:"#450c36"}}><BsPencilSquare onClick={() => openForm(team)} className=' ms-1 icon'/></a>
-              </Link> <a style={{color:"#450c36"}}><BsFillTrash3Fill onClick={() => handleDeleteTeam(team._id)} className='ms-2 icon'/></a></td>
+              </Link> <a style={{color:"#450c36"}}><BsFillTrash3Fill onClick={() => setSmShow(true)} className='ms-2 icon'/></a>
+              <Modal 
+        size="sm"
+        show={smShow}
+        onHide={() => setSmShow(false)}
+        aria-labelledby="example-modal-sizes-title-sm"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-modal-sizes-title-sm">
+            
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body ><h5 className="text-center" style={{marginTop:'-40px'}}>Are u want to Delete ?</h5></Modal.Body>
+        <Modal.Footer style={{marginTop:'-25px'}} >
+          <Button variant="secondary" style={{ borderRadius: '10px',
+          color:"white",marginLeft:"-50px"}} onClick={() => setSmShow(false)}>Close</Button>
+          <Button variant="dark" style={{ borderRadius: '10px',
+          color:"white"}}  onClick={() => handleDeleteTeam(team._id) }>Confirm</Button>
+        </Modal.Footer>
+      </Modal>
+</td>
       
            
             </tr>
@@ -246,7 +271,7 @@ const handleAddTeam = async (newTeam, isEdit) => {
     </ul>
   </nav>
       <TeamForm show={isFormOpen} handleClose={closeForm} handleAddTeam={handleAddTeam} teamToEdit={teamToEdit} />
-      <ToastContainer position="top-center" />
+      <ToastContainer autoClose={500}   position="top-center" />
     </Container>
   );
   //for pagenation

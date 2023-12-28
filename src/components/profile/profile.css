@@ -59,6 +59,7 @@
   height: 50px;
   opacity: 1.7;
   width: fit-content;
+  
 }
 
 .nav-link.text-white.active {
@@ -98,10 +99,6 @@
     background-color: white;
   }
   
-  
-  
-
-
 
 }
 #center{

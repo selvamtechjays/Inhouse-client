@@ -6,7 +6,7 @@ import {
   Row,
   Col,
   Button,
-  Form,
+  Modal,
   Table,
   Dropdown,
 } from "react-bootstrap";
@@ -25,6 +25,10 @@ import { MdOutlineFilterAlt } from "react-icons/md";
 
 // EmployeesContent component definition
 export const EmployeesContent = ({OpenSidebar}) => {
+
+//for delete confirm modal
+  const [smShow, setSmShow] = useState(false);
+
   // State variables
   const [isFormOpen, setFormOpen] = useState(false); // For controlling the visibility of the employee form
   const [employees, setEmployees] = useState([]); // For storing the list of employees
@@ -36,7 +40,7 @@ export const EmployeesContent = ({OpenSidebar}) => {
 
     //for pagenation
     const [currentPage,setCurrentPage] = useState(1)
-    const recordsPerPage = 4;
+    const recordsPerPage = 7;
     const lastIndex = currentPage * recordsPerPage;
     const firstIndex = lastIndex - recordsPerPage;
     const records = employees.slice(firstIndex, lastIndex);
@@ -141,6 +145,7 @@ export const EmployeesContent = ({OpenSidebar}) => {
     const response = await deleteEmployee(id);
     if (response.status == 200) {
       toast.success(response.data.message);
+      setSmShow(false)
       getAllEmployee();
     } else {
       toast.error(response.data.message);
@@ -314,13 +319,35 @@ export const EmployeesContent = ({OpenSidebar}) => {
                     </a>
                   </Link>{" "}
                   <a style={{color:"#450c36"}}>
-                    <BsFillTrash3Fill
-                      onClick={() => handleDeleteEmployee(employee._id)}
+                    <BsFillTrash3Fill onClick={() => setSmShow(true)}
+                      
                       className="ms-2 icon"
                     />
                   </a>
+                  
                 </td>
+                <Modal 
+        size="sm"
+        show={smShow}
+        onHide={() => setSmShow(false)}
+        aria-labelledby="example-modal-sizes-title-sm"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-modal-sizes-title-sm">
+            
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body ><h5 className="text-center" style={{marginTop:'-40px'}}>Are u want to Delete ?</h5></Modal.Body>
+        <Modal.Footer style={{marginTop:'-25px'}} >
+          <Button variant="secondary" style={{ borderRadius: '10px',
+          color:"white",marginLeft:"-50px"}} onClick={() => setSmShow(false)}>Close</Button>
+          <Button variant="dark" style={{ borderRadius: '10px',
+          color:"white"}}  onClick={() => handleDeleteEmployee(employee._id) }>Confirm</Button>
+        </Modal.Footer>
+      </Modal>
+
               </tr>
+              
             ))}
         </MDBTableBody>
         </MDBTable>
@@ -345,7 +372,7 @@ export const EmployeesContent = ({OpenSidebar}) => {
         handleAddEmployee={handleAddEmployee}
         employeeToEdit={employeeToEdit}
       />
-      <ToastContainer position="top-center" />
+      <ToastContainer autoClose={500}  position="top-center" />
       </Container>
   );
 

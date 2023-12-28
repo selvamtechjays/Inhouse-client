@@ -41,7 +41,7 @@ const Profile = () => {
         >
           <ul id="center" className="nav nav-pills flex-column">
             <li 
-              className={`nav-item mb-2   mt-5 d-flex align-items-center ${getButtonClassName(
+              className={`nav-item mb-1  mt-5 d-flex align-items-center ${getButtonClassName(
                 "dashboard"
               )}`}
             >
@@ -53,7 +53,7 @@ const Profile = () => {
               </button>
             </li>
             <li 
-              className={`nav-item mb-2   d-flex mt-3 align-items-center ${getButtonClassName(
+              className={`nav-item mb-1   d-flex mt-2 align-items-center ${getButtonClassName(
                 "projects"
               )}`}
             >
@@ -65,7 +65,7 @@ const Profile = () => {
               </button>
             </li>
             <li 
-              className={`nav-item mb-2  mt-3 d-flex align-items-center ${getButtonClassName(
+              className={`nav-item mb-1  mt-2 d-flex align-items-center ${getButtonClassName(
                 "employees"
               )}`}
             >
@@ -77,7 +77,7 @@ const Profile = () => {
               </button>
             </li>
             <li 
-              className={`nav-item mb-2  mt-3 d-flex align-items-center ${getButtonClassName(
+              className={`nav-item mb-1  mt-2 d-flex align-items-center ${getButtonClassName(
                 "team"
               )}`}
             >
@@ -89,7 +89,7 @@ const Profile = () => {
               </button>
             </li>
             <li 
-              className={`nav-item mb-2  mt-3 d-flex align-items-center ${getButtonClassName(
+              className={`nav-item mb-1  mt-2 d-flex align-items-center ${getButtonClassName(
                 "logout"
               )}`}
             >
