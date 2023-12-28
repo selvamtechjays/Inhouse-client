@@ -38,7 +38,7 @@ export const ProjectsContent = ({OpenSidebar}) => {
 
       //for pagenation
       const [currentPage,setCurrentPage] = useState(1)
-      const recordsPerPage = 7;
+      const recordsPerPage = 8;
       const lastIndex = currentPage * recordsPerPage;
       const firstIndex = lastIndex - recordsPerPage;
       const records = projects.slice(firstIndex, lastIndex);
@@ -208,8 +208,26 @@ export const ProjectsContent = ({OpenSidebar}) => {
         <th style={{backgroundColor:"#450c36", color:"white",
         borderTopLeftRadius:"10px",borderBottomLeftRadius:"10px"}} className="p-4" >Project Name </th>
         <th style={{backgroundColor:"#450c36", color:"white",}}  className="p-4" >Client Name</th>
-        <th style={{backgroundColor:"#450c36", color:"white"}}  className="p-4" >Start Date</th>
-        <th style={{backgroundColor:"#450c36", color:"white"}}  className="p-4" >End Date</th>
+        <th style={{backgroundColor:"#450c36", color:"white"}}  className="p-4" >Start Date
+        <div className="arrow">
+         <div class="up-arrow" onclick="clickupArrow()">
+
+         </div>
+         <div class="down-arrow" onclick="clickDownArrow()">
+
+        </div>
+         </div>
+        </th>
+        <th style={{backgroundColor:"#450c36", color:"white"}}  className="p-4" >End Date
+        <div className="arrow">
+         <div class="up-arrow" onclick="clickupArrow()">
+
+         </div>
+         <div class="down-arrow" onclick="clickDownArrow()">
+
+        </div>
+         </div>
+        </th>
         <th style={{backgroundColor:"#450c36", color:"white"}}  className="p-4" >Proj.Type</th>
         <th style={{backgroundColor:"#450c36", color:"white"}}  className="p-4" >#Resources</th>
         <th style={{backgroundColor:"#450c36", color:"white",
