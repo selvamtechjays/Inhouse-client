@@ -40,7 +40,7 @@ export const EmployeesContent = ({OpenSidebar}) => {
 
     //for pagenation
     const [currentPage,setCurrentPage] = useState(1)
-    const recordsPerPage = 7;
+    const recordsPerPage = 8;
     const lastIndex = currentPage * recordsPerPage;
     const firstIndex = lastIndex - recordsPerPage;
     const records = employees.slice(firstIndex, lastIndex);
