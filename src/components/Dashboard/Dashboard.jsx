@@ -20,7 +20,7 @@ export function Dashboard({OpenSidebar}) {
                 <div className="col-xl-8 col-lg-7">
                     <div className="card shadow mb-4">
                         <div className="card-header py-3">
-                            <h6 className="m-0 font-weight-bold text-primary">projects and clients</h6>
+                            <h6 className="m-0 font-weight-bold text-primary">Projects and Clients</h6>
                         </div>
                         <div className="card-body">
                             <div className="chart-bar">
@@ -33,7 +33,7 @@ export function Dashboard({OpenSidebar}) {
                 <div className="col-xl-4 col-lg-7">
                     <div className="card shadow mb-4">
                         <div className="card-header py-3">
-                            <h6 className="m-0 font-weight-bold text-primary">priority</h6>
+                            <h6 className="m-0 font-weight-bold text-primary">Priority</h6>
                         </div>
                         <div className="card-body">
                             <div className="chart-bar">
