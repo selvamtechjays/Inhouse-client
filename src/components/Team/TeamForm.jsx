@@ -102,7 +102,7 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
   return (
     <Modal size="md" show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title><h2>{teamToEdit ? "Edit Team Members" : "Add Team Members"} </h2></Modal.Title>
+        <Modal.Title><h2>{teamToEdit ? "Edit Tracker" : "Add Tracker"} </h2></Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>

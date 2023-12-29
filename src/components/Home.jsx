@@ -63,15 +63,18 @@ export const Home = () => {
     <section style={{ height: "100vh" }} className="position-relative pb-5">
          <ToastContainer />
       <div className="container-fluid">
-        <div className="row pt-5">
+
+        <div className="row pt-4">
           {/* Image Column */}
           <div className="col-12 col-lg-6 pic" >
+          <h4 className="mt-1 " style={{fontWeight:"1rem",fontSize:"medium"}}>Best way to handle your projects and make is simple and effective
+      track the current process and keep updated...</h4>
             {/* Image */}
             <img
-              className="img-fluid w-90"
+              className="img-fluid w-90 mt-3"
               style={{
                 marginBottom: "70px",
-                height: "600px",
+                height: "550px",
                 marginLeft: "0",
                 borderRadius: '15px'
               }}
@@ -103,7 +106,7 @@ export const Home = () => {
               >
                 {/* Check if the user is already signed in */}
                 {value ? navigate('/profile') :
-                  <button
+                  <button style={{marginLeft:"-43%"}}
                     className="btn btn1 color mb-2 custom-button"
                     onClick={handleClick}
                   >
@@ -112,19 +115,12 @@ export const Home = () => {
                   </button>
                 }
 
-                {/* Facebook Button */}
-                <button
-                  className="btn btn2 color mb-2 custom-button"
-                  onClick={() => console.log("Connect with Google")}
-                >
-                  <span className="button-text2">Facebook</span>
-                  <FaFacebookF className="button-icon2" />
-                </button>
+               
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
-  );
+  );
 };
