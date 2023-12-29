@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import { Container, Row, Col, Offcanvas, Button } from "react-bootstrap";
 import "./profile.css";
 import { useNavigate } from "react-router-dom";
-import { DashboardContent } from "../Dashboard/DashboardContent";
 import { ProjectsContent } from "../Projects/ProjectsContent";
 import { EmployeesContent } from "../Employees/EmployeesContent";
 import { TeamContent } from "../Team/TeamContent";
 import { IoMenu } from "react-icons/io5";
+import {Dashboard} from "../Dashboard/Dashboard"
 
 const Profile = () => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -191,7 +191,7 @@ const Profile = () => {
 
           {/* Main Content based on the selected section */}
           {activeSection === "dashboard" && (
-            <DashboardContent OpenSidebar={() => setShowSidebar(true)} />
+            <Dashboard OpenSidebar={() => setShowSidebar(true)} />
           )}
           {activeSection === "projects" && (
             <ProjectsContent OpenSidebar={() => setShowSidebar(true)} />
