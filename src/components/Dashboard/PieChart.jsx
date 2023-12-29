@@ -7,15 +7,15 @@ import { Doughnut } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const data = {
-    labels: ["Male", "Female"],
+    labels: ["Primary", "Secondary"],
     datasets: [
         {
             label: "# of Votes",
             data: [40, 60],
             backgroundColor: [
 
-                "rgba(28,200,138,1)",
-                "rgba(54,185,204,1)"
+                "#5a5a5a",
+                "#450c36"
             ],
             borderColor: "white",
             borderwidth: 500,

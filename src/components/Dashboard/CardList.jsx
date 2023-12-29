@@ -1,29 +1,31 @@
 import React from 'react';
 import { FaBook, FaBookReader, FaUsers, FaUserPlus } from 'react-icons/fa';
+import { GrProjects } from "react-icons/gr";
+import { MdGroups2 } from "react-icons/md";
 import { Card } from './Card';
 
 export function CardList() {
     const cardData = [
         {
-            title: "BORROWED",
+            title: "Total Projects",
             count: 150,
             colors: "success",
-            icon: <FaBook />
+            icon: <GrProjects />
         },
         {
-            title: "RETURNED",
+            title: "Total Employees",
             count: 30,
             colors: "warning",
-            icon: <FaBookReader />
+            icon: <MdGroups2 />
         },
         {
-            title: "VISITORS",
+            title: "Total Clients",
             count: 350,
             colors: "info",
             icon: <FaUsers />
         },
         {
-            title: "NEW MEMBER",
+            title: "NEW Employees",
             count: "58",
             colors: "primary",
             icon: <FaUserPlus />
@@ -31,7 +33,7 @@ export function CardList() {
     ];
 
     return (
-        <div className='row'>
+        <div className='row' >
             {cardData.map((dt, index) => <Card key={index} data={dt} />)}
         </div>
     );

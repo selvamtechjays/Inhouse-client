@@ -39,15 +39,15 @@ export const data = {
     labels,
     datasets: [
         {
-            label: "Visitor",
+            label: "Projects",
             data: [65, 40, 60, 30, 20, 50],
-            backgroundColor: "rgba(54,185,204,1)",
+            backgroundColor: "#450c36",
             barPercentage: 0.4
         },
         {
-            label: "Borrower",
+            label: "Clients",
             data: [30, 20, 15, 10, 25, 8],
-            backgroundColor: "rgba(28,200,138,1)",
+            backgroundColor: "#5a5a5a",
             barPercentage: 0.4
         },
 
