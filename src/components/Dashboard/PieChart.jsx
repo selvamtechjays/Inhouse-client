@@ -52,13 +52,13 @@ export function PieChart() {
             data: pieDatas,
             backgroundColor: [
 
-                "red",
-                "orange",
-                "yellow"
+                "#450c36",
+                "#888787",
+                "#defa25"
             ],
             borderColor: "white",
             borderwidth: 500,
-            cutout: "75%"
+            cutout: "55%"
         }
     ]
 };
