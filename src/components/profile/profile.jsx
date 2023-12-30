@@ -41,7 +41,7 @@ const Profile = () => {
         >
           <ul id="center" className="nav nav-pills flex-column">
             <li 
-              className={`nav-item mb-1  mt-2 d-flex align-items-center ${getButtonClassName(
+              className={`nav-item mb-1  mt-4 d-flex align-items-center ${getButtonClassName(
                 "dashboard"
               )}`}
             >

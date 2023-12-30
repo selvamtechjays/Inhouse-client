@@ -1,21 +1,60 @@
 
 /*doughnutchart*/
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
+import { getallTracker } from "../../service/allapi";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const data = {
-    labels: ["Primary", "Secondary"],
+
+export function PieChart() {
+
+    
+    let pri = [];
+    let sec = [];
+    let low = [];
+    let pieDatas = [];
+
+    const [projects, setProjects] = useState([]);
+
+    // Function to call the API and get all projects
+    const getAllTracker = async () => {
+        const response = await getallTracker(projects)
+        setProjects(response.data)
+        console.log(projects);
+    }
+  
+    pri = projects.map(a => a.priority === "primary")
+
+    const countPrimary = pri.filter(value => value === true).length;
+    console.log(countPrimary);
+
+    sec = projects.map(a => a.priority === "secondary")
+
+    const countSecondary = sec.filter(value => value === true).length;
+    console.log(countSecondary);
+
+    low = projects.map(a => a.priority === "low")
+
+    const countLow = low.filter(value => value === true).length;
+    console.log(countLow);
+
+    pieDatas=[countPrimary,countSecondary,countLow]
+    console.log(pieDatas);
+
+ 
+ const data = {
+    labels: ["Primary", "Secondary","Low"],
     datasets: [
         {
-            label: "# of Votes",
-            data: [40, 60],
+            label: "# of numbers",
+            data: pieDatas,
             backgroundColor: [
 
-                "#5a5a5a",
-                "#450c36"
+                "red",
+                "orange",
+                "yellow"
             ],
             borderColor: "white",
             borderwidth: 500,
@@ -24,6 +63,10 @@ export const data = {
     ]
 };
 
-export function PieChart() {
+        // useEffect hook to fetch all projects on component mount
+        useEffect(() => {
+           
+            getAllTracker();
+        }, []);
     return <Doughnut data={data} />;
 }

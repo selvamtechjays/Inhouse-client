@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -10,6 +10,7 @@ import {
     Legend
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import { getallTracker } from "../../service/allapi";
 
 ChartJS.register(
     CategoryScale,
@@ -20,40 +21,65 @@ ChartJS.register(
     Legend
 );
 
-export const options = {
-    responsive: true,
-    plugins: {
-        legend: {
-            position: "top"
-        },
-        title: {
-            display: false,
-            text: "Chart.js Bar Chart"
-        }
-    }
-};
-
-const labels = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
-
-export const data = {
-    labels,
-    datasets: [
-        {
-            label: "Projects",
-            data: [65, 40, 60, 30, 20, 50],
-            backgroundColor: "#450c36",
-            barPercentage: 0.4
-        },
-        {
-            label: "Clients",
-            data: [30, 20, 15, 10, 25, 8],
-            backgroundColor: "#5a5a5a",
-            barPercentage: 0.4
-        },
-
-    ]
-};
 
 export function BarChart() {
+
+
+    let names = [];
+    let workdone = [];
+    const [projects, setProjects] = useState([]);
+
+    // Function to call the API and get all projects
+    const getAllProjects = async () => {
+        const response = await getallTracker(projects)
+        setProjects(response.data)
+        console.log(projects);
+    }
+    names = projects.map(a => a.name);
+
+    workdone = projects.map(a => a.percentage);
+
+    const labels = names;
+
+    const options = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: "top",
+                display:false
+            },
+            title: {
+                display: true,
+                text: "Employee Name",
+                position:"bottom"
+            }
+        }
+    };
+
+
+    const data = {
+        labels,
+        datasets: [
+            {
+                label: "Project Done %",
+                data: workdone,
+                backgroundColor: "#450c36",
+                barPercentage: 0.4,
+              
+            },
+
+
+
+        ]
+    };
+
+
+
+    // useEffect hook to fetch all projects on component mount
+    useEffect(() => {
+     
+        getAllProjects();
+    }, []);
+
     return <Bar options={options} data={data} />;
 }

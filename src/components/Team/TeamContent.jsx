@@ -50,8 +50,9 @@ export const TeamContent = ({OpenSidebar}) => {
     // Function to call the API and get all projects
     const getallTeam=async()=>{
       const response=await getallTracker(teams)
+      console.log(response.data);
       setTeams(response.data)
-      console.log(teams.data);
+
     }
 
 
@@ -225,7 +226,7 @@ const handleAddTeam = async (newTeam, isEdit) => {
                 <td className="table-cell">{team.employeeCode}</td>
                 <td className="table-cell">{team.techStack}</td>
                 <td className="table-cell">{team.project}</td>
-                <td className="table-cell">{team.percentage}</td>
+                <td className="table-cell">{team.percentage} %</td>
                 <td className="table-cell">{team.priority}</td>
            
                 <td><Link><a style={{color:"#450c36"}}><BsPencilSquare onClick={() => openForm(team)} className=' ms-1 icon'/></a>

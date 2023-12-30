@@ -80,7 +80,7 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
           newErrors.percentage = teamData.percentage === "" ? "Allocated Percentage is required" : isNaN(teamData.percentage) || +teamData.percentage < 0 || +teamData.percentage > 100 ? "Please enter a valid percentage (0-100)" : "";
           break;
         case "priority":
-          newErrors.priority = teamData.priority.trim() === "" ? "Priority is required" : isNaN(teamData.priority) || +teamData.priority < 1 ? "Please enter a valid priority (greater than 0)" : "";
+          newErrors.priority = teamData.priority.trim() === "" ? "Priority is required" : "";
           break;
         default:
           newErrors[name] = "";
@@ -152,8 +152,8 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
                   isInvalid={!!errors.techStack}
                 >
                   <option value="">Select Tech Stack</option>
-                  <option value="TechStack1">Tech Stack 1</option>
-                  <option value="TechStack2">Tech Stack 2</option>
+                  <option value="mern">Mern</option>
+                  <option value="python">Python</option>
                 </Form.Select>
                 <Form.Control.Feedback type="invalid">
                   {errors.techStack}
@@ -207,9 +207,9 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
                   isInvalid={!!errors.priority}
                 >
                   <option value="">Select Priority</option>
-                  <option value="1">Senior</option>
-                  <option value="2">Junior</option>
-                  <option value="3">Intern</option>
+                  <option value="primary">Primary</option>
+                  <option value="secondary">Secondary</option>
+                  <option value="low">Low</option>
                 </Form.Select>
                 <Form.Control.Feedback type="invalid">
                   {errors.priority}
