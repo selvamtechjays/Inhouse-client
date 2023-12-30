@@ -1,10 +1,11 @@
 import React from 'react';
 import { FaFontAwesome } from 'react-icons/fa';
+import "./Dashboard.css"
 
 export function Card({ data }) {
     return (
-        <div className="col-xl-3 col-md-6 mb-4" >
-            <div className={`card border-left-${data.colors} shadow h-100 py-2`}>
+        <div className="col-xl-3 col-md-6 mb-4 " >
+            <div className={`card border-left-${data.colors} shadow h-100 py-2 style-c`}>
                 <div className="card-body" >
                     <div className="row no-gutters align-items-center">
                         <div className="col mr-2">
