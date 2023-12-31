@@ -43,6 +43,7 @@ export function BarChart() {
 
     const options = {
         responsive: true,
+        maintainAspectRatio: true,
         plugins: {
             legend: {
                 position: "top",
