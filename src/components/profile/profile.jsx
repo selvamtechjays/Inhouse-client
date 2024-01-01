@@ -35,7 +35,7 @@ const Profile = () => {
         {/* Sidebar */}
         <Col 
           md={3}
-          className={`dev text-white p-4 h-100 ${
+          className={`dev text-white p-4 h-100  ${
             showSidebar ? "sidebar-responsive" : ""
           }`}
         >
@@ -104,7 +104,7 @@ const Profile = () => {
         </Col>
 
         {/* Main Content */}
-        <Col md={9}  className="p-4  bg-light h-100">
+        <Col md={9}  className="p-4  bg-light h-100 overflow-y-auto">
           <Offcanvas show={showSidebar} onHide={() => setShowSidebar(false)}>
             <Offcanvas.Header
               closeButton

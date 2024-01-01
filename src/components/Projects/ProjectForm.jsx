@@ -10,6 +10,7 @@ const ProjectForm = ({
   handleClose,
   handleAddProject,
   projectToEdit,
+  projectType
 }) => {
   const [projectData, setProjectData] = useState({
     projectName: "",
@@ -162,6 +163,14 @@ const ProjectForm = ({
     }
   };
 
+
+    // Function to call the API and get all projects
+    const getAllProjects=async()=>{
+      const response=await getallProjects(projects)
+      setProjects(response.data)
+      console.log(projects);
+    }
+  
   return (
     <Modal size="md" show={show} onHide={handleClose}>
       <Modal.Header closeButton>

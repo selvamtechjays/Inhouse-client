@@ -3,6 +3,7 @@ import { BarChart } from './BarChart';
 import { CardList } from './CardList';
 import { PieChart } from './PieChart';
 import { BsJustify } from 'react-icons/bs';
+import { LineChart } from './LineChart';
 
 
 export function Dashboard({OpenSidebar}) {
@@ -46,6 +47,19 @@ export function Dashboard({OpenSidebar}) {
                 </div>
 
             </div>
+            <div className="col-xl-12 col-lg-7">
+                    <div className="card shadow mb-4">
+                        <div className="card-header py-3">
+                            <h6 className="m-0 font-weight-bold text-primary">Projects and Deadlines</h6>
+                        </div>
+                        <div className="card-body">
+                            <div className="chart-bar">
+                                <LineChart />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
         </div>
     );
 }
