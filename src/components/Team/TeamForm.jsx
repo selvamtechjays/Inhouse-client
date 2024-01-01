@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Modal, Form, Button, Row, Col } from "react-bootstrap";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getallEmployees, getallProjects } from "../../service/allapi";
 
 const initialTeamState = {
   name: "",
@@ -14,11 +15,17 @@ const initialTeamState = {
   priority: "",
 };
 
+
+
+
+
+
 const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
   const [teamData, setTeamData] = useState(initialTeamState);
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
+    
     if (teamToEdit) {
       setTeamData(teamToEdit);
     } else {
@@ -91,6 +98,25 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
     return Object.values(newErrors).every((error) => error === "");
   };
 
+  const [projects, setProjects] = useState([]);// For storing the list of projects
+
+  const [employees, setEmployees] = useState([]); // For storing the list of employees
+  
+
+   // Function to call the API and get all projects
+   const getAllProjects = async () => {
+    const response = await getallProjects(projects)
+    setProjects(response.data)
+    console.log(projects);
+}
+
+  //define a function to call api
+  const getAllEmployee = async () => {
+    const response = await getallEmployees(employees);
+    setEmployees(response.data);
+    console.log(employees);
+  };
+
   const handleSubmit = () => {
     if (validateForm()) {
       handleAddTeam(teamData, !!teamToEdit);
@@ -98,6 +124,11 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
       handleClose();
     }
   };
+      // useEffect hook to fetch all projects on component mount
+      useEffect(() => {
+        getAllEmployee();
+        getAllProjects();
+    }, []);
 
   return (
     <Modal size="md" show={show} onHide={handleClose}>
@@ -110,33 +141,43 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
             <Col>
               <Form.Group controlId="name">
                 <Form.Label>Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter name"
+                <Form.Select
                   name="name"
                   value={teamData.name}
                   onChange={handleChange}
                   isInvalid={!!errors.name}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errors.name}
-                </Form.Control.Feedback>
+                >
+                          {
+        employees.length > 0 ? employees.map((i,index) => (
+       
+                  <option value={i.name}>{i.name}</option>
+                  )
+                  ):""
+              }
+                
+                </Form.Select>
               </Form.Group>
             </Col>
             <Col>
               <Form.Group controlId="employeeCode">
                 <Form.Label>Employee Code</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter employee code"
+                <Form.Select
+                
                   name="employeeCode"
                   value={teamData.employeeCode}
                   onChange={handleChange}
                   isInvalid={!!errors.employeeCode}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errors.employeeCode}
-                </Form.Control.Feedback>
+                >
+                          {
+        employees.length > 0 ? employees.map((i,index) => (
+       
+                  <option value={i.employeeCode}>{i.name}:{i.employeeCode}</option>
+                  )
+                  ):""
+              }
+                
+                </Form.Select>
+          
               </Form.Group>
             </Col>
           </Row>
@@ -161,22 +202,31 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
               </Form.Group>
             </Col>
             <Col>
+   
               <Form.Group controlId="project">
                 <Form.Label>Project</Form.Label>
+        
                 <Form.Select
                   name="project" className="sel"
                   value={teamData.project}
                   onChange={handleChange}
                   isInvalid={!!errors.project}
                 >
-                  <option value="">Select Project</option>
-                  <option value="Project1">Project 1</option>
-                  <option value="Project2">Project 2</option>
+                          {
+        projects.length > 0 ? projects.map((i,index) => (
+                  <option value={i.projectName}>{i.projectName}</option>
+                  )
+                  ):""
+              }
+                
                 </Form.Select>
+                 
                 <Form.Control.Feedback type="invalid">
                   {errors.project}
                 </Form.Control.Feedback>
               </Form.Group>
+          
+            
             </Col>
           </Row>
 
