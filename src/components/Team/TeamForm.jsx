@@ -101,6 +101,7 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
   const [projects, setProjects] = useState([]);// For storing the list of projects
 
   const [employees, setEmployees] = useState([]); // For storing the list of employees
+  const [loading, setLoading] = useState(false);
   
 
    // Function to call the API and get all projects
@@ -109,13 +110,18 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
     setProjects(response.data)
     console.log(projects);
 }
-
-  //define a function to call api
-  const getAllEmployee = async () => {
-    const response = await getallEmployees(employees);
+// define a function to call the API
+const getAllEmployee = async () => {
+  try {
+    setLoading(true); // Set loading to true before making the API call
+    const response = await getallEmployees();
     setEmployees(response.data);
-    console.log(employees);
-  };
+  } catch (error) {
+    console.error("Error fetching employees:", error);
+  } finally {
+    setLoading(false); // Set loading to false after the API call (success or error)
+  }
+};
 
   const handleSubmit = () => {
     if (validateForm()) {
@@ -147,6 +153,9 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
                   onChange={handleChange}
                   isInvalid={!!errors.name}
                 >
+                  <option value="" disabled>
+            {loading ? "Loading..." : "Employee Name"}
+          </option>
                           {
         employees.length > 0 ? employees.map((i,index) => (
        
@@ -159,26 +168,28 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
               </Form.Group>
             </Col>
             <Col>
-              <Form.Group controlId="employeeCode">
-                <Form.Label>Employee Code</Form.Label>
-                <Form.Select
-                
-                  name="employeeCode"
-                  value={teamData.employeeCode}
-                  onChange={handleChange}
-                  isInvalid={!!errors.employeeCode}
-                >
-                          {
-        employees.length > 0 ? employees.map((i,index) => (
-       
-                  <option value={i.employeeCode}>{i.name}:{i.employeeCode}</option>
-                  )
-                  ):""
-              }
-                
-                </Form.Select>
-          
-              </Form.Group>
+            <Form.Group controlId="employeeCode">
+        <Form.Label>Employee Code</Form.Label>
+        <Form.Select
+          name="employeeCode"
+          value={teamData.employeeCode}
+          onChange={handleChange}
+          isInvalid={!!errors.employeeCode}
+        >
+          <option value="" disabled>
+            {loading ? "Loading..." : "Employee Code"}
+          </option>
+          {employees.length > 0 &&
+            employees.map((employee, index) => (
+              <option key={index} value={employee.employeeCode}>
+                {employee.name}: {employee.employeeCode}
+              </option>
+            ))}
+        </Form.Select>
+        <Form.Control.Feedback type="invalid">
+          {errors.employeeCode}
+        </Form.Control.Feedback>
+      </Form.Group>
             </Col>
           </Row>
 
@@ -212,6 +223,9 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
                   onChange={handleChange}
                   isInvalid={!!errors.project}
                 >
+                         <option value="" disabled>
+            {loading ? "Loading..." : "Select Project..."}
+          </option>
                           {
         projects.length > 0 ? projects.map((i,index) => (
                   <option value={i.projectName}>{i.projectName}</option>

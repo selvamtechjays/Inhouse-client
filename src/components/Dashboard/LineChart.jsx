@@ -56,13 +56,13 @@ export function LineChart() {
   const lineChartData = {
     labels: sortedProjects.map((project) => dateFormat(project.endDate)),
     datasets: [
-      {
-        label: "Start Date",
-        data: startDateData,
-        fill: false,
-        borderColor: "#00cc66", // Green color for start date
-        tension: 0.1,
-      },
+      // {
+      //   label: "Start Date",
+      //   data: startDateData,
+      //   fill: false,
+      //   borderColor: "#00cc66", // Green color for start date
+      //   tension: 0.1,
+      // },
       {
         label: "End Date",
         data: endDateData,
@@ -82,7 +82,7 @@ export function LineChart() {
       },
       title: {
         display: true,
-        text: "Project Start and End Dates",
+        text: "Projects and End Dates",
         position: "bottom",
       },
       tooltip: {
@@ -106,7 +106,7 @@ export function LineChart() {
             const endDate = dateFormat(sortedProjects[index].endDate);
 
             // Display project details in the tooltip
-            return ` (${projectName} - Start: ${startDate}, End: ${endDate})`;
+            return ` (${projectName} - End: ${endDate})`;
           },
         },
       },
