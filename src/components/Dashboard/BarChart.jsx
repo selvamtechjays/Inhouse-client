@@ -82,5 +82,9 @@ export function BarChart() {
         getAllProjects();
     }, []);
 
-    return <Bar options={options} data={data} />;
+    return(
+        <div style={{ width: '100%', height: '300px' }}>
+           <Bar options={options} data={data} />;
+        </div>
+    )
 }

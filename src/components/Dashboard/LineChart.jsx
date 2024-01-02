@@ -10,8 +10,8 @@ import {
   Title,
   Tooltip,
   Legend,
-  ArcElement
-} from 'chart.js';
+  ArcElement,
+} from "chart.js";
 import { dateFormat } from "./dateFormat";
 
 Chartjs.register(
@@ -45,10 +45,16 @@ export function LineChart() {
     return null;
   }
 
-  const sortedProjects = projects.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+  const sortedProjects = projects.sort(
+    (a, b) => new Date(a.startDate) - new Date(b.startDate)
+  );
 
-  const startDateData = sortedProjects.map((project) => new Date(project.startDate));
-  const endDateData = sortedProjects.map((project) => new Date(project.endDate));
+  const startDateData = sortedProjects.map(
+    (project) => new Date(project.startDate)
+  );
+  const endDateData = sortedProjects.map(
+    (project) => new Date(project.endDate)
+  );
   const projectNames = sortedProjects.map((project) => project.projectName);
 
   const currentDate = new Date();
@@ -67,7 +73,9 @@ export function LineChart() {
         label: "End Date",
         data: endDateData,
         fill: false,
-        borderColor: endDateData.some(date => date < currentDate) ? "#ff3333" : "#0066cc", // Red color for approaching deadline
+        borderColor: endDateData.some((date) => date < currentDate)
+          ? "#ff3333"
+          : "#0066cc", // Red color for approaching deadline
         tension: 0.1,
       },
     ],
@@ -75,6 +83,7 @@ export function LineChart() {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: true,
@@ -124,5 +133,10 @@ export function LineChart() {
     },
   };
 
-  return <Line options={options} data={lineChartData} />;
+  return (
+    <div style={{ width: '100%', height: '500px' }}>
+      <Line options={options} data={lineChartData} />
+    </div>
+  );
+  
 }

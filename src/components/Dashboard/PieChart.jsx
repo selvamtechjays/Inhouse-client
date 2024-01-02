@@ -68,5 +68,9 @@ export function PieChart() {
            
             getAllTracker();
         }, []);
-    return <Doughnut data={data} />;
+    return(
+        <div style={{ width: '100%', height: '300px' }}>
+          <Doughnut data={data} />;
+        </div>
+    ) 
 }
