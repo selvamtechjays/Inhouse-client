@@ -3,3 +3,7 @@
 .style-c{
     border-left: 5px solid #450c36;
 }
+
+.chart:hover{
+    transform: scale(1.03);
+  }

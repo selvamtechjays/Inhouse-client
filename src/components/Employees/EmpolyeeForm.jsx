@@ -124,9 +124,9 @@ const EmployeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
           <Row>
             <Col>
               {/* Form group for Name */}
-              <Form.Group controlId="name">
+              <Form.Group controlId="name" >
                 <Form.Label>Name</Form.Label>
-                <Form.Control
+                <Form.Control className="hov"
                   type="text"
                   placeholder="Enter name"
                   name="name"
@@ -140,8 +140,8 @@ const EmployeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
             <Col>
               {/* Form group for Role */}
               <Form.Group controlId="role">
-                <Form.Label>Role</Form.Label>
-                <Form.Control
+                <Form.Label className="hov">Role</Form.Label>
+                <Form.Control className="hov"
                   type="text"
                   placeholder="Enter role"
                   name="role"
@@ -159,7 +159,7 @@ const EmployeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
               {/* Form group for Slack (Email) */}
               <Form.Group controlId="slack">
                 <Form.Label>Slack</Form.Label>
-                <Form.Control
+                <Form.Control className="hov"
                   type="text"
                   placeholder="Enter Your Email"
                   name="slack"
@@ -177,7 +177,7 @@ const EmployeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
               {/* Form group for Employee Code */}
               <Form.Group controlId="employeeCode">
                 <Form.Label>Employee Code</Form.Label>
-                <Form.Control
+                <Form.Control className="hov"
                   type="text"
                   placeholder="Enter employee code"
                   name="employeeCode"

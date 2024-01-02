@@ -18,7 +18,7 @@ export function Dashboard({OpenSidebar}) {
             <CardList />
             <div className="row">
 
-                <div className="col-xl-8 col-lg-7">
+                <div className="col-xl-8 col-lg-7 chart">
                     <div className="card shadow mb-4">
                         <div className="card-header py-3">
                             <h6 className="m-0 font-weight-bold text-primary">Employees and Workdone</h6>
@@ -31,7 +31,7 @@ export function Dashboard({OpenSidebar}) {
                     </div>
 
                 </div>
-                <div className="col-xl-4 col-lg-7">
+                <div className="col-xl-4 col-lg-7 chart">
                     <div className="card shadow mb-4">
                         <div className="card-header py-3">
                             <h6 className="m-0 font-weight-bold text-primary">Projects priority</h6>
@@ -47,7 +47,7 @@ export function Dashboard({OpenSidebar}) {
                 </div>
 
             </div>
-            <div className="col-xl-12 col-lg-7">
+            <div className="col-xl-12 col-lg-7 chart">
                     <div className="card shadow mb-4">
                         <div className="card-header py-3">
                             <h6 className="m-0 font-weight-bold text-primary">Projects and Deadlines</h6>

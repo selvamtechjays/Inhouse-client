@@ -147,7 +147,7 @@ const getAllEmployee = async () => {
             <Col>
               <Form.Group controlId="name">
                 <Form.Label>Name</Form.Label>
-                <Form.Select
+                <Form.Select className="sel hov"
                   name="name"
                   value={teamData.name}
                   onChange={handleChange}
@@ -170,7 +170,7 @@ const getAllEmployee = async () => {
             <Col>
             <Form.Group controlId="employeeCode">
         <Form.Label>Employee Code</Form.Label>
-        <Form.Select
+        <Form.Select className="sel hov"
           name="employeeCode"
           value={teamData.employeeCode}
           onChange={handleChange}
@@ -197,8 +197,8 @@ const getAllEmployee = async () => {
             <Col>
               <Form.Group controlId="techStack">
                 <Form.Label>Tech Stack</Form.Label>
-                <Form.Select
-                  name="techStack" className="sel"
+                <Form.Select 
+                  name="techStack" className="sel hov"
                   value={teamData.techStack}
                   onChange={handleChange}
                   isInvalid={!!errors.techStack}
@@ -218,7 +218,7 @@ const getAllEmployee = async () => {
                 <Form.Label>Project</Form.Label>
         
                 <Form.Select
-                  name="project" className="sel"
+                  name="project" className="sel hov"
                   value={teamData.project}
                   onChange={handleChange}
                   isInvalid={!!errors.project}
@@ -248,7 +248,7 @@ const getAllEmployee = async () => {
             <Col>
               <Form.Group controlId="percentage">
                 <Form.Label>Allocated Percentage</Form.Label>
-                <Form.Control
+                <Form.Control className="hov"
                   type="text"
                   placeholder="Enter allocated percentage"
                   name="percentage"
@@ -265,7 +265,7 @@ const getAllEmployee = async () => {
               <Form.Group controlId="priority">
                 <Form.Label>Priority</Form.Label>
                 <Form.Select
-                  name="priority" className="sel"
+                  name="priority" className="sel hov"
                   value={teamData.priority}
                   onChange={handleChange}
                   isInvalid={!!errors.priority}

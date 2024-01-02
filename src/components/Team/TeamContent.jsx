@@ -157,7 +157,7 @@ const handleAddTeam = async (newTeam, isEdit) => {
       </Row>
       <Row className="mb-2 justify-content-start">
         <Col md="auto" className="text-start">
-          <Dropdown>
+          <Dropdown className="hov">
             <Dropdown.Toggle
            style={{
             fontSize: "16px",
@@ -183,7 +183,7 @@ const handleAddTeam = async (newTeam, isEdit) => {
           </Dropdown>
         </Col>
         <Col md="auto" className="text-start ">
-          <div className="input-wrapper">
+          <div className="input-wrapper hov">
         <IoSearchSharp id="search-icon" />
         <input 
           type="text" 
@@ -196,7 +196,7 @@ const handleAddTeam = async (newTeam, isEdit) => {
           </div>
           </Col>
       </Row>
-      <MDBTable responsive className="mt-3">
+      <MDBTable responsive className="mt-3 h">
       <thead className="tp" >
       <tr   >
      
@@ -229,7 +229,7 @@ const handleAddTeam = async (newTeam, isEdit) => {
                 <td className="table-cell">{team.percentage} %</td>
                 <td className="table-cell">{team.priority}</td>
            
-                <td><Link><a style={{color:"#450c36"}}><BsPencilSquare onClick={() => openForm(team)} className=' ms-1 icon'/></a>
+                <td className="ho"><Link><a style={{color:"#450c36"}}><BsPencilSquare onClick={() => openForm(team)} className=' ms-1 icon'/></a>
               </Link> <a style={{color:"#450c36"}}><BsFillTrash3Fill onClick={() => setSmShow(true)} className='ms-2 icon'/></a>
               <Modal 
         size="sm"

@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { FaFontAwesome } from 'react-icons/fa';
 import "./Dashboard.css"
 import { getallProjects } from '../../service/allapi';
+import "./Card.css"
 
 export function Card({ data }) {
     return (
-        <div className="col-xl-3 col-md-6 mb-4 " >
+        <div className="col-xl-3 col-md-6 mb-4 cards" >
             <div className={`card border-left-${data.colors} shadow h-100 py-2 style-c`}>
                 <div className="card-body" >
                     <div className="row no-gutters align-items-center">

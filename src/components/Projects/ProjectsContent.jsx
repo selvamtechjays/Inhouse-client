@@ -164,7 +164,7 @@ export const ProjectsContent = ({OpenSidebar}) => {
         </Col>
         <Row className="mb-2 justify-content-start">
           <Col md="auto" className="text-start">
-            <Dropdown>
+            <Dropdown className="hov">
               <Dropdown.Toggle
                style={{
                 fontSize: "16px",
@@ -188,7 +188,7 @@ export const ProjectsContent = ({OpenSidebar}) => {
             </Dropdown>
           </Col>
           <Col md="auto" className="text-start ">
-          <div className="input-wrapper">
+          <div className="input-wrapper hov">
         <IoSearchSharp id="search-icon" />
         <input 
           type="text" 
@@ -202,7 +202,7 @@ export const ProjectsContent = ({OpenSidebar}) => {
           </Col>
         </Row>
       </Row>
-      <MDBTable responsive className="p-3">
+      <MDBTable responsive className="p-3 h">
       <thead className="tp" >
       <tr   >
         <th style={{backgroundColor:"#450c36", color:"white",
@@ -249,7 +249,7 @@ export const ProjectsContent = ({OpenSidebar}) => {
               <td>{project.projectType}</td>
               <td>{project.resources}</td>
       
-              <td><Link><a style={{color:"#450c36"}}><BsPencilSquare onClick={() => openForm(project)} className=' ms-1 icon'/></a>
+              <td className="ho"><Link><a style={{color:"#450c36"}}><BsPencilSquare onClick={() => openForm(project)} className=' ms-1 icon'/></a>
               </Link> <a style={{color:"#450c36"}}><BsFillTrash3Fill onClick={() => setSmShow(true)} className='ms-2 icon'/></a>
               <Modal 
         size="sm"
