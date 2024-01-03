@@ -4,7 +4,8 @@ import { CardList } from './CardList';
 import { PieChart } from './PieChart';
 import { BsJustify } from 'react-icons/bs';
 import { LineChart } from './LineChart';
-
+import "./Dashboard.css";
+import avatar from '../../img/avatar.png'
 
 export function Dashboard({OpenSidebar}) {
     return (
@@ -12,8 +13,18 @@ export function Dashboard({OpenSidebar}) {
             <div className='menu-icon'>
             <BsJustify  className='icon' onClick={OpenSidebar}/>
             </div>
+
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 className="h3 mb-0 text-gray-800" >Dashboard</h1>
+
+                <div className='user-con'>
+                <img src={avatar}  alt="" />
+                <div id="text">
+                <h2 id='name'>Mike</h2>
+                <p id='cmpname' >Techjays</p>
+                </div>
+            </div>
+
             </div>
             <CardList />
             <div className="row">

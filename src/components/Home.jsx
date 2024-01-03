@@ -15,48 +15,52 @@ provider;
 
 // Home component definition
 export const Home = () => {
-  // Navigate function from react-router-dom
   const navigate = useNavigate();
 
-  // State to store the user's email
-  const [value, setValue] = useState('');
+// State to store the user's email
+const [value, setValue] = useState('');
 
-  // Click handler for the Google sign-in button using Firebase authentication
-  const handleClick = () => {
-    signInWithPopup(auth, provider)
-      .then((data) => {
-        const allowedDomain = "techjays.com"; // Change this to your desired domain
+// Click handler for the Google sign-in button using Firebase authentication
+const handleClick = () => {
+  signInWithPopup(auth, provider)
+    .then((data) => {
+      const allowedDomain = "techjays.com"; // Change this to your desired domain
 
-        // Check if the user's email includes the required domain
-        if (data.user.email.includes(`@${allowedDomain}`)) {
-          // Set user's email in state and localStorage
-          setValue(data.user.email);
-          localStorage.setItem("email", data.user.email);
-         
-          // Redirect to the profile page
-          navigate("/profile");
-          toast.success("You are logged in successfully.");
-        } else {
-          // User is not allowed to access the application
-          console.log("User is not allowed to access this application");
-          // Sign out the user
-          signOut(auth);
-          // Show Toastify error and redirect to the home page
-          toast.error("You are not allowed to access this application.");
-          navigate("/");
-        }
-      })
-      .catch((error) => {
-        // Handle errors
-        console.error("Error signing in:", error.message);
-        // Show Toastify error
-        toast.error("Error signing in. Please try again.");
-      });
-  };
-  // useEffect to set the initial value based on the email stored in localStorage
-  useEffect(() => {
-    setValue(localStorage.getItem('email'));
-  }, []); // Empty dependency array ensures it runs only once on mount
+      // Check if the user's email includes the required domain
+      if (data.user.email.includes(`@${allowedDomain}`)) {
+        // Set user's email in state and localStorage
+        setValue(data.user.email);
+        localStorage.setItem("email", data.user.email);
+       
+        // Redirect to the profile page
+        navigate("/profile");
+        toast.success("You are logged in successfully.");
+      } else {
+        // User is not allowed to access the application
+        console.log("User is not allowed to access this application");
+        // Sign out the user
+        signOut(auth);
+        // Show Toastify error and redirect to the home page
+        toast.error("You are not allowed to access this application.");
+        navigate("/");
+      }
+    })
+    .catch((error) => {
+      // Handle errors
+      console.error("Error signing in:", error.message);
+      // Show Toastify error
+      toast.error("Error signing in. Please try again.");
+    });
+};
+
+// useEffect to set the initial value based on the email stored in localStorage
+useEffect(() => {
+  const storedEmail = localStorage.getItem('email');
+  if (storedEmail) {
+    setValue(storedEmail);
+  }
+}, []);
+
 
   // JSX rendering
   return (
