@@ -1,7 +1,7 @@
 // Importing the necessary styles and components
 import "./App.css";
 import { useState } from 'react'
-import { Route, Routes } from "react-router-dom";
+import { Navigate,Route, Routes } from "react-router-dom";
 import { Home } from "./components/Home";
 import Profile from "./components/profile/profile";
 
@@ -23,10 +23,19 @@ function App() {
 
         {/* Route for the profile page */}
         <Route path="/profile" element
-        ={<Profile openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar} />} />
+        ={<ProtectedRoutes><Profile openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar} /></ProtectedRoutes>} />
       </Routes>
     </>
   );
+}
+
+export function ProtectedRoutes(props){
+  if(localStorage.getItem('email')){
+    return props.children
+  }
+  else{
+    return <Navigate to="/"/>
+  }
 }
 
 // Exporting the App component as the default export

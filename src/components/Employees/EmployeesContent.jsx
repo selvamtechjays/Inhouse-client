@@ -174,7 +174,7 @@ export const EmployeesContent = ({OpenSidebar}) => {
           <h1 className="mb-4">Employees</h1>
         </Col>
         <Col className="text-end">
-          <Button
+          <Button className="hov"
             variant="dark"
             onClick={() => openForm(null)}
             style={{ fontSize: "17px", width: "150px" }}
@@ -184,7 +184,7 @@ export const EmployeesContent = ({OpenSidebar}) => {
         </Col>
         <Row className="mb-2 justify-content-start">
           <Col md="auto" className="text-start">
-            <Dropdown>
+            <Dropdown className="hov">
               <Dropdown.Toggle
                  style={{
                   fontSize: "16px",
@@ -226,7 +226,7 @@ export const EmployeesContent = ({OpenSidebar}) => {
             </Dropdown>
           </Col>
           <Col md="auto" className="text-start ">
-          <div className="input-wrapper">
+          <div className="input-wrapper hov">
         <IoSearchSharp id="search-icon" />
         <input 
           type="text" 
@@ -240,7 +240,7 @@ export const EmployeesContent = ({OpenSidebar}) => {
           </Col>
         </Row>
       </Row>
-      <MDBTable responsive>
+      <MDBTable responsive className="h">
         <thead className="tp">
           <tr>
             <th
@@ -309,7 +309,7 @@ export const EmployeesContent = ({OpenSidebar}) => {
                 <td>{employee.role}</td>
                 <td>{employee.employeeCode}</td>
                 <td>{employee.slack}</td>
-                <td>
+                <td className="ho">
                   <Link>
                     <a style={{color:"#450c36"}}>
                       <BsPencilSquare

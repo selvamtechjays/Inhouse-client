@@ -185,7 +185,7 @@ const ProjectForm = ({
             <Col>
               <Form.Group controlId="formProjectName">
                 <Form.Label>Project Name</Form.Label>
-                <Form.Control
+                <Form.Control className="hov"
                   type="text"
                   placeholder="Enter project name"
                   name="projectName"
@@ -200,7 +200,7 @@ const ProjectForm = ({
 
               <Form.Group controlId="formStartDate">
                 <Form.Label>Start Date</Form.Label>
-                <Form.Control
+                <Form.Control className="hov"
                   type="date"
                   placeholder="Enter start date"
                   name="startDate"
@@ -214,15 +214,15 @@ const ProjectForm = ({
 
                 <Form.Group controlId="formProjectType">
                   <Form.Label>Project Type</Form.Label>
-                  <Form.Select
-                    name="projectType" className="sel"
+                  <Form.Select 
+                    name="projectType" className="sel hov"
                     value={projectData.projectType}
                     onChange={handleChange}
                     isInvalid={!!errors.projectType}
                   >
                     <option value="">Select Project Type</option>
-                    <option value="Type1">Type 1</option>
-                    <option value="Type2">Type 2</option>
+                    <option value="Type1">Internal Project -techjays</option>
+                    <option value="Type2">External Project -client</option>
                   </Form.Select>
                   <Form.Control.Feedback type="invalid">
                     {errors.projectType}
@@ -235,7 +235,7 @@ const ProjectForm = ({
             <Col>
               <Form.Group controlId="formClientName">
                 <Form.Label>Client Name</Form.Label>
-                <Form.Control
+                <Form.Control className="hov"
                   type="text"
                   placeholder="Enter client name"
                   name="clientName"
@@ -250,7 +250,7 @@ const ProjectForm = ({
 
               <Form.Group controlId="formEndDate">
                 <Form.Label>End Date</Form.Label>
-                <Form.Control
+                <Form.Control className="hov"
                   type="date"
                   placeholder="Enter end date"
                   name="endDate"
@@ -264,7 +264,7 @@ const ProjectForm = ({
 
                 <Form.Group controlId="formResources">
                   <Form.Label>Resources</Form.Label>
-                  <Form.Control
+                  <Form.Control className="hov"
                     type="text"
                     placeholder="Enter resources"
                     name="resources"

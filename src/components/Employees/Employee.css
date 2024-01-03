@@ -105,6 +105,22 @@ input:focus{
 }
 
 
+.hov:hover{
+  transform: scale(1.03);
+}
+
+button:hover{
+  transform: scale(1.03);
+}
+
+
+.ho:hover{
+  transform: scale(1.09);
+}
+
+.h:hover{
+  transform: scale(1.01);
+}
 
 /* Small <= 768px */
   

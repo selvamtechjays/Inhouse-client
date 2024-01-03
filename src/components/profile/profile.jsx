@@ -1,5 +1,7 @@
 // Profile.js
+
 import React, { useEffect, useState } from "react";
+
 import { Container, Row, Col, Offcanvas, Button } from "react-bootstrap";
 import "./profile.css";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +17,7 @@ const Profile = () => {
   const [userInactive, setUserInactive] = useState(false);
   const navigate = useNavigate();
 
-// Set the inactivity timeout duration in milliseconds (e.g., 15 minutes)
+// Set the inactivity timeout duration in milliseconds (e.g., 1 hour)
 const inactivityTimeout = 60 * 60 * 1000;
 
 useEffect(() => {
@@ -36,6 +38,7 @@ useEffect(() => {
       resetTimer();
     }
   };
+
 
   // Attach event listeners for user activity
   window.addEventListener("mousemove", handleUserActivity);
@@ -65,9 +68,35 @@ const handleLogout = () => {
 };
 
 
+
   const getButtonClassName = (section) => {
     return `nav-link text-white ${activeSection === section ? "active" : ""}`;
   };
+
+
+  function clearStorage() {
+
+    let session = sessionStorage.getItem('register');
+
+    if (session == null) {
+    
+        localStorage.removeItem('email');
+
+    }
+    sessionStorage.setItem('register', 1);
+}
+window.addEventListener('load', clearStorage);
+
+  // onbeforeunload = function() { localStorage. removeItem('email'); return ''; };
+
+  useEffect(() => {
+
+  clearStorage()
+   
+    // onbeforeunload();
+
+  }, []);
+
 
   return (
     <Container fluid className="profile-container ">

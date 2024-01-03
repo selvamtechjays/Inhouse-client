@@ -1,0 +1,9 @@
+
+.cards:hover{
+    transform: scale(1.03);
+  }
+  .tooltip-inner {
+    background-color: #450c36;
+    color: white;
+    font-weight: bold;
+  }
