@@ -5,14 +5,20 @@ import { PieChart } from './PieChart';
 import { BsJustify } from 'react-icons/bs';
 import { LineChart } from './LineChart';
 import "./Dashboard.css";
-import avatar from '../../img/avatar.png'
+
 
 export function Dashboard({OpenSidebar}) {
+   
+    const [loginData, setLoginData] = useState('image');
+    const [login, setLogin] = useState('image');
 
-    const [loginData, setLoginData] = useState('');
+  
 
     const getEmailFromLocalStorage = () => {
       const userEmail = localStorage.getItem('email');
+      const loginImage=localStorage.getItem('image')
+      setLogin(loginImage)
+    console.log(loginImage);
   
       if (userEmail?.includes('@')) {
         const slicedEmail = userEmail.slice(0, userEmail.indexOf('@'));
@@ -21,7 +27,8 @@ export function Dashboard({OpenSidebar}) {
         setLoginData('Name Not Found');
       }
     };
-  
+
+
     useEffect(() => {
       getEmailFromLocalStorage();
     }, []);
@@ -35,7 +42,7 @@ export function Dashboard({OpenSidebar}) {
                 <h1 className="h3 mb-0 text-gray-800" >Dashboard</h1>
 
                 <div className='user-con'>
-                <img src={avatar}  alt="" />
+                <img src={login}  alt="" />
                 <div id="text">
                 <h2 id='name'>{loginData}</h2>
                 <p id='cmpname' >Techjays</p>

@@ -74,28 +74,28 @@ const handleLogout = () => {
   };
 
 
-  function clearStorage() {
+//   function clearStorage() {
 
-    let session = sessionStorage.getItem('register');
+//     let session = sessionStorage.getItem('register');
 
-    if (session == null) {
+//     if (session == null) {
     
-        localStorage.removeItem('email');
+//         localStorage.removeItem('email');
 
-    }
-    sessionStorage.setItem('register', 1);
-}
-window.addEventListener('load', clearStorage);
+//     }
+//     sessionStorage.setItem('register', 1);
+// }
+// window.addEventListener('load', clearStorage);
 
   // onbeforeunload = function() { localStorage. removeItem('email'); return ''; };
 
-  useEffect(() => {
+  // useEffect(() => {
 
-  clearStorage()
+  // clearStorage()
    
     // onbeforeunload();
 
-  }, []);
+  // }, []);
 
 
   return (
