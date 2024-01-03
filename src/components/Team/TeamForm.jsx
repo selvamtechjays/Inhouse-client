@@ -37,7 +37,7 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
     // setEmpcode(response.data)
    
   }
-      console.log(empcode);
+      // console.log(empcode);
   useEffect(() => {
     
     if (teamToEdit) {
@@ -74,12 +74,12 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
         errorMessage = value === "" ? "Allocated Percentage is required" : isNaN(value) || +value < 0 || +value > 100 ? "Please enter a valid percentage (0-100)" : "";
         break;
       case "priority":
-        errorMessage = value.trim() === "" ? "Priority is required" : isNaN(value) || +value < 1 ? "Please enter a valid priority (greater than 0)" : "";
+        errorMessage = value.trim() === "" ? "Priority is required"  : "";
         break;
       default:
         errorMessage = "";
     }
-
+console.log(teamData);
     setTeamData((prevData) => ({ ...prevData, [name]: value }));
     setErrors((prevErrors) => ({ ...prevErrors, [name]: errorMessage }));
   };

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BarChart } from './BarChart';
 import { CardList } from './CardList';
 import { PieChart } from './PieChart';
@@ -8,6 +8,23 @@ import "./Dashboard.css";
 import avatar from '../../img/avatar.png'
 
 export function Dashboard({OpenSidebar}) {
+
+    const [loginData, setLoginData] = useState('');
+
+    const getEmailFromLocalStorage = () => {
+      const userEmail = localStorage.getItem('email');
+  
+      if (userEmail?.includes('@')) {
+        const slicedEmail = userEmail.slice(0, userEmail.indexOf('@'));
+        setLoginData(slicedEmail);
+      } else {
+        setLoginData('Name Not Found');
+      }
+    };
+  
+    useEffect(() => {
+      getEmailFromLocalStorage();
+    }, []);
     return (
         <div className="container-fluid p-3">
             <div className='menu-icon'>
@@ -20,7 +37,7 @@ export function Dashboard({OpenSidebar}) {
                 <div className='user-con'>
                 <img src={avatar}  alt="" />
                 <div id="text">
-                <h2 id='name'>Mike</h2>
+                <h2 id='name'>{loginData}</h2>
                 <p id='cmpname' >Techjays</p>
                 </div>
             </div>

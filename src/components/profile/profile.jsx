@@ -1,5 +1,5 @@
 // Profile.js
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Container, Row, Col, Offcanvas, Button } from "react-bootstrap";
 import "./profile.css";
 import { useNavigate } from "react-router-dom";
@@ -28,6 +28,11 @@ const Profile = () => {
   const getButtonClassName = (section) => {
     return `nav-link text-white ${activeSection === section ? "active" : ""}`;
   };
+
+  useEffect(() => {
+    localStorage.removeItem("email");
+  }, []);
+
 
   return (
     <Container fluid className="profile-container ">
