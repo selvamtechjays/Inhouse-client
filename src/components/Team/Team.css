@@ -102,6 +102,8 @@ input:focus{
   font-size: 24px;
 }
 /* Small <= 768px */
+
+
   
 @media(max-width: 700px) {
   .modal-content{

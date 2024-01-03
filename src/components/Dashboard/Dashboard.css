@@ -4,9 +4,13 @@
     border-left: 5px solid #450c36;
 }
 
-.chart:hover{
-    transform: scale(1.03);
+.chart:hover {
+    transform: scale(1.02);
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f5f5f5; 
   }
+  
   .user-con{
     height: 100px;
     display: flex;

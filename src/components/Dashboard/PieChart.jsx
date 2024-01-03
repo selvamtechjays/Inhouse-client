@@ -70,7 +70,7 @@ export function PieChart() {
         }, []);
     return(
         <div style={{ width: '100%', height: '300px' }}>
-          <Doughnut data={data} />;
+          <Doughnut data={data} />
         </div>
     ) 
 }
