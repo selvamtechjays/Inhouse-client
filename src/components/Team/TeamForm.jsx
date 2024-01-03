@@ -61,9 +61,9 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
   
         errorMessage = value.trim() === "" ? "Name is required" : !/^[a-zA-Z\s]+$/.test(value) ? "Name must be a string without numeric characters" : "";
         break;
-      case "employeeCode":
-        errorMessage = value.trim() === "" ? "Employee Code is required" : !/^\d+$/.test(value) ? "Employee Code must contain only numerical values" : "";
-        break;
+      // case "employeeCode":
+      //   errorMessage = value.trim() === "" ? "Employee Code is required" : !/^\d+$/.test(value) ? "Employee Code must contain only numerical values" : "";
+      //   break;
       case "techStack":
         errorMessage = value.trim() === "" ? "Tech Stack is required" : "";
         break;
@@ -93,9 +93,9 @@ console.log(teamData);
         case "name":
           newErrors.name = teamData.name.trim() === "" ? "Name is required" : !/^[a-zA-Z\s]+$/.test(teamData.name) ? "Name must be a string without numeric characters" : "";
           break;
-        case "employeeCode":
-          newErrors.employeeCode = teamData.employeeCode === "" ? "Employee Code is required" : !/^\d+$/.test(teamData.employeeCode) ? "Employee Code must contain only numerical values" : "";
-          break;
+        // case "employeeCode":
+          // newErrors.employeeCode = teamData.employeeCode === "" ? "Employee Code is required" : !/^\d+$/.test(teamData.employeeCode) ? "Employee Code must contain only numerical values" : "";
+          // break;
         case "techStack":
           newErrors.techStack = teamData.techStack.trim() === "" ? "Tech Stack is required" : "";
           break;
@@ -142,14 +142,20 @@ const getAllEmployee = async () => {
   }
 };
   
+const handleSubmit = () => {
+  if (validateForm()) {
+    // Include empcode in teamData before calling handleAddTeam
+    const updatedTeamData = {
+      ...teamData,
+      employeeCode: empcode.employeeCode
+    };
 
-  const handleSubmit = () => {
-    if (validateForm()) {
-      handleAddTeam(teamData, !!teamToEdit);
-      setTeamData(initialTeamState);
-      handleClose();
-    }
-  };
+    handleAddTeam(updatedTeamData, !!teamToEdit);
+    setTeamData(initialTeamState);
+    setEmpcode('');
+    handleClose();
+  }
+};
       // useEffect hook to fetch all projects on component mount
       useEffect(() => {
         getAllEmployee();
