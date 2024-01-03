@@ -53,6 +53,8 @@ export const Home = () => {
         toast.error("Error signing in. Please try again.");
       });
   };
+
+  
   // useEffect to set the initial value based on the email stored in localStorage
   useEffect(() => {
     setValue(localStorage.getItem('email'));
