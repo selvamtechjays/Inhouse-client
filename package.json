@@ -24,7 +24,7 @@
     "mdbreact": "^5.2.0",
     "moment": "^2.29.4",
     "react": "^18.2.0",
-    "react-bootstrap": "^2.9.1",
+    "react-bootstrap": "^2.9.2",
     "react-chartjs-2": "^5.2.0",
     "react-datepicker": "^4.24.0",
     "react-dom": "^18.2.0",
