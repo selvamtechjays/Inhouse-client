@@ -25,12 +25,32 @@ const Profile = () => {
     navigate("/");
   };
 
+
+
   const getButtonClassName = (section) => {
     return `nav-link text-white ${activeSection === section ? "active" : ""}`;
   };
+  function clearStorage() {
+
+    let session = sessionStorage.getItem('register');
+
+    if (session == null) {
+    
+        localStorage.removeItem('email');
+
+    }
+    sessionStorage.setItem('register', 1);
+}
+window.addEventListener('load', clearStorage);
+
+  // onbeforeunload = function() { localStorage. removeItem('email'); return ''; };
 
   useEffect(() => {
-    localStorage.removeItem("email");
+
+  clearStorage()
+   
+    // onbeforeunload();
+
   }, []);
 
 

@@ -32,6 +32,7 @@ export const Home = () => {
           // Set user's email in state and localStorage
           setValue(data.user.email);
           localStorage.setItem("email", data.user.email);
+          sessionStorage.setItem("email", data.user.email);
 
           // Redirect to the profile page
           navigate("/profile");
