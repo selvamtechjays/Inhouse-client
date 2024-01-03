@@ -6,6 +6,8 @@ import "./Card.css"
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 
+//Added tooltip function
+
 export function Card({ data }) {
   const renderTooltip = (title) => (
     <Tooltip id={title}>{title}</Tooltip>
