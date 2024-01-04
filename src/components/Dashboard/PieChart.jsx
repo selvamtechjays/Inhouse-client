@@ -52,9 +52,9 @@ export function PieChart() {
             data: pieDatas,
             backgroundColor: [
 
-                "#450c36",
-                "#888787",
-                "#defa25"
+                "lightgreen",
+                "gold",
+                "#FFCCCB"
             ],
             borderColor: "white",
             borderwidth: 500,

@@ -29,6 +29,7 @@ export function BarChart() {
     let workdone = [];
     const [projects, setProjects] = useState([]);
 
+    
     // Function to call the API and get all projects
     const getAllProjects = async () => {
         const response = await getallTracker(projects)
@@ -62,16 +63,22 @@ export function BarChart() {
         labels,
         datasets: [
             {
-                label: "Project Done %",
-                data: workdone,
-                backgroundColor: "#450c36",
-                barPercentage: 0.4,
-              
-            },
+            label: "Project Done %",
+            data: workdone,
+            backgroundColor: workdone.map((value) => {
+              if (value > 75) {
+                return "lightgreen"; // Higher than 75% - green
+              } else if (value > 45) {
+                return "gold"; // Between 45% and 75% - yellow
+              } else {
+                return "#FFCCCB"; // Below 45% - light red
+              }
+            }),
+            barPercentage: 0.4,
+          },
 
 
-
-        ]
+        ],
     };
 
 
@@ -84,7 +91,7 @@ export function BarChart() {
 
     return(
         <div style={{ width: '100%', height: '300px' }}>
-           <Bar options={options} data={data} />;
+           <Bar options={options} data={data} />
         </div>
     )
 }

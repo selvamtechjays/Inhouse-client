@@ -17,7 +17,7 @@
   .tp{
   
     background-color: #450c36;
-    color: #defa25;
+    color: #3df04f;
   }
   .modal-content{
     -webkit-border-radius: 0px;
@@ -26,8 +26,13 @@
     padding: 7%;
     width: 116%;
 } 
+.modal-backdrop:not(#_) ~ .modal-backdrop,
+body:not(.modal-open) .modal-backdrop {
+  display: none;
+}
 .modal-header {
   border: none;
+
 }
 
 .form-control{
