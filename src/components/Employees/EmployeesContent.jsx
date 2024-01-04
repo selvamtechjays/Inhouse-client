@@ -293,7 +293,7 @@ export const EmployeesContent = ({OpenSidebar}) => {
               return employeeValue.includes(searchTerm);
             })
             .map((employee, index) => (
-              <tr key={index}>
+              <tr key={index} className="table-row">
                 <td style={{ display: "flex", alignItems: "center" }}>
                   <div style={{ marginRight: "8px" }}>
                     {employee.slack === localStorage.getItem("email") ? (

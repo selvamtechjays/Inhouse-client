@@ -74,28 +74,28 @@ const handleLogout = () => {
   };
 
 
-//   function clearStorage() {
+  function clearStorage() {
 
-//     let session = sessionStorage.getItem('register');
+    let session = sessionStorage.getItem('register');
 
-//     if (session == null) {
+    if (session == null) {
     
-//         localStorage.removeItem('email');
+        localStorage.removeItem('email');
 
-//     }
-//     sessionStorage.setItem('register', 1);
-// }
-// window.addEventListener('load', clearStorage);
+    }
+    sessionStorage.setItem('register', 1);
+}
+window.addEventListener('load', clearStorage);
 
-  // onbeforeunload = function() { localStorage. removeItem('email'); return ''; };
+  onbeforeunload = function() { localStorage. removeItem('email'); return ''; };
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  // clearStorage()
+  clearStorage()
    
-    // onbeforeunload();
+    onbeforeunload();
 
-  // }, []);
+  }, []);
 
 
   return (
@@ -116,7 +116,7 @@ const handleLogout = () => {
             >
               <button
                 className={getButtonClassName("dashboard")}
-                onClick={() => handleSectionChange("dashboard")}
+                onClick={() => handleSectionChange("dashboard")} title="Dashboard"
               >
                 Dashboard
               </button>
@@ -128,7 +128,7 @@ const handleLogout = () => {
             >
               <button
                 className={getButtonClassName("projects")}
-                onClick={() => handleSectionChange("projects")}
+                onClick={() => handleSectionChange("projects")} title="Projects"
               >
                 Projects
               </button>
@@ -140,7 +140,7 @@ const handleLogout = () => {
             >
               <button
                 className={getButtonClassName("employees")}
-                onClick={() => handleSectionChange("employees")}
+                onClick={() => handleSectionChange("employees")} title="Team Members"
               >
                 Team Members
               </button>
@@ -152,7 +152,7 @@ const handleLogout = () => {
             >
               <button
                 className={getButtonClassName("team")}
-                onClick={() => handleSectionChange("team")}
+                onClick={() => handleSectionChange("team")} title="Tracker"
               >
                 Tracker
               </button>
@@ -164,7 +164,7 @@ const handleLogout = () => {
             >
               <button
                 className={getButtonClassName("logout")}
-                onClick={handleLogout}
+                onClick={handleLogout} title="Tracker"
               >
                 Logout
               </button>
