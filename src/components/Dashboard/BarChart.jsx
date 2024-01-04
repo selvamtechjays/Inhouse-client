@@ -29,6 +29,7 @@ export function BarChart() {
     let workdone = [];
     const [projects, setProjects] = useState([]);
 
+    
     // Function to call the API and get all projects
     const getAllProjects = async () => {
         const response = await getallTracker(projects)
@@ -64,7 +65,9 @@ export function BarChart() {
             {
                 label: "Project Done %",
                 data: workdone,
-                backgroundColor: "#450c36",
+                backgroundColor: ["lightgreen",
+                "gold",
+                "#FFCCCB"],
                 barPercentage: 0.4,
               
             },

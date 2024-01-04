@@ -54,7 +54,7 @@ export function PieChart() {
 
                 "lightgreen",
                 "gold",
-                "lightblue"
+                "#FFCCCB"
             ],
             borderColor: "white",
             borderwidth: 500,
