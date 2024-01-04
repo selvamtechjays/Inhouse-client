@@ -17,44 +17,66 @@ const Profile = () => {
   const [userInactive, setUserInactive] = useState(false);
   const navigate = useNavigate();
 
-// Set the inactivity timeout duration in milliseconds (e.g., 1 hour)
-const inactivityTimeout = 60 * 60 * 1000;
-
-useEffect(() => {
-  let inactivityTimer;
-
-  const resetTimer = () => {
-    clearTimeout(inactivityTimer);
-    inactivityTimer = setTimeout(() => {
-      // User is considered inactive, perform logout
+  const inactivityTimeout = 60 * 60 * 1000;
+  const lastActiveKey = 'lastActive';
+  
+  useEffect(() => {
+    let inactivityTimer;
+  
+    const getLastActiveTimestamp = () => {
+      return parseInt(localStorage.getItem(lastActiveKey), 10) || Date.now();
+    };
+  
+    const setLastActiveTimestamp = () => {
+      localStorage.setItem(lastActiveKey, Date.now().toString());
+    };
+  
+    const resetTimer = () => {
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(() => {
+        // User is considered inactive, perform logout
+        handleLogout();
+      }, inactivityTimeout);
+    };
+  
+    const handleUserActivity = () => {
+      // Reset the inactivity timer on user activity
+      if (userInactive) {
+        setUserInactive(false);
+        setLastActiveTimestamp();
+        resetTimer();
+      }
+    };
+  
+    const handleBeforeUnload = () => {
+      setLastActiveTimestamp();
+    };
+  
+    // Attach event listeners for user activity
+    window.addEventListener('mousemove', handleUserActivity);
+    window.addEventListener('keydown', handleUserActivity);
+    window.addEventListener('beforeunload', handleBeforeUnload);
+  
+    // Calculate elapsed time since last activity
+    const elapsed = Date.now() - getLastActiveTimestamp();
+  
+    // Check if the elapsed time exceeds the inactivity timeout
+    if (elapsed > inactivityTimeout) {
       handleLogout();
-    }, inactivityTimeout);
-  };
-
-  const handleUserActivity = () => {
-    // Reset the inactivity timer on user activity
-    if (userInactive) {
-      setUserInactive(false);
+    } else {
+      // Initialize the inactivity timer
       resetTimer();
     }
-  };
-
-
-  // Attach event listeners for user activity
-  window.addEventListener("mousemove", handleUserActivity);
-  window.addEventListener("keydown", handleUserActivity);
-
-  // Initialize the inactivity timer
-  resetTimer();
-
-  // Clear the timer and remove event listeners on component unmount
-  return () => {
-    clearTimeout(inactivityTimer);
-    window.removeEventListener("mousemove", handleUserActivity);
-    window.removeEventListener("keydown", handleUserActivity);
-  };
-}, [userInactive]);
-
+  
+    // Clear the timer and remove event listeners on component unmount
+    return () => {
+      clearTimeout(inactivityTimer);
+      window.removeEventListener('mousemove', handleUserActivity);
+      window.removeEventListener('keydown', handleUserActivity);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [userInactive]);
+  
 const handleSectionChange = (section) => {
   setActiveSection(section);
   setShowSidebar(false);
@@ -87,15 +109,15 @@ const handleLogout = () => {
 // }
 // window.addEventListener('load', clearStorage);
 
-  // onbeforeunload = function() { localStorage. removeItem('email'); return ''; };
+//   onbeforeunload = function() { localStorage. removeItem('email'); return ''; };
 
-  // useEffect(() => {
+//   useEffect(() => {
 
-  // clearStorage()
+//   clearStorage()
    
-    // onbeforeunload();
+//     onbeforeunload();
 
-  // }, []);
+//   }, []);
 
 
   return (
