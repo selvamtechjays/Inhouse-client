@@ -37,6 +37,8 @@ export const EmployeesContent = ({OpenSidebar}) => {
   const [filterType, setFilterType] = useState("name"); // Default filter type
   const [filterText, setFilterText] = useState("Filter"); // Default filter text
   const [errors, setErrors] = useState({}); // For handling form validation errors
+ 
+
   const [deleteEmployeeId, setDeleteEmployeeId] = useState(null);
 
     //for pagenation
@@ -71,6 +73,12 @@ export const EmployeesContent = ({OpenSidebar}) => {
     setFormOpen(false);
   };
 
+    //function for delete Project
+  // Function to handle clicking on the delete button
+  const handleDeleteButtonClick = (employeeId) => {
+    setDeleteEmployeeId(employeeId);
+    setSmShow(true);
+  };
   // Function to fetch all employees
   //define a function to call api
   const getAllEmployee = async () => {
@@ -140,34 +148,30 @@ export const EmployeesContent = ({OpenSidebar}) => {
   
 
 
-  // Function to handle clicking on the delete button
-  const handleDeleteButtonClick = (employeeId) => {
-    setDeleteEmployeeId(employeeId);
-    setSmShow(true);
-  };
 
   // Function to handle deleting an employee
   const handleDeleteEmployee = async (id) => {
     try {
-      // API call for delete Employee
-      const response = await deleteEmployee(id);
-
-      if (response.status === 200) {
-        toast.success(response.data.message);
-
-        // Update the employees list after successful deletion
-        const updatedEmployees = employees.filter((employee) => employee._id !== id);
-        setEmployees(updatedEmployees);
-
-        // Reset deleteEmployeeId and close the delete confirmation modal
-        setDeleteEmployeeId(null);
-        setSmShow(false);
-      } else {
-        toast.error(response.data.message);
-      }
-    } catch (error) {
-      console.error("Error deleting employee", error);
-      toast.error("Error deleting employee. Please try again.");
+      
+        // API call for delete Employee
+        const response = await deleteEmployee(id);
+  
+        if (response.status === 200) {
+          toast.success(response.data.message);
+  
+          // Update the employees list after successful deletion
+          const updatedEmployees = employees.filter((employee) => employee._id !== id);
+          setEmployees(updatedEmployees);
+  
+          // Reset deleteEmployeeId and close the delete confirmation modal
+          setDeleteEmployeeId(null);
+          setSmShow(false);
+        } else {
+          toast.error(response.data.message);
+        }
+      } catch (error) {
+        console.error("Error deleting employee", error);
+        toast.error("Error deleting employee. Please try again.");
     }
   };
   // Function to handle selecting a filter type

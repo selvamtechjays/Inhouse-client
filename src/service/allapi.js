@@ -16,6 +16,10 @@ export const getallEmployees=async(body)=>{
 export const getSingleEmployee=async(category)=>{
     return await commonRequest("GET",`${BASE_URL}/api/get-singleEmp/${category}`,"")
 }
+//Get a single Employee
+export const getSingleEmpEdit=async(v)=>{
+    return await commonRequest("GET",`${BASE_URL}/api/get-singleEmpedit/${v}`,"")
+}
 
 //Update An Employee
 export const updateEmployee=async(id,employeeData)=>{

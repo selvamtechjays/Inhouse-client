@@ -59,6 +59,7 @@ const EmployeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
       default:
         errorMessage = "";
     }
+    console.log(employeeData);
 
     setEmployeeData((prevData) => ({
       ...prevData,

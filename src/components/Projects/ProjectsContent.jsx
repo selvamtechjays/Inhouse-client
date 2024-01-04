@@ -33,6 +33,9 @@ export const ProjectsContent = ({ OpenSidebar }) => {
   const [search, setSearch] = useState('');
   const [filterType, setFilterType] = useState('projectName');
   const [filterText, setFilterText] = useState('Filter');
+  const [deleteEmployeeId, setDeleteEmployeeId] = useState(null);
+
+
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 8;
   const lastIndex = currentPage * recordsPerPage;
@@ -71,6 +74,7 @@ export const ProjectsContent = ({ OpenSidebar }) => {
       toast.error(response.data.message);
     }
   };
+
 
   // Function to handle filter type selection
   const handleFilterSelect = (type, text) => {
@@ -240,7 +244,7 @@ export const ProjectsContent = ({ OpenSidebar }) => {
 
               <td className="ho">
                 <Link>
-                  <a style={{ color: "#450c36" }}>
+                <a style={{ color: "#450c36" }}>
                     <BsPencilSquare onClick={() => openForm(project)} className=' ms-1 icon' />
                   </a>
                 </Link>{" "}

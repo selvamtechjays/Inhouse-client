@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Modal, Form, Button, Row, Col } from "react-bootstrap";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { addTracker, getSingleEmployee, getallEmployees, getallProjects } from "../../service/allapi";
+import { addTracker, getSingleEmployee, getallEmployees, getallProjects, updateTracker } from "../../service/allapi";
 
 const initialTeamState = {
   name: "",
@@ -17,7 +17,9 @@ const initialTeamState = {
 
 
 
-const TeamForm = ({ show, handleClose,  }) => {
+const TeamEdit = ({ shows, handleClose,team}) => {
+    
+
   const [teamData, setTeamData] = useState(initialTeamState);
   const [errors, setErrors] = useState({});
 
@@ -38,7 +40,16 @@ const TeamForm = ({ show, handleClose,  }) => {
     // setEmpcode(response.data)
    
   }
-
+  useEffect(() => {
+    if(team){
+        setTeamData(team);
+        
+    }else
+    {
+        setTeamData(initialTeamState)
+    }
+},[team])
+console.log(teamData);
 
 
 
@@ -141,18 +152,16 @@ const handleSubmit =async () => {
     // Include empcode in teamData before calling handleAddTeam
     const updatedTeamData = {
       ...teamData,
-      employeeCode: empcode.employeeCode
+      
     };
     
 
        //api call
-       const response = await addTracker(updatedTeamData)
+       const response = await updateTracker(teamData._id,teamData)
     
        if (response.status == 200) {
          toast.success(response.data.message);
-         setTimeout(()=> {
-           navigate('/dashboard')
-         }, 1500);
+       
          
       } else {
         toast.success(response.data.message)
@@ -172,9 +181,9 @@ const handleSubmit =async () => {
     }, []);
 
   return (
-    <Modal size="md" show={show} onHide={handleClose}>
+    <Modal size="md" show={shows} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title><h2>Add Tracker </h2></Modal.Title>
+        <Modal.Title><h2>Edit Tracker  </h2></Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
@@ -210,7 +219,7 @@ const handleSubmit =async () => {
         <Form.Control className="hov"
                   type="text"
                   name="employeeCode"
-          value={empcode.employeeCode}
+          value={teamData.employeeCode}
           onChange={handleChange}
           isInvalid={!!errors.employeeCode}
                 />
@@ -228,7 +237,7 @@ const handleSubmit =async () => {
                 <Form.Label>Tech Stack</Form.Label>
                 <Form.Select 
                   name="techStack" className="sel hov"
-                 
+                 value={teamData.techStack}
                   onChange={handleChange}
                   isInvalid={!!errors.techStack}
                 >
@@ -281,7 +290,7 @@ const handleSubmit =async () => {
                   type="text"
                   placeholder="Enter allocated percentage"
                   name="percentage"
-            
+                  value={teamData.percentage}
                   onChange={handleChange}
                   isInvalid={!!errors.percentage}
                 />
@@ -295,7 +304,7 @@ const handleSubmit =async () => {
                 <Form.Label>Priority</Form.Label>
                 <Form.Select
                   name="priority" className="sel hov"
-                
+                  value={teamData.priority}
                   onChange={handleChange}
                   isInvalid={!!errors.priority}
                 >
@@ -317,13 +326,13 @@ const handleSubmit =async () => {
           Close
         </Button>
         <Button variant="dark" onClick={handleSubmit}>
-         Add
+         Edit
         </Button>
       </Modal.Footer>
     </Modal>
   );
 };
 
-export default TeamForm;
+export default TeamEdit;
 
 
