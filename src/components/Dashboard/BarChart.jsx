@@ -63,18 +63,22 @@ export function BarChart() {
         labels,
         datasets: [
             {
-                label: "Project Done %",
-                data: workdone,
-                backgroundColor: ["lightgreen",
-                "gold",
-                "#FFCCCB"],
-                barPercentage: 0.4,
-              
-            },
+            label: "Project Done %",
+            data: workdone,
+            backgroundColor: workdone.map((value) => {
+              if (value > 75) {
+                return "lightgreen"; // Higher than 75% - green
+              } else if (value > 45) {
+                return "gold"; // Between 45% and 75% - yellow
+              } else {
+                return "#FFCCCB"; // Below 45% - light red
+              }
+            }),
+            barPercentage: 0.4,
+          },
 
 
-
-        ]
+        ],
     };
 
 
