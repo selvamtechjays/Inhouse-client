@@ -116,7 +116,7 @@ window.addEventListener('load', clearStorage);
             >
               <button
                 className={getButtonClassName("dashboard")}
-                onClick={() => handleSectionChange("dashboard")}
+                onClick={() => handleSectionChange("dashboard")} title="Dashboard"
               >
                 Dashboard
               </button>
@@ -128,7 +128,7 @@ window.addEventListener('load', clearStorage);
             >
               <button
                 className={getButtonClassName("projects")}
-                onClick={() => handleSectionChange("projects")}
+                onClick={() => handleSectionChange("projects")} title="Projects"
               >
                 Projects
               </button>
@@ -140,7 +140,7 @@ window.addEventListener('load', clearStorage);
             >
               <button
                 className={getButtonClassName("employees")}
-                onClick={() => handleSectionChange("employees")}
+                onClick={() => handleSectionChange("employees")} title="Team Members"
               >
                 Team Members
               </button>
@@ -152,7 +152,7 @@ window.addEventListener('load', clearStorage);
             >
               <button
                 className={getButtonClassName("team")}
-                onClick={() => handleSectionChange("team")}
+                onClick={() => handleSectionChange("team")} title="Tracker"
               >
                 Tracker
               </button>
@@ -164,7 +164,7 @@ window.addEventListener('load', clearStorage);
             >
               <button
                 className={getButtonClassName("logout")}
-                onClick={handleLogout}
+                onClick={handleLogout} title="Tracker"
               >
                 Logout
               </button>
