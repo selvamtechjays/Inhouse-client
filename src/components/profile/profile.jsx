@@ -47,7 +47,7 @@ const Profile = () => {
             >
               <button
                 className={getButtonClassName("dashboard")}
-                onClick={() => handleSectionChange("dashboard")}
+                onClick={() => handleSectionChange("dashboard")} title="Dashboard"
               >
                 Dashboard
               </button>
@@ -59,7 +59,7 @@ const Profile = () => {
             >
               <button
                 className={getButtonClassName("projects")}
-                onClick={() => handleSectionChange("projects")}
+                onClick={() => handleSectionChange("projects")} title="Projects"
               >
                 Projects
               </button>
@@ -71,7 +71,7 @@ const Profile = () => {
             >
               <button
                 className={getButtonClassName("employees")}
-                onClick={() => handleSectionChange("employees")}
+                onClick={() => handleSectionChange("employees")} title="Team Members"
               >
                 Team Members
               </button>
@@ -83,7 +83,7 @@ const Profile = () => {
             >
               <button
                 className={getButtonClassName("team")}
-                onClick={() => handleSectionChange("team")}
+                onClick={() => handleSectionChange("team")} title="Tracker"
               >
                 Tracker
               </button>
@@ -95,7 +95,7 @@ const Profile = () => {
             >
               <button
                 className={getButtonClassName("logout")}
-                onClick={handleLogout}
+                onClick={handleLogout} title="Tracker"
               >
                 Logout
               </button>
