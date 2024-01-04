@@ -1,5 +1,7 @@
 // Profile.js
-import React, { useState } from "react";
+
+import React, { useEffect, useState } from "react";
+
 import { Container, Row, Col, Offcanvas, Button } from "react-bootstrap";
 import "./profile.css";
 import { useNavigate } from "react-router-dom";
@@ -12,22 +14,89 @@ import {Dashboard} from "../Dashboard/Dashboard"
 const Profile = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [activeSection, setActiveSection] = useState("dashboard");
-
+  const [userInactive, setUserInactive] = useState(false);
   const navigate = useNavigate();
 
-  const handleSectionChange = (section) => {
-    setActiveSection(section);
-    setShowSidebar(false);
+// Set the inactivity timeout duration in milliseconds (e.g., 1 hour)
+const inactivityTimeout = 60 * 60 * 1000;
+
+useEffect(() => {
+  let inactivityTimer;
+
+  const resetTimer = () => {
+    clearTimeout(inactivityTimer);
+    inactivityTimer = setTimeout(() => {
+      // User is considered inactive, perform logout
+      handleLogout();
+    }, inactivityTimeout);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("email");
-    navigate("/");
+  const handleUserActivity = () => {
+    // Reset the inactivity timer on user activity
+    if (userInactive) {
+      setUserInactive(false);
+      resetTimer();
+    }
   };
+
+
+  // Attach event listeners for user activity
+  window.addEventListener("mousemove", handleUserActivity);
+  window.addEventListener("keydown", handleUserActivity);
+
+  // Initialize the inactivity timer
+  resetTimer();
+
+  // Clear the timer and remove event listeners on component unmount
+  return () => {
+    clearTimeout(inactivityTimer);
+    window.removeEventListener("mousemove", handleUserActivity);
+    window.removeEventListener("keydown", handleUserActivity);
+  };
+}, [userInactive]);
+
+const handleSectionChange = (section) => {
+  setActiveSection(section);
+  setShowSidebar(false);
+};
+
+const handleLogout = () => {
+  localStorage.removeItem("email");
+  localStorage.removeItem("firebaseToken");
+  // Perform additional logout actions if needed
+  navigate("/");
+};
+
+
 
   const getButtonClassName = (section) => {
     return `nav-link text-white ${activeSection === section ? "active" : ""}`;
   };
+
+
+  function clearStorage() {
+
+    let session = sessionStorage.getItem('register');
+
+    if (session == null) {
+    
+        localStorage.removeItem('email');
+
+    }
+    sessionStorage.setItem('register', 1);
+}
+window.addEventListener('load', clearStorage);
+
+  onbeforeunload = function() { localStorage. removeItem('email'); return ''; };
+
+  useEffect(() => {
+
+  clearStorage()
+   
+    onbeforeunload();
+
+  }, []);
+
 
   return (
     <Container fluid className="profile-container ">

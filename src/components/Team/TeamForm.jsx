@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Modal, Form, Button, Row, Col } from "react-bootstrap";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getallEmployees, getallProjects } from "../../service/allapi";
+import { getSingleEmployee, getallEmployees, getallProjects } from "../../service/allapi";
 
 const initialTeamState = {
   name: "",
@@ -17,13 +17,27 @@ const initialTeamState = {
 
 
 
-
-
-
 const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
   const [teamData, setTeamData] = useState(initialTeamState);
   const [errors, setErrors] = useState({});
 
+  const [empcode, setEmpcode] = useState('');
+
+
+  const handleinput =(e) =>{
+    const { name, value } = e.target;
+    // console.log(value);
+    const getsingle = async () => {
+    const response  = await getSingleEmployee(value)
+    // console.log(response.data);
+    setEmpcode(response.data)
+  
+    }
+    getsingle(value)
+    // setEmpcode(response.data)
+   
+  }
+      // console.log(empcode);
   useEffect(() => {
     
     if (teamToEdit) {
@@ -33,18 +47,23 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
     }
   }, [teamToEdit]);
 
+
+
   const handleChange = (e) => {
+
     const { name, value } = e.target;
+
 
     // Validate each field as the user types
     let errorMessage = "";
     switch (name) {
       case "name":
+  
         errorMessage = value.trim() === "" ? "Name is required" : !/^[a-zA-Z\s]+$/.test(value) ? "Name must be a string without numeric characters" : "";
         break;
-      case "employeeCode":
-        errorMessage = value.trim() === "" ? "Employee Code is required" : !/^\d+$/.test(value) ? "Employee Code must contain only numerical values" : "";
-        break;
+      // case "employeeCode":
+      //   errorMessage = value.trim() === "" ? "Employee Code is required" : !/^\d+$/.test(value) ? "Employee Code must contain only numerical values" : "";
+      //   break;
       case "techStack":
         errorMessage = value.trim() === "" ? "Tech Stack is required" : "";
         break;
@@ -55,12 +74,12 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
         errorMessage = value === "" ? "Allocated Percentage is required" : isNaN(value) || +value < 0 || +value > 100 ? "Please enter a valid percentage (0-100)" : "";
         break;
       case "priority":
-        errorMessage = value.trim() === "" ? "Priority is required" : isNaN(value) || +value < 1 ? "Please enter a valid priority (greater than 0)" : "";
+        errorMessage = value.trim() === "" ? "Priority is required"  : "";
         break;
       default:
         errorMessage = "";
     }
-
+console.log(teamData);
     setTeamData((prevData) => ({ ...prevData, [name]: value }));
     setErrors((prevErrors) => ({ ...prevErrors, [name]: errorMessage }));
   };
@@ -74,9 +93,9 @@ const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
         case "name":
           newErrors.name = teamData.name.trim() === "" ? "Name is required" : !/^[a-zA-Z\s]+$/.test(teamData.name) ? "Name must be a string without numeric characters" : "";
           break;
-        case "employeeCode":
-          newErrors.employeeCode = teamData.employeeCode === "" ? "Employee Code is required" : !/^\d+$/.test(teamData.employeeCode) ? "Employee Code must contain only numerical values" : "";
-          break;
+        // case "employeeCode":
+          // newErrors.employeeCode = teamData.employeeCode === "" ? "Employee Code is required" : !/^\d+$/.test(teamData.employeeCode) ? "Employee Code must contain only numerical values" : "";
+          // break;
         case "techStack":
           newErrors.techStack = teamData.techStack.trim() === "" ? "Tech Stack is required" : "";
           break;
@@ -122,14 +141,21 @@ const getAllEmployee = async () => {
     setLoading(false); // Set loading to false after the API call (success or error)
   }
 };
+  
+const handleSubmit = () => {
+  if (validateForm()) {
+    // Include empcode in teamData before calling handleAddTeam
+    const updatedTeamData = {
+      ...teamData,
+      employeeCode: empcode.employeeCode
+    };
 
-  const handleSubmit = () => {
-    if (validateForm()) {
-      handleAddTeam(teamData, !!teamToEdit);
-      setTeamData(initialTeamState);
-      handleClose();
-    }
-  };
+    handleAddTeam(updatedTeamData, !!teamToEdit);
+    setTeamData(initialTeamState);
+    setEmpcode('');
+    handleClose();
+  }
+};
       // useEffect hook to fetch all projects on component mount
       useEffect(() => {
         getAllEmployee();
@@ -152,6 +178,8 @@ const getAllEmployee = async () => {
                   value={teamData.name}
                   onChange={handleChange}
                   isInvalid={!!errors.name}
+                  onInput={handleinput}
+              
                 >
                   <option value="" disabled>
             {loading ? "Loading..." : "Employee Name"}
@@ -170,22 +198,14 @@ const getAllEmployee = async () => {
             <Col>
             <Form.Group controlId="employeeCode">
         <Form.Label>Employee Code</Form.Label>
-        <Form.Select className="sel hov"
-          name="employeeCode"
-          value={teamData.employeeCode}
+        <Form.Control className="hov"
+                  type="text"
+                  name="employeeCode"
+          value={empcode.employeeCode}
           onChange={handleChange}
           isInvalid={!!errors.employeeCode}
-        >
-          <option value="" disabled>
-            {loading ? "Loading..." : "Employee Code"}
-          </option>
-          {employees.length > 0 &&
-            employees.map((employee, index) => (
-              <option key={index} value={employee.employeeCode}>
-                {employee.name}: {employee.employeeCode}
-              </option>
-            ))}
-        </Form.Select>
+                />
+   
         <Form.Control.Feedback type="invalid">
           {errors.employeeCode}
         </Form.Control.Feedback>

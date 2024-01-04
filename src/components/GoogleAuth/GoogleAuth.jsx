@@ -21,6 +21,9 @@ const provider = new GoogleAuthProvider();
 auth.onAuthStateChanged((user) => {
   // Check if the user is signed in
   if (user) {
+    const photoURL = user.photoURL;
+    // console.log(photoURL);
+    localStorage.setItem('image',photoURL)
     // Check if the user's email includes the required domain
     const allowedDomain = "techjays.com"; // Change this to your desired domain
     if (user.email.includes(`@${allowedDomain}`)) {

@@ -107,20 +107,23 @@ input:focus{
 
 .hov:hover{
   transform: scale(1.03);
+  transition: transform 0.3s ease-in-out;
 }
+
 
 button:hover{
   transform: scale(1.03);
+  transition: transform 0.3s ease-in-out;
 }
 
 
-.ho:hover{
-  transform: scale(1.09);
-}
-
-.h:hover{
+.table-row:hover {
+  background-color: #e0e0e0; 
   transform: scale(1.01);
+  box-shadow:2px 2px 2px rgba(0,0,0,0.2),-1px -1px 8px rgba(0,0,0,0.2) ;
 }
+
+
 
 /* Small <= 768px */
   

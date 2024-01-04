@@ -134,14 +134,6 @@ export const ProjectsContent = ({OpenSidebar}) => {
     setFilterText(text);
   };
 
-  const PlaceholderWithIcon = () => (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
-      <IoSearchSharp />
-      <span style={{ marginLeft: '5px' }}>Search...</span>
-    </div>
-  );
-
-
   // useEffect hook to fetch all projects on component mount
   useEffect(() => {
     getAllProjects();
@@ -241,7 +233,7 @@ export const ProjectsContent = ({OpenSidebar}) => {
             const projectValue = item[filterType].toLowerCase();
             return projectValue.includes(searchTerm);
           }).map((project, index) => (
-            <tr >
+            <tr key={index} className="table-row" >
               <td>{project.projectName}</td>
               <td>{project.clientName}</td>
               <td>{moment(project.startDate).format("DD-MM-YYYY")}</td>
