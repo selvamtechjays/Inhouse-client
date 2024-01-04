@@ -23,6 +23,13 @@ const inactivityTimeout = 60 * 60 * 1000;
 useEffect(() => {
   let inactivityTimer;
 
+   // Check if the Firebase token has expired
+   const tokenExpireTime = localStorage.getItem("tokenExpireTime");
+   const currentTimestamp = new Date().getTime();
+   if (tokenExpireTime && currentTimestamp > new Date(tokenExpireTime).getTime()) {
+     // Token has expired, perform logout
+     handleLogout();
+   }
   const resetTimer = () => {
     clearTimeout(inactivityTimer);
     inactivityTimer = setTimeout(() => {
@@ -53,7 +60,7 @@ useEffect(() => {
     window.removeEventListener("mousemove", handleUserActivity);
     window.removeEventListener("keydown", handleUserActivity);
   };
-}, [userInactive]);
+}, [userInactive,localStorage.getItem("tokenExpireTime")]);
 
 const handleSectionChange = (section) => {
   setActiveSection(section);
@@ -74,28 +81,28 @@ const handleLogout = () => {
   };
 
 
-  function clearStorage() {
+//   function clearStorage() {
 
-    let session = sessionStorage.getItem('register');
+//     let session = sessionStorage.getItem('register');
 
-    if (session == null) {
+//     if (session == null) {
     
-        localStorage.removeItem('email');
+//         localStorage.removeItem('email');
 
-    }
-    sessionStorage.setItem('register', 1);
-}
-window.addEventListener('load', clearStorage);
+//     }
+//     sessionStorage.setItem('register', 1);
+// }
+// window.addEventListener('load', clearStorage);
 
-  onbeforeunload = function() { localStorage. removeItem('email'); return ''; };
+  // onbeforeunload = function() { localStorage. removeItem('email'); return ''; };
 
-  useEffect(() => {
+  // useEffect(() => {
 
-  clearStorage()
+  // clearStorage()
    
-    onbeforeunload();
+    // onbeforeunload();
 
-  }, []);
+  // }, []);
 
 
   return (

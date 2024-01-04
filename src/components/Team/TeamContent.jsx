@@ -1,15 +1,7 @@
 // TeamContent.js
 
 import React, { useState, useEffect } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Modal,
-  Dropdown,
-  Form,
-} from "react-bootstrap";
+import { Container, Row, Col, Button, Modal, Dropdown } from "react-bootstrap";
 import TeamForm from "./TeamForm";
 import { CiFilter } from "react-icons/ci";
 import { capitalize } from "@mui/material";
@@ -32,19 +24,22 @@ import {
 } from "../../service/allapi";
 import { MdOutlineFilterAlt } from "react-icons/md";
 
+// TeamContent component definition
 export const TeamContent = ({ OpenSidebar }) => {
-  //for delete confirm modal
-  const [smShow, setSmShow] = useState(false);
+  // State variables
+  const [smShow, setSmShow] = useState(false); // for delete confirm modal
+  const [isFormOpen, setFormOpen] = useState(false); // For controlling the visibility of the team form
+  const [teams, setTeams] = useState([]); // For storing the list of teams
+  const [teamToEdit, setTeamToEdit] = useState(null); // For tracking the team being edited
+  const [search, setSearch] = useState(""); // For storing the search term
+  const [filterType, setFilterType] = useState("name"); // Default filter type
+  const [filterText, setFilterText] = useState("Filter"); // Default filter text
+  const [currentPage, setCurrentPage] = useState(1); // For pagination
+  // State to track the ID of the team for which delete confirmation modal is open
+  const [deleteTeamId, setDeleteTeamId] = useState(null);
 
-  const [isFormOpen, setFormOpen] = useState(false);
-  const [teams, setTeams] = useState([]);
-  const [teamToEdit, setTeamToEdit] = useState(null);
-  const [search, setSearch] = useState("");
-  const [filterType, setFilterType] = useState("name");
-  const [filterText, setFilterText] = useState("Filter");
+  
 
-  //for pagenation
-  const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 8;
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
@@ -52,24 +47,29 @@ export const TeamContent = ({ OpenSidebar }) => {
   const npages = Math.ceil(teams.length / recordsPerPage);
   const numbers = [...Array(npages + 1).keys()].slice(1);
 
+  // Function to open the team form
   const openForm = (team) => {
     setTeamToEdit(team);
     setFormOpen(true);
   };
 
+  // Function to close the team form
   const closeForm = () => {
     setTeamToEdit(null);
     setFormOpen(false);
   };
 
-  // Function to call the API and get all projects
+  // Function to fetch all teams
   const getallTeam = async () => {
-    const response = await getallTracker(teams);
-    console.log(response.data);
-    setTeams(response.data);
+    try {
+      const response = await getallTracker(teams);
+      setTeams(response.data);
+    } catch (error) {
+      console.error("Error fetching teams", error);
+    }
   };
 
-  // add tracker
+  // Function to handle adding or editing a team
   const handleAddTeam = async (newTeam, isEdit) => {
     // Capitalize name
     newTeam.name = capitalize(newTeam.name);
@@ -79,7 +79,6 @@ export const TeamContent = ({ OpenSidebar }) => {
       if (isEdit) {
         try {
           const response = await updateTracker(newTeam._id, newTeam);
-          console.log("Update Response:", response);
 
           if (response.status === 200) {
             // Update the team
@@ -89,7 +88,6 @@ export const TeamContent = ({ OpenSidebar }) => {
               )
             );
 
-            // Check if response.data is defined before accessing its properties
             if (response.data && response.data.message) {
               toast.success(response.data.message);
             } else {
@@ -108,9 +106,7 @@ export const TeamContent = ({ OpenSidebar }) => {
       } else {
         // If adding new, make an API call to add the team
         const response = await addTracker(newTeam);
-        console.log("Add Team Response:", response);
 
-        // Check if response.data is defined before accessing its properties
         if (response.data && response.data.message) {
           if (response.status === 201) {
             // Add the new team to the state with the returned id
@@ -132,27 +128,40 @@ export const TeamContent = ({ OpenSidebar }) => {
     }
   };
 
+  // Function to handle clicking on the delete button
+  const handleDeleteButtonClick = (teamId) => {
+    setDeleteTeamId(teamId);
+    setSmShow(true);
+  };
+
+  // Function to handle deleting a team
   const handleDeleteTeam = async (id) => {
-    //api call for delete Projct
-    const response = await deleteTracker(id);
-    if (response.status == 200) {
-      toast.success(response.data.message);
-      setSmShow(false);
-      getallTeam();
-    } else {
-      toast.error(response.data.error);
+    try {
+      const response = await deleteTracker(id);
+      if (response.status === 200) {
+        toast.success(response.data.message);
+        setSmShow(false);
+        getallTeam();
+      } else {
+        toast.error(response.data.error);
+      }
+    } catch (error) {
+      console.error("Error deleting team", error);
     }
   };
 
+  // Function to handle selecting a filter type
   const handleFilterSelect = (type, text) => {
     setFilterType(type);
     setFilterText(text);
   };
-  // useEffect hook to fetch all employees on component mount
+
+  // useEffect hook to fetch all teams on component mount
   useEffect(() => {
     getallTeam();
   }, []);
 
+  // JSX rendering
   return (
     <Container>
       <Row className="mb-3">
@@ -231,7 +240,6 @@ export const TeamContent = ({ OpenSidebar }) => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-                      
           </div>
         </Col>
       </Row>
@@ -298,19 +306,17 @@ export const TeamContent = ({ OpenSidebar }) => {
               const searchTerm = search.toLowerCase();
 
               if (filterType === "employeeCode") {
-                // Ensure that team.employeeCode is a string before calling toLowerCase
                 const employeeCodeValue = String(
                   team.employeeCode
                 ).toLowerCase();
                 return employeeCodeValue.includes(searchTerm);
               } else {
-                // Use the generic condition for other filter types
                 const teamValue = String(team[filterType]).toLowerCase();
                 return teamValue.includes(searchTerm);
               }
             })
             .map((team, index) => (
-              <tr key={index} className="table-row" >
+              <tr key={index} className="table-row">
                 <td className="table-cell">{team.name}</td>
                 <td className="table-cell">{team.employeeCode}</td>
                 <td className="table-cell">{team.techStack}</td>
@@ -329,13 +335,13 @@ export const TeamContent = ({ OpenSidebar }) => {
                   </Link>{" "}
                   <a style={{ color: "#450c36" }}>
                     <BsFillTrash3Fill
-                      onClick={() => setSmShow(true)}
+                      onClick={() => handleDeleteButtonClick(team._id)}
                       className="ms-2 icon"
                     />
                   </a>
                   <Modal
                     size="sm"
-                    show={smShow}
+                    show={smShow && deleteTeamId === team._id}
                     onHide={() => setSmShow(false)}
                     aria-labelledby="example-modal-sizes-title-sm"
                   >
@@ -399,8 +405,9 @@ export const TeamContent = ({ OpenSidebar }) => {
       <ToastContainer autoClose={500} position="top-center" />
     </Container>
   );
-  //for pagenation
+  //for pagination
 
+  // Function to change current page for pagination
   function changeCpage(id) {
     setCurrentPage(id);
   }

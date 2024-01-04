@@ -37,6 +37,7 @@ export const EmployeesContent = ({OpenSidebar}) => {
   const [filterType, setFilterType] = useState("name"); // Default filter type
   const [filterText, setFilterText] = useState("Filter"); // Default filter text
   const [errors, setErrors] = useState({}); // For handling form validation errors
+  const [deleteEmployeeId, setDeleteEmployeeId] = useState(null);
 
     //for pagenation
     const [currentPage,setCurrentPage] = useState(1)
@@ -139,19 +140,36 @@ export const EmployeesContent = ({OpenSidebar}) => {
   
 
 
-  //function for delete Project
-  const handleDeleteEmployee = async (id) => {
-    //api call for delete Projct
-    const response = await deleteEmployee(id);
-    if (response.status == 200) {
-      toast.success(response.data.message);
-      setSmShow(false)
-      getAllEmployee();
-    } else {
-      toast.error(response.data.message);
-    }
+  // Function to handle clicking on the delete button
+  const handleDeleteButtonClick = (employeeId) => {
+    setDeleteEmployeeId(employeeId);
+    setSmShow(true);
   };
 
+  // Function to handle deleting an employee
+  const handleDeleteEmployee = async (id) => {
+    try {
+      // API call for delete Employee
+      const response = await deleteEmployee(id);
+
+      if (response.status === 200) {
+        toast.success(response.data.message);
+
+        // Update the employees list after successful deletion
+        const updatedEmployees = employees.filter((employee) => employee._id !== id);
+        setEmployees(updatedEmployees);
+
+        // Reset deleteEmployeeId and close the delete confirmation modal
+        setDeleteEmployeeId(null);
+        setSmShow(false);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.error("Error deleting employee", error);
+      toast.error("Error deleting employee. Please try again.");
+    }
+  };
   // Function to handle selecting a filter type
   const handleFilterSelect = (type, text) => {
     setFilterType(type);
@@ -318,20 +336,19 @@ export const EmployeesContent = ({OpenSidebar}) => {
                       />
                     </a>
                   </Link>{" "}
-                  <a style={{color:"#450c36"}}>
-                    <BsFillTrash3Fill onClick={() => setSmShow(true)}
-                      
-                      className="ms-2 icon"
-                    />
-                  </a>
-                  
-                </td>
-                <Modal 
-        size="sm"
-        show={smShow}
-        onHide={() => setSmShow(false)}
-        aria-labelledby="example-modal-sizes-title-sm"
-      >
+                  <a style={{ color: "#450c36" }}>
+                  <BsFillTrash3Fill
+                    onClick={() => handleDeleteButtonClick(employee._id)}
+                    className="ms-2 icon"
+                  />
+                </a>
+              </td>
+              <Modal
+                size="sm"
+                show={smShow && deleteEmployeeId === employee._id}
+                onHide={() => setSmShow(false)}
+                aria-labelledby="example-modal-sizes-title-sm"
+              >
         <Modal.Header closeButton>
           <Modal.Title id="example-modal-sizes-title-sm">
             

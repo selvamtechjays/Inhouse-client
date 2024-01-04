@@ -20,7 +20,9 @@ const initialTeamState = {
 const TeamForm = ({ show, handleClose, handleAddTeam, teamToEdit }) => {
   const [teamData, setTeamData] = useState(initialTeamState);
   const [errors, setErrors] = useState({});
-
+  const [projects, setProjects] = useState([]);// For storing the list of projects
+  const [employees, setEmployees] = useState([]); // For storing the list of employees
+  const [loading, setLoading] = useState(false);
   const [empcode, setEmpcode] = useState('');
 
 
@@ -117,11 +119,6 @@ console.log(teamData);
     return Object.values(newErrors).every((error) => error === "");
   };
 
-  const [projects, setProjects] = useState([]);// For storing the list of projects
-
-  const [employees, setEmployees] = useState([]); // For storing the list of employees
-  const [loading, setLoading] = useState(false);
-  
 
    // Function to call the API and get all projects
    const getAllProjects = async () => {
@@ -156,6 +153,7 @@ const handleSubmit = () => {
     handleClose();
   }
 };
+
       // useEffect hook to fetch all projects on component mount
       useEffect(() => {
         getAllEmployee();
