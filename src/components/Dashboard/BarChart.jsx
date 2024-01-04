@@ -84,7 +84,7 @@ export function BarChart() {
 
     return(
         <div style={{ width: '100%', height: '300px' }}>
-           <Bar options={options} data={data} />;
+           <Bar options={options} data={data} />
         </div>
     )
 }

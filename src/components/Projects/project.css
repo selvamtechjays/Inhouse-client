@@ -21,6 +21,10 @@
     border-radius: 22px; 
     padding: 7%;
 } 
+.modal-backdrop:not(#_) ~ .modal-backdrop,
+body:not(.modal-open) .modal-backdrop {
+  display: none;
+}
 .modal-header {
   border: none;
 }

@@ -52,9 +52,9 @@ export function PieChart() {
             data: pieDatas,
             backgroundColor: [
 
-                "#450c36",
-                "#888787",
-                "#defa25"
+                "lightgreen",
+                "gold",
+                "lightblue"
             ],
             borderColor: "white",
             borderwidth: 500,
@@ -70,7 +70,7 @@ export function PieChart() {
         }, []);
     return(
         <div style={{ width: '100%', height: '300px' }}>
-          <Doughnut data={data} />;
+          <Doughnut data={data} />
         </div>
     ) 
 }

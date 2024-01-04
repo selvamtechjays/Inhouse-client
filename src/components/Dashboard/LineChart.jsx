@@ -74,8 +74,8 @@ export function LineChart() {
         data: endDateData,
         fill: false,
         borderColor: endDateData.some((date) => date < currentDate)
-          ? "#ff3333"
-          : "#0066cc", // Red color for approaching deadline
+          ? "#450c36"
+          : "#450c36", // Red color for approaching deadline
         tension: 0.1,
       },
     ],
