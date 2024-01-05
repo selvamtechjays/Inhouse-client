@@ -116,7 +116,7 @@ export const TeamContent = ({ OpenSidebar }) => {
   // useEffect hook to fetch all employees on component mount
   useEffect(() => {
     getallTeam();
-  }, []);
+  }, [teams]);
 
   const updateTeamInState = (updatedTeamData) => {
     // Update the team data in the local state
@@ -127,7 +127,8 @@ export const TeamContent = ({ OpenSidebar }) => {
       return updatedTeams;
     });
   };
-  
+
+ 
 
   return (
     <Container>

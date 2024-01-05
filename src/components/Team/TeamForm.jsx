@@ -150,6 +150,8 @@ const handleSubmit =async () => {
     
        if (response.status == 200) {
          toast.success(response.data.message);
+          // Use the addTeamInState function to update the local state
+        
          setTimeout(()=> {
            navigate('/dashboard')
          }, 1500);
@@ -157,8 +159,6 @@ const handleSubmit =async () => {
       } else {
         toast.success(response.data.message)
       }
- 
-
    
     setTeamData(initialTeamState);
     setEmpcode('');
