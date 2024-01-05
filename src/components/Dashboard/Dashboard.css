@@ -54,3 +54,7 @@
 
 float: left;
 }
+
+body{
+    overflow-y: hidden !important;
+}

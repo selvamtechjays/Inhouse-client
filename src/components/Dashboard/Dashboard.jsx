@@ -15,7 +15,8 @@ export function Dashboard({OpenSidebar}) {
   
 
     const getEmailFromLocalStorage = () => {
-      const userEmail = localStorage.getItem('email');
+      const userEmail = localStorage.getItem('name');
+      setLoginData(userEmail);
       const loginImage=localStorage.getItem('image')
       setLogin(loginImage)
     console.log(loginImage);
