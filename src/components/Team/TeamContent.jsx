@@ -118,6 +118,17 @@ export const TeamContent = ({ OpenSidebar }) => {
     getallTeam();
   }, []);
 
+  const updateTeamInState = (updatedTeamData) => {
+    // Update the team data in the local state
+    setTeams((prevTeams) => {
+      const updatedTeams = prevTeams.map((team) =>
+        team._id === updatedTeamData._id ? updatedTeamData : team
+      );
+      return updatedTeams;
+    });
+  };
+  
+
   return (
     <Container>
       <Row className="mb-3">
@@ -265,7 +276,7 @@ export const TeamContent = ({ OpenSidebar }) => {
               return teamValue.includes(searchTerm);
             })
             .map((team, index) => (
-              <tr>
+              <tr key={team._id} className="table-row">
                 <td className="table-cell">{team.name}</td>
                 <td className="table-cell">{team.employeeCode}</td>
                 <td className="table-cell">{team.techStack}</td>
@@ -348,7 +359,7 @@ export const TeamContent = ({ OpenSidebar }) => {
         </ul>
       </nav>
       <TeamForm show={isFormOpen} handleClose={closeForm} />
-      <TeamEdit shows={isFormOpens} handleClose={closeFormss} team={team} />
+      <TeamEdit shows={isFormOpens} handleClose={closeFormss} team={team} updateTeamInState={updateTeamInState} />
       <ToastContainer autoClose={500} position="top-center" />
     </Container>
   );

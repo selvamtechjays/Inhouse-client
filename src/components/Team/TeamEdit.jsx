@@ -17,7 +17,7 @@ const initialTeamState = {
 
 
 
-const TeamEdit = ({ shows, handleClose,team}) => {
+const TeamEdit = ({ shows, handleClose,team,updateTeamInState}) => {
     
 
   const [teamData, setTeamData] = useState(initialTeamState);
@@ -147,6 +147,11 @@ const getAllEmployee = async () => {
 
       if (response.status === 200) {
         toast.success(response.data.message);
+          
+         // Update the team data in the parent component's state
+        updateTeamInState(updatedTeamData);
+        // Close the form after the successful update
+        handleClose();
       } else {
         toast.error(response.data.message);
       }
