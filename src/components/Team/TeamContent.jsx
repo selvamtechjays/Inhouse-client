@@ -273,7 +273,7 @@ export const TeamContent = ({ OpenSidebar }) => {
           {records
             .filter((team) => {
               const searchTerm = search.toLowerCase();
-              const teamValue = team[filterType].toLowerCase();
+              const teamValue = filterType === 'percentage' ? team[filterType].toString() : team[filterType].toLowerCase();
               return teamValue.includes(searchTerm);
             })
             .map((team, index) => (
