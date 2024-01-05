@@ -333,14 +333,14 @@ export const EmployeesContent = ({OpenSidebar}) => {
                 <td>{employee.slack}</td>
                 <td className="ho">
                   <Link>
-                    <a style={{color:"#450c36"}}>
+                    <a style={{color:"brgb(51, 185, 247)"}}>
                       <BsPencilSquare
                         onClick={() => openForm(employee)}
                         className="ms-1 icon"
                       />
                     </a>
                   </Link>{" "}
-                  <a style={{ color: "#450c36" }}>
+                  <a style={{ color: "red" }}>
                   <BsFillTrash3Fill
                     onClick={() => handleDeleteButtonClick(employee._id)}
                     className="ms-2 icon"

@@ -27,19 +27,12 @@ const TeamEdit = ({ shows, handleClose,team}) => {
 
   
 
-  const handleinput =(e) =>{
+  const handleinput = async (e) => {
     const { name, value } = e.target;
-    // console.log(value);
-    const getsingle = async () => {
-    const response  = await getSingleEmployee(value)
-    // console.log(response.data);
-    setEmpcode(response.data)
-  
-    }
-    getsingle(value)
-    // setEmpcode(response.data)
-   
-  }
+    const response = await getSingleEmployee(value);
+    setEmpcode(response.data);
+  };
+
   useEffect(() => {
     if(team){
         setTeamData(team);
@@ -147,33 +140,22 @@ const getAllEmployee = async () => {
   }
 };
   
-const handleSubmit =async () => {
-  if (validateForm()) {
-    // Include empcode in teamData before calling handleAddTeam
-    const updatedTeamData = {
-      ...teamData,
-      
-    };
-    
+ const handleSubmit = async () => {
+    if (validateForm()) {
+      const updatedTeamData = { ...teamData };
+      const response = await updateTracker(teamData._id, updatedTeamData);
 
-       //api call
-       const response = await updateTracker(teamData._id,teamData)
-    
-       if (response.status == 200) {
-         toast.success(response.data.message);
-       
-         
+      if (response.status === 200) {
+        toast.success(response.data.message);
       } else {
-        toast.success(response.data.message)
+        toast.error(response.data.message);
       }
- 
 
-   
-    setTeamData(initialTeamState);
-    setEmpcode('');
-    handleClose();
-  }
-};
+      setTeamData(initialTeamState);
+      setEmpcode('');
+      handleClose();
+    }
+  };
       // useEffect hook to fetch all projects on component mount
       useEffect(() => {
         getAllEmployee();

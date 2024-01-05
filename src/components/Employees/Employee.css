@@ -104,10 +104,11 @@ input:focus{
 
 }
 #filter-icon{
-  color: rgb(50, 49, 49);
+  color: rgb(49, 50, 50);
   font-size: 23px;
   font-weight: normal;
 }
+
 
 
 .hov:hover{

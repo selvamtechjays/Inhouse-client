@@ -18,7 +18,6 @@ import moment from 'moment';
 import { MDBTable, MDBTableBody } from 'mdbreact';
 import { BsPencilSquare, BsFillTrash3Fill, BsJustify } from 'react-icons/bs'
 import { addProject, deleteProject, getallProjects, updateProject } from "../../service/allapi";
-import { capitalize } from "@mui/material";
 import { IoSearchSharp } from "react-icons/io5";
 import { MdOutlineFilterAlt } from "react-icons/md";
 
@@ -33,9 +32,6 @@ export const ProjectsContent = ({ OpenSidebar }) => {
   const [search, setSearch] = useState('');
   const [filterType, setFilterType] = useState('projectName');
   const [filterText, setFilterText] = useState('Filter');
-  const [deleteEmployeeId, setDeleteEmployeeId] = useState(null);
-
-
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 8;
   const lastIndex = currentPage * recordsPerPage;
@@ -75,7 +71,6 @@ export const ProjectsContent = ({ OpenSidebar }) => {
     }
   };
 
-
   // Function to handle filter type selection
   const handleFilterSelect = (type, text) => {
     setFilterType(type);
@@ -88,24 +83,32 @@ export const ProjectsContent = ({ OpenSidebar }) => {
     setProjects(response.data);
   }
 
+  //Capitalize the first letter
+  const capitalizeString = (str) => {
+    if (typeof str !== 'string') {
+      return '';
+    }
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
   // Function to handle adding or editing a project
   const handleAddProject = async (newProject, isEdit) => {
     // Capitalize the first letter of projectName, clientName, projectType, and resources
-    newProject.projectName = capitalize(newProject.projectName);
-    newProject.clientName = capitalize(newProject.clientName);
-    newProject.projectType = capitalize(newProject.projectType);
-    newProject.resources = capitalize(newProject.resources);
-
+    newProject.projectName = capitalizeString(newProject.projectName);
+    newProject.clientName = capitalizeString(newProject.clientName);
+    newProject.projectType = capitalizeString(newProject.projectType);
+    newProject.resources = capitalizeString(newProject.resources);
+  
     try {
       if (isEdit) {
         // If editing, make an API call to update the project
         const response = await updateProject(newProject._id, newProject);
-
+  
         if (response && response.status === 200) {
           // Update the corresponding project in the state
           setProjects((prevProjects) =>
             prevProjects.map((project) =>
-              project.id === newProject._id ? newProject : project
+              project._id === newProject._id ? newProject : project
             )
           );
           toast.success(response.data && response.data.message);
@@ -119,7 +122,7 @@ export const ProjectsContent = ({ OpenSidebar }) => {
           // Add the new project to the state with the returned id
           setProjects((prevProjects) => [
             ...prevProjects,
-            { ...newProject, id: response.data && response.data.id },
+            { ...newProject, _id: response.data && response.data.id },
           ]);
           toast.success(response.data && response.data.message);
         } else {
@@ -131,6 +134,7 @@ export const ProjectsContent = ({ OpenSidebar }) => {
       toast.error('Error updating/adding project. Please try again.');
     }
   };
+  
 
   // useEffect hook to fetch all projects on component mount
   useEffect(() => {
@@ -244,11 +248,11 @@ export const ProjectsContent = ({ OpenSidebar }) => {
 
               <td className="ho">
                 <Link>
-                <a style={{ color: "#450c36" }}>
+                  <a style={{ color: "rgb(51, 185, 247)" }}>
                     <BsPencilSquare onClick={() => openForm(project)} className=' ms-1 icon' />
                   </a>
                 </Link>{" "}
-                <a style={{ color: "#450c36" }} onClick={() => handleDeleteClick(project._id)}>
+                <a style={{ color: "red" }} onClick={() => handleDeleteClick(project._id)}>
                   <BsFillTrash3Fill className='ms-2 icon' />
                 </a>
                 <Modal

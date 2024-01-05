@@ -35,7 +35,7 @@ export function Dashboard({OpenSidebar}) {
     return (
         <div className="container-fluid p-3">
             <div className='menu-icon'>
-            <BsJustify  className='icon' onClick={OpenSidebar}/>
+            <BsJustify  className='icong' onClick={OpenSidebar}/>
             </div>
 
             <div className="d-sm-flex align-items-center justify-content-between mb-4">

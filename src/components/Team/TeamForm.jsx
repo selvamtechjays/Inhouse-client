@@ -326,4 +326,3 @@ const handleSubmit =async () => {
 
 export default TeamForm;
 
-
