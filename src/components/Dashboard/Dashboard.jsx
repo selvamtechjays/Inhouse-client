@@ -5,6 +5,7 @@ import { PieChart } from './PieChart';
 import { BsJustify } from 'react-icons/bs';
 import { LineChart } from './LineChart';
 import "./Dashboard.css";
+import logo from "../../img/logo.png"
 
 
 export function Dashboard({OpenSidebar}) {
@@ -43,10 +44,11 @@ export function Dashboard({OpenSidebar}) {
                 <h1 className="h3 mb-0 text-gray-800" >Dashboard</h1>
 
                 <div className='user-con'>
-                <img src={login}  alt="" />
+                <img id='logimg' src={login}  alt="" />
                 <div id="text">
                 <h2 id='name'>{loginData}</h2>
-                <p id='cmpname' >Techjays</p>
+                {/* <p id='cmpname' >Techjays</p> */}
+                <img src={logo} className="techimg" alt="" />
                 </div>
             </div>
 
