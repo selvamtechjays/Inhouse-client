@@ -101,11 +101,11 @@ input:focus{
   
 }
 #search-icon{
-  color: black;
+  color: rgb(42, 110, 218);
   font-size: 20px;
 }
 #filter-icon{
-  color: rgb(50, 49, 49);
+  color:  rgb(42, 110, 218);
   font-size: 24px;
 }
 

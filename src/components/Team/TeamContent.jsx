@@ -275,7 +275,7 @@ export const TeamContent = ({ OpenSidebar }) => {
 
                 <td className="ho">
                   <Link>
-                    <a >
+                    <a style={{ color: " rgb(42, 110, 218)" }}>
                       <BsPencilSquare
                         onClick={() => openForms(team._id)}
                         className=" ms-1 icon"

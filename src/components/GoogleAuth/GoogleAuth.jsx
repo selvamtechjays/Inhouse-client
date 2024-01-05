@@ -28,6 +28,11 @@ auth.onAuthStateChanged((user) => {
     // Store the photoURL in local storage
     localStorage.setItem("image", photoURL);
 
+    // Get the user's name from email
+    const  email = user.email
+    // Store the email in local storage
+    localStorage.setItem("name",email);
+
     // Get the user's ID token
     user.getIdToken().then((token) => {
       // Store the ID token in local storage

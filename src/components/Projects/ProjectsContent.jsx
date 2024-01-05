@@ -248,7 +248,7 @@ export const ProjectsContent = ({ OpenSidebar }) => {
 
               <td className="ho">
                 <Link>
-                  <a style={{ color: "rgb(51, 185, 247)" }}>
+                  <a style={{ color: " rgb(42, 110, 218)" }}>
                     <BsPencilSquare onClick={() => openForm(project)} className=' ms-1 icon' />
                   </a>
                 </Link>{" "}
