@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import "./project.css";
+import moment from 'moment';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { addProject } from "../../service/allapi";
@@ -10,7 +11,7 @@ const ProjectForm = ({
   handleClose,
   handleAddProject,
   projectToEdit,
-  projectType
+  
 }) => {
   const [projectData, setProjectData] = useState({
     projectName: "",
@@ -54,6 +55,8 @@ const ProjectForm = ({
       validateDate();
     }
   };
+
+  console.log(projectData);
 
   const validateDate = () => {
     const newErrors = { ...errors };
@@ -204,7 +207,7 @@ const ProjectForm = ({
                   type="date"
                   placeholder="Enter start date"
                   name="startDate"
-                  value={projectData.startDate}
+                  value={moment(projectData.startDate).format("YYYY-MM-DD")}
                   onChange={handleChange}
                   isInvalid={!!errors.startDate}
                 />
@@ -254,7 +257,7 @@ const ProjectForm = ({
                   type="date"
                   placeholder="Enter end date"
                   name="endDate"
-                  value={projectData.endDate}
+                  value={moment(projectData.endDate).format("YYYY-MM-DD")}
                   onChange={handleChange}
                   isInvalid={!!errors.endDate}
                 />
@@ -286,7 +289,7 @@ const ProjectForm = ({
           Close
         </Button>
         <Button variant="dark" onClick={handleSave}>
-          {projectToEdit ? "Edit" : "Add"}
+          {projectToEdit ? "Save" : "Add"}
         </Button>
       </Modal.Footer>
     </Modal>

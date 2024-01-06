@@ -393,7 +393,7 @@ export const EmployeesContent = ({OpenSidebar}) => {
         handleAddEmployee={handleAddEmployee}
         employeeToEdit={employeeToEdit}
       />
-      <ToastContainer autoClose={500}  position="top-center" />
+      <ToastContainer autoClose={800}  position="top-center" />
       </Container>
   );
 

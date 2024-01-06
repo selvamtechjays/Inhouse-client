@@ -317,7 +317,7 @@ const handleSubmit =async () => {
           Close
         </Button>
         <Button variant="dark" onClick={handleSubmit}>
-         Add
+         Save
         </Button>
       </Modal.Footer>
     </Modal>

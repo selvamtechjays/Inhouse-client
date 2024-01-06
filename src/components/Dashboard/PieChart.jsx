@@ -48,7 +48,7 @@ export function PieChart() {
     labels: ["Primary", "Secondary","Low"],
     datasets: [
         {
-            label: "# of numbers",
+            label: "Projects in This ",
             data: pieDatas,
             backgroundColor: [
 

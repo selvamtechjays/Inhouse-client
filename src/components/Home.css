@@ -76,12 +76,19 @@
   .pic{
    margin-left: 50px;
   }
+  #img{
+    height: 550px;
+   }
 
   /* Small <= 768px */
   
 @media(max-width: 700px) {
   .pic{
     margin-left: 0px;
+   }
+   #img{
+    
+    height: 200px;
    }
  
 

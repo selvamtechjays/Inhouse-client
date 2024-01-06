@@ -361,7 +361,7 @@ export const TeamContent = ({ OpenSidebar }) => {
       </nav>
       <TeamForm show={isFormOpen} handleClose={closeForm} />
       <TeamEdit shows={isFormOpens} handleClose={closeFormss} team={team} updateTeamInState={updateTeamInState} />
-      <ToastContainer autoClose={500} position="top-center" />
+      <ToastContainer autoClose={800} position="top-center" />
     </Container>
   );
   //for pagenation

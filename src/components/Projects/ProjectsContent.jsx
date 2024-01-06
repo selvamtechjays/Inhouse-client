@@ -293,7 +293,7 @@ export const ProjectsContent = ({ OpenSidebar }) => {
         </ul>
       </nav>
       <ProjectForm show={isFormOpen} handleClose={closeForm} handleAddProject={handleAddProject} projectToEdit={projectToEdit} />
-      <ToastContainer autoClose={500} position="top-center" />
+      <ToastContainer autoClose={800} position="top-center" />
     </Container>
   );
   //for pagination

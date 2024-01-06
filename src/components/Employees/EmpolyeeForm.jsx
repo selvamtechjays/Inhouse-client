@@ -199,7 +199,7 @@ const EmployeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
         </Button>
         {/* Save button */}
         <Button variant="dark" onClick={handleSave}>
-          {employeeToEdit ? "Edit" : "Add"}
+          {employeeToEdit ? "Save" : "Add"}
         </Button>
       </Modal.Footer>
       {/* Toast container for notifications */}

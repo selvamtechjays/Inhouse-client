@@ -63,7 +63,7 @@ export const Home = () => {
 
   // JSX rendering
   return (
-    <section style={{ height: "100vh" }} className="position-relative pb-5">
+    <section style={{ height: "100vh",scrollMargin:"true" }} className="position-relative pb-5">
       <ToastContainer />
       <div className="container-fluid">
         <div className="row pt-4">
@@ -77,11 +77,9 @@ export const Home = () => {
               track the current process and keep updated...
             </h4>
             {/* Image */}
-            <img
+            <img id="img"
               className="img-fluid w-90 mt-3"
-              style={{
-                marginBottom: "70px",
-                height: "550px",
+              style={{     
                 marginLeft: "0",
                 borderRadius: "15px",
               }}
@@ -108,7 +106,7 @@ export const Home = () => {
 
               {/* Buttons for Google and Facebook */}
               <div
-                className="d-flex flex-row mb-5 button"
+                className="d-flex flex-row mb-1 button"
                 style={{
                   justifyContent: "center",
                   gap: "50px",
