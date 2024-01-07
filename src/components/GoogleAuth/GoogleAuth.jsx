@@ -36,7 +36,7 @@ auth.onAuthStateChanged((user) => {
     // Get the user's ID token
     user.getIdToken().then((token) => {
       // Store the ID token in local storage
-      localStorage.setItem("firebaseToken", token);
+      // localStorage.setItem("firebaseToken", token);
 
       // Get the creation time and expiration time of the token
       user.getIdTokenResult().then((idTokenResult) => {
@@ -44,16 +44,16 @@ auth.onAuthStateChanged((user) => {
         const tokenExpireTime = new Date(idTokenResult.expirationTime).toLocaleString();
 
         // Store the creation time and expiration time in local storage
-        localStorage.setItem("tokenCreateTime", tokenCreateTime);
-        localStorage.setItem("tokenExpireTime", tokenExpireTime);
+        // localStorage.setItem("tokenCreateTime", tokenCreateTime);
+        // localStorage.setItem("tokenExpireTime", tokenExpireTime);
 
         // Check if the user's email includes the required domain
         const allowedDomain = "techjays.com"; // Change this to your desired domain
         if (user.email.includes(`@${allowedDomain}`)) {
           // User is authenticated and has the correct email domain
           console.log("User is authenticated and has the correct email domain");
-          console.log("Firebase Token Creation Time:", tokenCreateTime);
-          console.log("Firebase Token Expiration Time:", tokenExpireTime);
+          // console.log("Firebase Token Creation Time:", tokenCreateTime);
+          // console.log("Firebase Token Expiration Time:", tokenExpireTime);
         } else {
           // User is not allowed to access the application
           console.log("User is not allowed to access this application");

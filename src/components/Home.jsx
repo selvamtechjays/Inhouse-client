@@ -9,6 +9,7 @@ import { auth, provider } from "./GoogleAuth/GoogleAuth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { signOut } from "firebase/auth";
+import axios from "axios";
 
 // Firebase authentication provider
 provider;
@@ -21,39 +22,60 @@ export const Home = () => {
   // State to store the user's email
   const [value, setValue] = useState("");
 
-  // Click handler for the Google sign-in button using Firebase authentication
-  const handleClick = () => {
-    signInWithPopup(auth, provider)
-      .then((data) => {
-        const allowedDomain = "techjays.com"; // Change this to your desired domain
-
-        // Check if the user's email includes the required domain
-        if (data.user.email.includes(`@${allowedDomain}`)) {
-          // Set user's email in state and localStorage
-          setValue(data.user.email);
-          localStorage.setItem("email", data.user.email);
-          sessionStorage.setItem("email", data.user.email);
-
-          // Redirect to the profile page
-          navigate("/profile");
-          toast.success("You are logged in successfully.");
-        } else {
-          // User is not allowed to access the application
-          console.log("User is not allowed to access this application");
-          // Sign out the user
-          signOut(auth);
-          // Show Toastify error and redirect to the home page
-          toast.error("You are not allowed to access this application.");
-          navigate("/");
-        }
-      })
-      .catch((error) => {
-        // Handle errors
-        console.error("Error signing in:", error.message);
-        // Show Toastify error
-        toast.error("Error signing in. Please try again.");
-      });
+  const registerUser = async (userEmail) => {
+    try {
+      const response = await axios.post('http://localhost:4000/register', { email: userEmail });
+      const email = response.data.user.email;
+      const token = response.data.token;
+  
+      // Set token in local storage
+      localStorage.setItem('jwtToken', token);
+  
+      // Now you can use the email and token in your React component
+      console.log('User email:', email);
+      console.log('JWT token:', token);
+    } catch (error) {
+      console.error('Registration error:', error.response.data.error);
+    }
   };
+  
+
+// Click handler for the Google sign-in button using Firebase authentication
+const handleClick = async () => {
+  try {
+    const data = await signInWithPopup(auth, provider);
+    console.log('User object:', data.user);
+
+    const allowedDomain = "techjays.com"; // Change this to your desired domain
+
+    // Check if the user's email includes the required domain
+    if (data.user.email.includes(`@${allowedDomain}`)) {
+      // Set user's email in state and localStorage
+      setValue(data.user.email);
+      localStorage.setItem("email", data.user.email);
+      sessionStorage.setItem("email", data.user.email);
+
+      await registerUser(data.user.email);
+
+      // Redirect to the profile page
+      navigate("/profile");
+      toast.success("You are logged in successfully.");
+    } else {
+      // User is not allowed to access the application
+      console.log("User is not allowed to access this application");
+      // Sign out the user
+      signOut(auth);
+      // Show Toastify error and redirect to the home page
+      toast.error("You are not allowed to access this application.");
+      navigate("/");
+    }
+  } catch (error) {
+    // Handle errors
+    console.error("Error signing in:", error.message);
+    // Show Toastify error
+    toast.error("Error signing in. Please try again.");
+  }
+};
 
   
   // useEffect to set the initial value based on the email stored in localStorage
@@ -63,7 +85,7 @@ export const Home = () => {
 
   // JSX rendering
   return (
-    <section style={{ height: "100vh",scrollMargin:"true" }} className="position-relative pb-5">
+    <section style={{overflowY: "auto", height: "100vh" }} className="position-relative pb-5">
       <ToastContainer />
       <div className="container-fluid">
         <div className="row pt-4">
@@ -77,9 +99,11 @@ export const Home = () => {
               track the current process and keep updated...
             </h4>
             {/* Image */}
-            <img id="img"
+            <img
               className="img-fluid w-90 mt-3"
-              style={{     
+              style={{
+                marginBottom: "70px",
+                height: "550px",
                 marginLeft: "0",
                 borderRadius: "15px",
               }}
@@ -106,7 +130,7 @@ export const Home = () => {
 
               {/* Buttons for Google and Facebook */}
               <div
-                className="d-flex flex-row mb-1 button"
+                className="d-flex flex-row mb-5 button"
                 style={{
                   justifyContent: "center",
                   gap: "50px",
