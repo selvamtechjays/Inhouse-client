@@ -108,6 +108,11 @@ input:focus{
   color:  rgb(42, 110, 218);
   font-size: 24px;
 }
+input[type="date"]:not(.has-value):before{
+  color: black;
+  content: attr(placeholder) !important;
+  margin-right: 0.5em;
+}
 
 
 

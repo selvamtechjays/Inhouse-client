@@ -6,6 +6,8 @@ import { BsJustify } from 'react-icons/bs';
 import { LineChart } from './LineChart';
 import "./Dashboard.css";
 import logo from "../../img/logo.png"
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 export function Dashboard({OpenSidebar}) {
@@ -18,9 +20,10 @@ export function Dashboard({OpenSidebar}) {
     const getEmailFromLocalStorage = () => {
       const userEmail = localStorage.getItem('name');
       setLoginData(userEmail);
+    //   toast.success("Login successfull");
       const loginImage=localStorage.getItem('image')
       setLogin(loginImage)
-    console.log(loginImage);
+   
   
       if (userEmail?.includes('@')) {
         const slicedEmail = userEmail.slice(0, userEmail.indexOf('@'));
@@ -96,6 +99,7 @@ export function Dashboard({OpenSidebar}) {
                             </div>
                         </div>
                     </div>
+                    <ToastContainer autoClose={800} position="top-center" />
 
                 </div>
         </div>

@@ -59,7 +59,8 @@ const handleLogout = () => {
   }
 
   // If available, clear local storage and perform additional logout actions if needed
-  localStorage.clear();
+  localStorage.removeItem("email");
+  localStorage.removeItem("jwtToken");
   // Perform additional logout actions if needed
   navigate("/");
 };

@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import "./project.css";
 import moment from 'moment';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { addProject } from "../../service/allapi";
+
 
 const ProjectForm = ({
   show,
@@ -167,12 +166,6 @@ const ProjectForm = ({
   };
 
 
-    // Function to call the API and get all projects
-    const getAllProjects=async()=>{
-      const response=await getallProjects(projects)
-      setProjects(response.data)
-      console.log(projects);
-    }
   
   return (
     <Modal size="md" show={show} onHide={handleClose}>
@@ -202,14 +195,15 @@ const ProjectForm = ({
               </Form.Group>
 
               <Form.Group controlId="formStartDate">
-                <Form.Label> </Form.Label>
-                <Form.Control className="hov"
+                <Form.Label>Start Date</Form.Label>
+                <Form.Control className="hov kk"
                   type="date"
-                  placeholder="Enter start date"
+                  placeholder="Start Date"
                   name="startDate"
-                  value={moment(projectData.startDate).format("YYYY-MM-DD")}
                   onChange={handleChange}
                   isInvalid={!!errors.startDate}
+                  value={moment(projectData.startDate).format("YYYY-MM-DD")}
+                  
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.startDate}
@@ -255,7 +249,7 @@ const ProjectForm = ({
                 <Form.Label> </Form.Label>
                 <Form.Control className="hov"
                   type="date"
-                  placeholder="Enter end date"
+                  placeholder="End date  "
                   name="endDate"
                   value={moment(projectData.endDate).format("YYYY-MM-DD")}
                   onChange={handleChange}
