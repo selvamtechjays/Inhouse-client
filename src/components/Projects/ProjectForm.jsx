@@ -4,13 +4,11 @@ import "./project.css";
 import moment from 'moment';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 const ProjectForm = ({
   show,
   handleClose,
   handleAddProject,
   projectToEdit,
-  
 }) => {
   const [projectData, setProjectData] = useState({
     projectName: "",
@@ -55,8 +53,6 @@ const ProjectForm = ({
     }
   };
 
-  console.log(projectData);
-
   const validateDate = () => {
     const newErrors = { ...errors };
 
@@ -80,7 +76,7 @@ const ProjectForm = ({
       ? "Resources must contain only numeric characters"
       : "";
 
-  setErrors(newErrors);
+    setErrors(newErrors);
   };
 
   const validateNameAndClientName = () => {
@@ -152,6 +148,7 @@ const ProjectForm = ({
         handleAddProject(projectData, false);
       }
 
+      // Reset form data and clear errors
       setProjectData({
         projectName: "",
         clientName: "",
@@ -161,14 +158,33 @@ const ProjectForm = ({
         resources: "",
       });
 
+      // Clear errors
+      setErrors({});
+
       handleClose();
     }
   };
 
+  const handleCloseModal = () => {
+    // Reset form data and clear errors
+    setProjectData({
+      projectName: "",
+      clientName: "",
+      startDate: "",
+      endDate: "",
+      projectType: "",
+      resources: "",
+    });
 
-  
+    // Clear errors
+    setErrors({});
+
+    // Close the modal using the prop function
+    handleClose();
+  };
+
   return (
-    <Modal size="md" show={show} onHide={handleClose}>
+    <Modal size="md" show={show} onHide={handleCloseModal}>
       <Modal.Header closeButton>
         <Modal.Title>
           <h2>{projectToEdit ? "Edit Project" : "Add Project"}</h2>
@@ -180,8 +196,9 @@ const ProjectForm = ({
             {/* First Column */}
             <Col>
               <Form.Group controlId="formProjectName">
-              <Form.Label> </Form.Label>
-                <Form.Control className="hov"
+                <Form.Label> </Form.Label>
+                <Form.Control
+                  className="hov"
                   type="text"
                   placeholder="Project Name"
                   name="projectName"
@@ -196,14 +213,14 @@ const ProjectForm = ({
 
               <Form.Group controlId="formStartDate">
                 <Form.Label> </Form.Label>
-                <Form.Control className="hov kk"
+                <Form.Control
+                  className="hov kk"
                   type="date"
                   placeholder="Start Date"
                   name="startDate"
                   onChange={handleChange}
                   isInvalid={!!errors.startDate}
                   value={moment(projectData.startDate).format("YYYY-MM-DD")}
-                  
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.startDate}
@@ -211,8 +228,9 @@ const ProjectForm = ({
 
                 <Form.Group controlId="formProjectType">
                   <Form.Label> </Form.Label>
-                  <Form.Select 
-                    name="projectType" className="sel hov"
+                  <Form.Select
+                    name="projectType"
+                    className="sel hov"
                     value={projectData.projectType}
                     onChange={handleChange}
                     isInvalid={!!errors.projectType}
@@ -231,8 +249,9 @@ const ProjectForm = ({
             {/* Second Column */}
             <Col>
               <Form.Group controlId="formClientName">
-              <Form.Label> </Form.Label>
-                <Form.Control className="hov"
+                <Form.Label> </Form.Label>
+                <Form.Control
+                  className="hov"
                   type="text"
                   placeholder="Client Name"
                   name="clientName"
@@ -247,7 +266,8 @@ const ProjectForm = ({
 
               <Form.Group controlId="formEndDate">
                 <Form.Label> </Form.Label>
-                <Form.Control className="hov"
+                <Form.Control
+                  className="hov"
                   type="date"
                   placeholder="End date  "
                   name="endDate"
@@ -261,7 +281,8 @@ const ProjectForm = ({
 
                 <Form.Group controlId="formResources">
                   <Form.Label> </Form.Label>
-                  <Form.Control className="hov"
+                  <Form.Control
+                    className="hov"
                     type="text"
                     placeholder="#Resources"
                     name="resources"
@@ -279,7 +300,7 @@ const ProjectForm = ({
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
+        <Button variant="secondary" onClick={handleCloseModal}>
           Close
         </Button>
         <Button variant="dark" onClick={handleSave}>
@@ -291,4 +312,5 @@ const ProjectForm = ({
 };
 
 export default ProjectForm;
+
 
