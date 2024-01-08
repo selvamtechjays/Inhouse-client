@@ -285,7 +285,6 @@ const handleSubmit =async () => {
                 <Form.Control className="hov"
                   type="text"
                   placeholder="Allocated percentage"
-                  placeholder="Allocated percentage"
                   name="percentage"
             
                   onChange={handleChange}
