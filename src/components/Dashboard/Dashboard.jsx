@@ -20,7 +20,7 @@ export function Dashboard({OpenSidebar}) {
     const getEmailFromLocalStorage = () => {
       const userEmail = localStorage.getItem('name');
       setLoginData(userEmail);
-      toast.success("Login successfull");
+    //   toast.success("Login successfull");
       const loginImage=localStorage.getItem('image')
       setLogin(loginImage)
    

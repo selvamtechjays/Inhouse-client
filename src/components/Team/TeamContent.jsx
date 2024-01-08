@@ -315,7 +315,7 @@ export const TeamContent = ({ OpenSidebar }) => {
                         className="text-center"
                         style={{ marginTop: "-40px" }}
                       >
-                        Are u want to Delete ?
+                        Are you want to Delete ?
                       </h5>
                     </Modal.Body>
                     <Modal.Footer style={{ marginTop: "-25px" }}>
@@ -328,14 +328,14 @@ export const TeamContent = ({ OpenSidebar }) => {
                         }}
                         onClick={() => setSmShow(false)}
                       >
-                        Close
+                        No,Close
                       </Button>
                       <Button
                         variant="dark"
                         style={{ borderRadius: "10px", color: "white" }}
                         onClick={() => handleDeleteTeam(team._id)}
                       >
-                        Confirm        
+                        Yes,Delete        
                       </Button>
                     </Modal.Footer>
                   </Modal>
