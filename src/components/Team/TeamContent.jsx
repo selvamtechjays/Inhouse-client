@@ -168,32 +168,32 @@ export const TeamContent = ({ OpenSidebar }) => {
 
             <Dropdown.Menu>
               <Dropdown.Item onClick={() => handleFilterSelect("name", "Name")}>
-                Name
+               
               </Dropdown.Item>
               <Dropdown.Item
-                onClick={() => handleFilterSelect("employeeCode", "Emp code")}
+                onClick={() => handleFilterSelect("employeeCode", "Emp id")}
               >
-                Emp code
+                
               </Dropdown.Item>
               <Dropdown.Item
                 onClick={() => handleFilterSelect("techStack", "Tech stack")}
               >
-                Tech stack
+               
               </Dropdown.Item>
               <Dropdown.Item
                 onClick={() => handleFilterSelect("project", "Project")}
               >
-                Project
+                
               </Dropdown.Item>
               <Dropdown.Item
                 onClick={() => handleFilterSelect("percentage", "Percentage")}
               >
-                Percentage
+                
               </Dropdown.Item>
               <Dropdown.Item
                 onClick={() => handleFilterSelect("priority", "Priority")}
               >
-                Priority
+                
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
@@ -230,7 +230,7 @@ export const TeamContent = ({ OpenSidebar }) => {
               style={{ backgroundColor: "#450c36", color: "white" }}
               className="p-4"
             >
-              Emp code
+              Emp id
             </th>
             <th
               style={{ backgroundColor: "#450c36", color: "white" }}
