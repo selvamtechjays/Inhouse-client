@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import "./project.css";
 import moment from 'moment';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { addProject } from "../../service/allapi";
+
 
 const ProjectForm = ({
   show,
@@ -197,13 +196,13 @@ const ProjectForm = ({
 
               <Form.Group controlId="formStartDate">
                 <Form.Label>Start Date</Form.Label>
-                <Form.Control className="hov"
+                <Form.Control className="hov kk"
                   type="date"
-                  placeholder="Enter start date"
+                  placeholder="Start Date"
                   name="startDate"
-                  value={moment(projectData.startDate).format("YYYY-MM-DD")}
                   onChange={handleChange}
                   isInvalid={!!errors.startDate}
+                  
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.startDate}
@@ -249,7 +248,7 @@ const ProjectForm = ({
                 <Form.Label>End Date</Form.Label>
                 <Form.Control className="hov"
                   type="date"
-                  placeholder="Enter end date"
+                  placeholder="End date  "
                   name="endDate"
                   value={moment(projectData.endDate).format("YYYY-MM-DD")}
                   onChange={handleChange}
