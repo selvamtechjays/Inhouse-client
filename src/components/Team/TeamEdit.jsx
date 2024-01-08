@@ -202,7 +202,7 @@ const getAllEmployee = async () => {
             </Col>
             <Col>
             <Form.Group controlId="employeeCode">
-        <Form.Label>Employee Code</Form.Label>
+        <Form.Label>Employee id</Form.Label>
         <Form.Control className="hov"
                   type="text"
                   name="employeeCode"
@@ -228,7 +228,7 @@ const getAllEmployee = async () => {
                   onChange={handleChange}
                   isInvalid={!!errors.techStack}
                 >
-                  <option value="">Select Tech Stack</option>
+                  
                   <option value="mern">Mern</option>
                   <option value="python">Python</option>
                 </Form.Select>
@@ -295,7 +295,7 @@ const getAllEmployee = async () => {
                   onChange={handleChange}
                   isInvalid={!!errors.priority}
                 >
-                  <option value="">Select Priority</option>
+                  
                   <option value="primary">Primary</option>
                   <option value="secondary">Secondary</option>
                   <option value="low">Low</option>
@@ -313,7 +313,7 @@ const getAllEmployee = async () => {
           Close
         </Button>
         <Button variant="dark" onClick={handleSubmit}>
-         Edit
+         Save
         </Button>
       </Modal.Footer>
     </Modal>

@@ -206,8 +206,8 @@ const handleSubmit =async () => {
               </Form.Group>
             </Col>
             <Col>
-            <Form.Group controlId="employeeid">
-        <Form.Label> </Form.Label>
+            <Form.Group controlId="employeeCode">
+        <Form.Label></Form.Label>
         <Form.Control className="hov"
                   type="text"
                   name="employeeid"
@@ -228,6 +228,7 @@ const handleSubmit =async () => {
             <Col>
               <Form.Group controlId="techStack">
                 <Form.Label> </Form.Label>
+                <Form.Label> </Form.Label>
                 <Form.Select 
                   name="techStack" className="sel hov"
                  
@@ -246,6 +247,7 @@ const handleSubmit =async () => {
             <Col>
    
               <Form.Group controlId="project">
+                <Form.Label> </Form.Label>
                 <Form.Label> </Form.Label>
         
                 <Form.Select
@@ -278,6 +280,7 @@ const handleSubmit =async () => {
           <Row>
             <Col>
               <Form.Group controlId="percentage">
+                <Form.Label> </Form.Label>
                 <Form.Label> </Form.Label>
                 <Form.Control className="hov"
                   type="text"
