@@ -171,9 +171,9 @@ export const TeamContent = ({ OpenSidebar }) => {
                
               </Dropdown.Item>
               <Dropdown.Item
-                onClick={() => handleFilterSelect("employeeCode", "Emp id")}
+                onClick={() => handleFilterSelect("employeeCode", "Emp code")}
               >
-                
+                Emp code
               </Dropdown.Item>
               <Dropdown.Item
                 onClick={() => handleFilterSelect("techStack", "Tech stack")}

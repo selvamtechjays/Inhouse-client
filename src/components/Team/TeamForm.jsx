@@ -184,6 +184,7 @@ const handleSubmit =async () => {
                 <Form.Label> </Form.Label>
                 <Form.Select className="sel hov"
                   name="name"
+                  placeholder = "Name"
                   value={teamData.name}
                   onChange={handleChange}
                   isInvalid={!!errors.name}
@@ -209,8 +210,8 @@ const handleSubmit =async () => {
         <Form.Label></Form.Label>
         <Form.Control className="hov"
                   type="text"
+                  name="employeeid"
                   placeholder="Employee id"
-                  name="employeeCode"
           value={empcode.employeeCode}
           onChange={handleChange}
           isInvalid={!!errors.employeeCode}
@@ -226,6 +227,7 @@ const handleSubmit =async () => {
           <Row>
             <Col>
               <Form.Group controlId="techStack">
+                <Form.Label> </Form.Label>
                 <Form.Label> </Form.Label>
                 <Form.Select 
                   name="techStack" className="sel hov"
@@ -245,6 +247,7 @@ const handleSubmit =async () => {
             <Col>
    
               <Form.Group controlId="project">
+                <Form.Label> </Form.Label>
                 <Form.Label> </Form.Label>
         
                 <Form.Select
@@ -278,8 +281,10 @@ const handleSubmit =async () => {
             <Col>
               <Form.Group controlId="percentage">
                 <Form.Label> </Form.Label>
+                <Form.Label> </Form.Label>
                 <Form.Control className="hov"
                   type="text"
+                  placeholder="Allocated percentage"
                   placeholder="Allocated percentage"
                   name="percentage"
             
@@ -293,7 +298,7 @@ const handleSubmit =async () => {
             </Col>
             <Col>
               <Form.Group controlId="priority">
-                <Form.Label> </Form.Label>
+                <Form.Label></Form.Label>
                 <Form.Select
                   name="priority" className="sel hov"
                 
