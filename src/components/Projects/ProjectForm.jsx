@@ -202,6 +202,7 @@ const ProjectForm = ({
                   name="startDate"
                   onChange={handleChange}
                   isInvalid={!!errors.startDate}
+                  value={moment(projectData.startDate).format("YYYY-MM-DD")}
                   
                 />
                 <Form.Control.Feedback type="invalid">

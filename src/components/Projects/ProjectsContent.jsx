@@ -97,7 +97,7 @@ export const ProjectsContent = ({ OpenSidebar }) => {
     newProject.projectName = capitalizeString(newProject.projectName);
     newProject.clientName = capitalizeString(newProject.clientName);
     newProject.projectType = capitalizeString(newProject.projectType);
-  
+    newProject.resources = capitalizeString(newProject.resources);
   
     try {
       if (isEdit) {
@@ -264,16 +264,16 @@ export const ProjectsContent = ({ OpenSidebar }) => {
                   <Modal.Header closeButton>
                     <Modal.Title id="example-modal-sizes-title-sm"></Modal.Title>
                   </Modal.Header>
-                  <Modal.Body ><h5 className="text-center" style={{ marginTop: '-40px' }}>Are you want to Delete ?</h5></Modal.Body>
+                  <Modal.Body ><h5 className="text-center" style={{ marginTop: '-40px' }}>Are u want to Delete ?</h5></Modal.Body>
                   <Modal.Footer style={{ marginTop: '-25px' }} >
                     <Button variant="secondary" style={{
                       borderRadius: '10px',
                       color: "white", marginLeft: "-50px"
-                    }} onClick={() => setSmShow(false)}>No,Close</Button>
+                    }} onClick={() => setSmShow(false)}>Close</Button>
                     <Button variant="dark" style={{
                       borderRadius: '10px',
                       color: "white"
-                    }} onClick={() => handleDeleteProject(project._id)}>Yes,Delete</Button>
+                    }} onClick={() => handleDeleteProject(project._id)}>Confirm</Button>
                   </Modal.Footer>
                 </Modal>
               </td>
