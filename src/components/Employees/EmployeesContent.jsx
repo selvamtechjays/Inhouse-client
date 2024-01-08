@@ -286,7 +286,7 @@ export const EmployeesContent = ({OpenSidebar}) => {
               style={{ backgroundColor: "#450c36", color: "white" }}
               className="p-4"
             >
-              Emp code
+              Emp id
             </th>
             <th
               style={{ backgroundColor: "#450c36", color: "white" }}
@@ -358,12 +358,12 @@ export const EmployeesContent = ({OpenSidebar}) => {
             
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body ><h5 className="text-center" style={{marginTop:'-40px'}}>Are u want to Delete ?</h5></Modal.Body>
+        <Modal.Body ><h5 className="text-center" style={{marginTop:'-40px'}}>Are you sure you want to Delete ?</h5></Modal.Body>
         <Modal.Footer style={{marginTop:'-25px'}} >
           <Button variant="secondary" style={{ borderRadius: '10px',
-          color:"white",marginLeft:"-50px"}} onClick={() => setSmShow(false)}>Close</Button>
+          color:"white",marginLeft:"-50px"}} onClick={() => setSmShow(false)}>No, Cancel</Button>
           <Button variant="dark" style={{ borderRadius: '10px',
-          color:"white"}}  onClick={() => handleDeleteEmployee(employee._id) }>Confirm</Button>
+          color:"white"}}  onClick={() => handleDeleteEmployee(employee._id) }>Yes, Delete</Button>
         </Modal.Footer>
       </Modal>
 

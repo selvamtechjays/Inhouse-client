@@ -126,10 +126,10 @@ const EmployeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
             <Col>
               {/* Form group for Name */}
               <Form.Group controlId="name" >
-                <Form.Label>Name</Form.Label>
+                <Form.Label> </Form.Label>
                 <Form.Control className="hov"
                   type="text"
-                  placeholder="Enter name"
+                  placeholder="Name"
                   name="name"
                   value={employeeData.name}
                   onChange={handleChange}
@@ -141,10 +141,10 @@ const EmployeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
             <Col>
               {/* Form group for Role */}
               <Form.Group controlId="role">
-                <Form.Label className="hov">Role</Form.Label>
+                <Form.Label className="hov"> </Form.Label>
                 <Form.Control className="hov"
                   type="text"
-                  placeholder="Enter role"
+                  placeholder="Role"
                   name="role"
                   value={employeeData.role}
                   onChange={handleChange}
@@ -159,10 +159,10 @@ const EmployeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
             <Col>
               {/* Form group for Slack (Email) */}
               <Form.Group controlId="slack">
-                <Form.Label>Slack</Form.Label>
+                <Form.Label> </Form.Label>
                 <Form.Control className="hov"
                   type="text"
-                  placeholder="Enter Your Email"
+                  placeholder="Email Address"
                   name="slack"
                   value={employeeData.slack}
                   onChange={handleChange}
@@ -177,10 +177,10 @@ const EmployeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
             <Col>
               {/* Form group for Employee Code */}
               <Form.Group controlId="employeeCode">
-                <Form.Label>Employee Code</Form.Label>
+                <Form.Label></Form.Label>
                 <Form.Control className="hov"
                   type="text"
-                  placeholder="Enter employee code"
+                  placeholder="Employee id"
                   name="employeeCode"
                   value={employeeData.employeeCode}
                   onChange={handleChange}

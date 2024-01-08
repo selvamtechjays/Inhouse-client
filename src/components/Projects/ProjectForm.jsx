@@ -195,7 +195,7 @@ const ProjectForm = ({
               </Form.Group>
 
               <Form.Group controlId="formStartDate">
-                <Form.Label>Start Date</Form.Label>
+                <Form.Label> </Form.Label>
                 <Form.Control className="hov kk"
                   type="date"
                   placeholder="Start Date"
