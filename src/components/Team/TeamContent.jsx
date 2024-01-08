@@ -171,9 +171,9 @@ export const TeamContent = ({ OpenSidebar }) => {
                 Name
               </Dropdown.Item>
               <Dropdown.Item
-                onClick={() => handleFilterSelect("employeeCode", "Emp code")}
+                onClick={() => handleFilterSelect("employeeCode", "Emp id")}
               >
-                Emp code
+                Emp id
               </Dropdown.Item>
               <Dropdown.Item
                 onClick={() => handleFilterSelect("techStack", "Tech stack")}
@@ -230,7 +230,7 @@ export const TeamContent = ({ OpenSidebar }) => {
               style={{ backgroundColor: "#450c36", color: "white" }}
               className="p-4"
             >
-              Emp code
+              Emp id
             </th>
             <th
               style={{ backgroundColor: "#450c36", color: "white" }}
@@ -315,7 +315,7 @@ export const TeamContent = ({ OpenSidebar }) => {
                         className="text-center"
                         style={{ marginTop: "-40px" }}
                       >
-                        Are u want to Delete ?
+                        Are you sure you want to Delete ?
                       </h5>
                     </Modal.Body>
                     <Modal.Footer style={{ marginTop: "-25px" }}>
@@ -328,14 +328,14 @@ export const TeamContent = ({ OpenSidebar }) => {
                         }}
                         onClick={() => setSmShow(false)}
                       >
-                        Close
+                        No, Cancel
                       </Button>
                       <Button
                         variant="dark"
                         style={{ borderRadius: "10px", color: "white" }}
                         onClick={() => handleDeleteTeam(team._id)}
                       >
-                        Confirm        
+                        Yes, Delete       
                       </Button>
                     </Modal.Footer>
                   </Modal>

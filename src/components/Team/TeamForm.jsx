@@ -181,9 +181,10 @@ const handleSubmit =async () => {
           <Row>
             <Col>
               <Form.Group controlId="name">
-                <Form.Label>Name</Form.Label>
+                <Form.Label> </Form.Label>
                 <Form.Select className="sel hov"
                   name="name"
+                  placeholder = "Name"
                   value={teamData.name}
                   onChange={handleChange}
                   isInvalid={!!errors.name}
@@ -205,11 +206,12 @@ const handleSubmit =async () => {
               </Form.Group>
             </Col>
             <Col>
-            <Form.Group controlId="employeeCode">
-        <Form.Label>Employee Code</Form.Label>
+            <Form.Group controlId="employeeid">
+        <Form.Label> </Form.Label>
         <Form.Control className="hov"
                   type="text"
-                  name="employeeCode"
+                  name="employeeid"
+                  placeholder="Employee id"
           value={empcode.employeeCode}
           onChange={handleChange}
           isInvalid={!!errors.employeeCode}
@@ -225,7 +227,7 @@ const handleSubmit =async () => {
           <Row>
             <Col>
               <Form.Group controlId="techStack">
-                <Form.Label>Tech Stack</Form.Label>
+                <Form.Label> </Form.Label>
                 <Form.Select 
                   name="techStack" className="sel hov"
                  
@@ -244,7 +246,7 @@ const handleSubmit =async () => {
             <Col>
    
               <Form.Group controlId="project">
-                <Form.Label>Project</Form.Label>
+                <Form.Label> </Form.Label>
         
                 <Form.Select
                   name="project" className="sel hov"
@@ -276,10 +278,10 @@ const handleSubmit =async () => {
           <Row>
             <Col>
               <Form.Group controlId="percentage">
-                <Form.Label>Allocated Percentage</Form.Label>
+                <Form.Label> </Form.Label>
                 <Form.Control className="hov"
                   type="text"
-                  placeholder="Enter allocated percentage"
+                  placeholder="Allocated percentage"
                   name="percentage"
             
                   onChange={handleChange}
@@ -292,7 +294,7 @@ const handleSubmit =async () => {
             </Col>
             <Col>
               <Form.Group controlId="priority">
-                <Form.Label>Priority</Form.Label>
+                <Form.Label></Form.Label>
                 <Form.Select
                   name="priority" className="sel hov"
                 

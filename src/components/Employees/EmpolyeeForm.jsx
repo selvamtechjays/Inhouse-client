@@ -159,10 +159,10 @@ const EmployeeForm = ({ show, handleClose, handleAddEmployee, employeeToEdit }) 
             <Col>
               {/* Form group for Slack (Email) */}
               <Form.Group controlId="slack">
-                <Form.Label>Slack</Form.Label>
+                <Form.Label> </Form.Label>
                 <Form.Control className="hov"
                   type="text"
-                  placeholder="Enter Your Email"
+                  placeholder="Email Address"
                   name="slack"
                   value={employeeData.slack}
                   onChange={handleChange}
