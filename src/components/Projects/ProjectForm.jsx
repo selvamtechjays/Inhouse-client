@@ -82,11 +82,13 @@ const ProjectForm = ({
 
     // Validate End Date
     newErrors.endDate =
-      projectData.endDate === ""
-        ? "End Date is required"
-        : projectData.startDate && projectData.endDate < projectData.startDate
-        ? "End Date cannot be earlier than Start Date"
-        : "";
+    !projectData.endDate
+      ? ""
+      : projectData.startDate &&
+        new Date(projectData.endDate) < new Date(projectData.startDate)
+      ? "End Date cannot be earlier than Start Date"
+      : "";
+  
 
     setErrors(newErrors);
   };
@@ -96,9 +98,10 @@ const ProjectForm = ({
 
     // Validate Resources
     newErrors.resources =
-    !/^\d+$/.test(projectData.resources)
+    projectData.resources !== null && isNaN(projectData.resources)
       ? "Resources must contain only numeric characters"
       : "";
+
 
     setErrors(newErrors);
   };
@@ -108,15 +111,15 @@ const ProjectForm = ({
 
     // Validate Project Name
     newErrors.projectName =
-      !/^[a-zA-Z\s]+$/.test(projectData.projectName)
+      !/^[a-zA-Z\s]*$/.test(projectData.projectName)
         ? "Project Name must be a string without numeric characters"
         : "";
 
     // Validate Client Name
     newErrors.clientName =
-      !/^[a-zA-Z\s]+$/.test(projectData.clientName)
-        ? "Client Name must be a string without numeric characters"
-        : "";
+    !/^[a-zA-Z\s]*$/.test(projectData.clientName)
+      ? "Client Name must be a string"
+      : "";
 
     setErrors(newErrors);
   };
@@ -132,9 +135,9 @@ const ProjectForm = ({
 
     // Validate Client Name
     newErrors.clientName =
-      !/^[a-zA-Z\s]+$/.test(projectData.clientName)
-        ? "Client Name must be a string without numeric characters"
-        : "";
+    !/^[a-zA-Z\s]*$/.test(projectData.clientName)
+      ? "Client Name must be a string"
+      : "";
 
     // Validate Start Date
     newErrors.startDate = projectData.startDate === "" ? "Start Date is required" : "";
@@ -147,17 +150,19 @@ const ProjectForm = ({
 
     // Validate Resources
     newErrors.resources =
-    !/^\d+$/.test(projectData.resources)
+    projectData.resources !== null && isNaN(projectData.resources)
       ? "Resources must contain only numeric characters"
       : "";
 
+
     // Validate End Date
     newErrors.endDate =
-      projectData.endDate === ""
-        ? "End Date is required"
-        : projectData.startDate && projectData.endDate < projectData.startDate
-        ? "End Date cannot be earlier than Start Date"
-        : "";
+    !projectData.endDate
+      ? ""
+      : projectData.startDate &&
+        new Date(projectData.endDate) < new Date(projectData.startDate)
+      ? "End Date cannot be earlier than Start Date"
+      : "";
 
     setErrors(newErrors);
 

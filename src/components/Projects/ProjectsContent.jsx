@@ -97,7 +97,7 @@ export const ProjectsContent = ({ OpenSidebar }) => {
     newProject.projectName = capitalizeString(newProject.projectName);
     newProject.clientName = capitalizeString(newProject.clientName);
     newProject.projectType = capitalizeString(newProject.projectType);
-    newProject.resources = capitalizeString(newProject.resources);
+  
   
     try {
       if (isEdit) {
