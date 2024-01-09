@@ -21,6 +21,30 @@ const ProjectForm = ({
 
   const [errors, setErrors] = useState({});
 
+  const [inputType, setInputType] = useState('text');
+  
+
+  const handleFocus = () => {
+    setInputType('date');
+  };
+
+  const handleBlur = () => {
+    if (!projectToEdit) {
+      setInputType('text');
+    }
+  };
+
+  
+  const formattedEndDate = projectData.endDate
+    ? moment(projectData.endDate).format('YYYY-MM-DD')
+    : '';
+
+    const formattedStartDate = projectData.startDate
+    ? moment(projectData.startDate).format('YYYY-MM-DD')
+    : '';
+
+  
+
   useEffect(() => {
     if (projectToEdit) {
       setProjectData((prevData) => ({
@@ -183,6 +207,9 @@ const ProjectForm = ({
     handleClose();
   };
 
+  const placeholderText =
+  projectToEdit && focus ? null : projectToEdit ? "" : "End Date";
+
   return (
     <Modal size="md" show={show} onHide={handleCloseModal}>
       <Modal.Header closeButton>
@@ -196,7 +223,7 @@ const ProjectForm = ({
             {/* First Column */}
             <Col>
               <Form.Group controlId="formProjectName">
-                <Form.Label> </Form.Label>
+              {projectToEdit ? <Form.Label>Project Name</Form.Label> : <Form.Label> </Form.Label>}
                 <Form.Control
                   className="hov"
                   type="text"
@@ -212,22 +239,24 @@ const ProjectForm = ({
               </Form.Group>
 
               <Form.Group controlId="formStartDate">
-                <Form.Label> </Form.Label>
+              {projectToEdit ? <Form.Label>Start Date</Form.Label> : <Form.Label> </Form.Label>}
                 <Form.Control
                   className="hov kk"
-                  type="date"
-                  placeholder="Start Date"
+                  type={inputType}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  placeholder={projectToEdit ? null : "Start date"}
                   name="startDate"
                   onChange={handleChange}
                   isInvalid={!!errors.startDate}
-                  value={moment(projectData.startDate).format("YYYY-MM-DD")}
+                  value={formattedStartDate}
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.startDate}
                 </Form.Control.Feedback>
 
                 <Form.Group controlId="formProjectType">
-                  <Form.Label> </Form.Label>
+                {projectToEdit ? <Form.Label>Project Type</Form.Label> : <Form.Label> </Form.Label>}
                   <Form.Select
                     name="projectType"
                     className="sel hov"
@@ -249,7 +278,7 @@ const ProjectForm = ({
             {/* Second Column */}
             <Col>
               <Form.Group controlId="formClientName">
-                <Form.Label> </Form.Label>
+              {projectToEdit ? <Form.Label>Client Name</Form.Label> : <Form.Label> </Form.Label>}
                 <Form.Control
                   className="hov"
                   type="text"
@@ -265,13 +294,15 @@ const ProjectForm = ({
               </Form.Group>
 
               <Form.Group controlId="formEndDate">
-                <Form.Label> </Form.Label>
+              {projectToEdit ? <Form.Label>End Date</Form.Label> : <Form.Label> </Form.Label>}
                 <Form.Control
                   className="hov"
-                  type="date"
-                  placeholder="End date  "
+                  type={inputType}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  placeholder={projectToEdit ? null : "End date"}
                   name="endDate"
-                  value={moment(projectData.endDate).format("YYYY-MM-DD")}
+                  value={formattedEndDate}
                   onChange={handleChange}
                   isInvalid={!!errors.endDate}
                 />
@@ -280,7 +311,7 @@ const ProjectForm = ({
                 </Form.Control.Feedback>
 
                 <Form.Group controlId="formResources">
-                  <Form.Label> </Form.Label>
+                {projectToEdit ? <Form.Label>#Resources</Form.Label> : <Form.Label> </Form.Label>}
                   <Form.Control
                     className="hov"
                     type="text"
