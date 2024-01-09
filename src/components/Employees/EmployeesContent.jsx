@@ -106,6 +106,7 @@ export const EmployeesContent = ({OpenSidebar}) => {
             console.log("Update Response:", response);
   
             if (response && response.status === 200) {
+              getAllEmployee()
               // Update the employee
               setEmployees((prevEmployees) =>
                 prevEmployees.map((employee) =>
@@ -130,6 +131,7 @@ export const EmployeesContent = ({OpenSidebar}) => {
         console.log("Add Team Response:", response);
   
         if (response && response.status === 200) {
+          getAllEmployee()
           // Add the new employee to the state with the returned id
           setEmployees((prevEmployees) => [
             ...prevEmployees,
@@ -157,6 +159,7 @@ export const EmployeesContent = ({OpenSidebar}) => {
         const response = await deleteEmployee(id);
   
         if (response.status === 200) {
+          
           toast.success(response.data.message);
   
           // Update the employees list after successful deletion

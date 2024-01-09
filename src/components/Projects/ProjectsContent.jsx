@@ -105,6 +105,7 @@ export const ProjectsContent = ({ OpenSidebar }) => {
         const response = await updateProject(newProject._id, newProject);
   
         if (response && response.status === 200) {
+          getAllProjects()
           // Update the corresponding project in the state
           setProjects((prevProjects) =>
             prevProjects.map((project) =>
@@ -119,6 +120,7 @@ export const ProjectsContent = ({ OpenSidebar }) => {
         // If adding new, make an API call to add the project
         const response = await addProject(newProject);
         if (response && response.status === 200) {
+          getAllProjects()
           // Add the new project to the state with the returned id
           setProjects((prevProjects) => [
             ...prevProjects,
