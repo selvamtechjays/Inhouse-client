@@ -168,12 +168,12 @@ export const TeamContent = ({ OpenSidebar }) => {
 
             <Dropdown.Menu>
               <Dropdown.Item onClick={() => handleFilterSelect("name", "Name")}>
-                Name
+               Name
               </Dropdown.Item>
               <Dropdown.Item
                 onClick={() => handleFilterSelect("employeeCode", "Emp id")}
               >
-                Emp id
+                Emp Id
               </Dropdown.Item>
               <Dropdown.Item
                 onClick={() => handleFilterSelect("techStack", "Tech stack")}
