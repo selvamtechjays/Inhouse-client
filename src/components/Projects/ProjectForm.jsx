@@ -83,7 +83,7 @@ const ProjectForm = ({
     // Validate End Date
     newErrors.endDate =
       projectData.endDate === ""
-        ? ""
+        ? "End Date is required"
         : projectData.startDate && projectData.endDate < projectData.startDate
         ? "End Date cannot be earlier than Start Date"
         : "";
@@ -96,7 +96,7 @@ const ProjectForm = ({
 
     // Validate Resources
     newErrors.resources =
-    /^\d+$/.test(projectData.resources)
+    !/^\d+$/.test(projectData.resources)
       ? "Resources must contain only numeric characters"
       : "";
 
@@ -343,5 +343,3 @@ const ProjectForm = ({
 };
 
 export default ProjectForm;
-
-
