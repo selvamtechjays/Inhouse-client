@@ -24,7 +24,7 @@ export const Home = () => {
 
   const registerUser = async (userEmail) => {
     try {
-      const response = await axios.post('/register', { email: userEmail });
+      const response = await axios.post('http://localhost:3000/register', { email: userEmail });
       const email = response.data.user.email;
       const token = response.data.token;
   
