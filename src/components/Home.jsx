@@ -25,7 +25,7 @@ export const Home = () => {
 
   const registerUser = async (userEmail) => {
     try {
-      const response = await axios.post(`${BASE_URL}/register`, { email: userEmail });
+      const response = await axios.post(`${BASE_URL}/api/register`, { email: userEmail });
       const email = response.data.user.email;
       const token = response.data.token;
   
