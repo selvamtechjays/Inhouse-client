@@ -1,3 +1,3 @@
-const BASE_URL='http://13.201.109.195'
+const BASE_URL='http://43.204.196.20'
 
 export default BASE_URL
