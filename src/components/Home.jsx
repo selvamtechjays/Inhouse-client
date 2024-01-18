@@ -10,6 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { signOut } from "firebase/auth";
 import axios from "axios";
+import BASE_URL from "../service/baseurl";
 
 // Firebase authentication provider
 provider;
@@ -24,7 +25,7 @@ export const Home = () => {
 
   const registerUser = async (userEmail) => {
     try {
-      const response = await axios.post('/register', { email: userEmail });
+      const response = await axios.post(`${BASE_URL}/register`, { email: userEmail });
       const email = response.data.user.email;
       const token = response.data.token;
   
