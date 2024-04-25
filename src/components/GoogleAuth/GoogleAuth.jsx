@@ -3,15 +3,14 @@ import {getAuth,GoogleAuthProvider} from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBnCnXqQl_V_QzfHn5ZoUH7MsTyD4ti5E4",
-  authDomain: "inhouse-c77d7.firebaseapp.com",
-  projectId: "inhouse-c77d7",
-  storageBucket: "inhouse-c77d7.appspot.com",
-  messagingSenderId: "843304820458",
-  appId: "1:843304820458:web:f7796a32eb99e728060193",
-  measurementId: "G-FCKWPFSSY0"
+  apiKey: "AIzaSyDU_5X3KsNYMyU43imyiuX5o3sYj4kcEJc",
+  authDomain: "inhouse-408005.firebaseapp.com",
+  projectId: "inhouse-408005",
+  storageBucket: "inhouse-408005.appspot.com",
+  messagingSenderId: "880729680538",
+  appId: "1:880729680538:web:0cb4b4bec5b71c7ead0d23",
+  measurementId: "G-VWSDH9WN1Q"
 };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app)
